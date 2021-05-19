@@ -260,7 +260,6 @@
     <Compile Include="Platform\Windows\NativeMethods.cs" />
     <Compile Include="Platform\Windows\WindowStyles.cs" />
     <Compile Include="Platform\Windows\WindowStylesEx.cs" />
-    <Compile Include="StringHelper.cs" />
     <Compile Include="Structs\CefAudioParameters.cs" />
     <Compile Include="Structs\CefBrowserSettings.cs" />
     <Compile Include="Structs\CefColor.cs" />

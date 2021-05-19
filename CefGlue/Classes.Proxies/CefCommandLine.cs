@@ -198,11 +198,8 @@
         public void AppendSwitch(string name)
         {
             // TODO: use CheckSwitchName method
-            if (StringHelper.IsNullOrWhiteSpace(name))
-            {
-                if (name == null) throw new ArgumentNullException("name");
-                throw new ArgumentException("Switch name must be non empty or whitespace only string.", "name");
-            }
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentNullException(nameof(name), "The switch name cannot be null or whitespace!");
 
             fixed (char* name_str = name)
             {
@@ -218,11 +215,8 @@
         public void AppendSwitch(string name, string value)
         {
             // TODO: use CheckSwitchName method
-            if (StringHelper.IsNullOrWhiteSpace(name))
-            {
-                if (name == null) throw new ArgumentNullException("name");
-                throw new ArgumentException("Switch name must be non empty or whitespace only string.", "name");
-            }
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentNullException(nameof(name), "The switch name cannot be null or whitespace!");
 
             fixed (char* name_str = name)
             fixed (char* value_str = value)
