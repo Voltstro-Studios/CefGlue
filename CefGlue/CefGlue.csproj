@@ -1,13 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
+    <TargetFrameworks>net5.0;netstandard2.0;net45</TargetFrameworks>
 
     <AssemblyName>Xilium.CefGlue</AssemblyName>
     <RootNamespace>Xilium.CefGlue</RootNamespace>
 
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
+    <AnalysisMode>Default</AnalysisMode>
 
     <Version>90.5.4</Version>
     <IsPackable>true</IsPackable>
