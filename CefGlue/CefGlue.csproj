@@ -9,6 +9,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <AnalysisMode>Default</AnalysisMode>
+    <Nullable>enable</Nullable>
 
     <Version>90.6.5</Version>
     <IsPackable>true</IsPackable>
