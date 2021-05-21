@@ -1,11 +1,8 @@
-﻿namespace Xilium.CefGlue
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Runtime.InteropServices;
-    using Xilium.CefGlue.Interop;
+﻿using System;
+using Xilium.CefGlue.Interop;
 
+namespace Xilium.CefGlue
+{
     // TODO: use intptr-sized implementations ?
 
     /// <summary>
@@ -19,7 +16,8 @@
         /// </summary>
         public static CefBinaryValue Create(byte[] data)
         {
-            if (data == null) throw new ArgumentNullException("data");
+            if (data == null) 
+                throw new ArgumentNullException(nameof(data));
 
             fixed (byte* data_ptr = data)
             {
@@ -34,18 +32,12 @@
         /// and that other object is then modified or destroyed. Do not call any other
         /// methods if this method returns false.
         /// </summary>
-        public bool IsValid
-        {
-            get { return cef_binary_value_t.is_valid(_self) != 0; }
-        }
+        public bool IsValid => cef_binary_value_t.is_valid(_self) != 0;
 
         /// <summary>
         /// Returns true if this object is currently owned by another object.
         /// </summary>
-        public bool IsOwned
-        {
-            get { return cef_binary_value_t.is_owned(_self) != 0; }
-        }
+        public bool IsOwned => cef_binary_value_t.is_owned(_self) != 0;
 
         /// <summary>
         /// Returns true if this object and |that| object have the same underlying
@@ -77,10 +69,7 @@
         /// <summary>
         /// Returns the data size.
         /// </summary>
-        public long Size
-        {
-            get { return (long)cef_binary_value_t.get_size(_self); }
-        }
+        public long Size => (long)cef_binary_value_t.get_size(_self);
 
         /// <summary>
         /// Read up to |buffer_size| number of bytes into |buffer|. Reading begins at
@@ -88,7 +77,8 @@
         /// </summary>
         public long GetData(byte[] buffer, long bufferSize, long dataOffset)
         {
-            if (buffer.LongLength < dataOffset + bufferSize) throw new ArgumentOutOfRangeException("dataOffset");
+            if (buffer.LongLength < dataOffset + bufferSize)
+                throw new ArgumentOutOfRangeException(nameof(dataOffset));
 
             fixed (byte* buffer_ptr = buffer)
             {
@@ -102,7 +92,8 @@
         {
             var value = new byte[Size];
             var readed = GetData(value, value.Length, 0);
-            if (readed != value.Length) throw new InvalidOperationException();
+            if (readed != value.Length) 
+                throw new InvalidOperationException();
             return value;
         }
     }

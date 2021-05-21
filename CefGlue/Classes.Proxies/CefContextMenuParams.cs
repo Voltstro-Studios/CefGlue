@@ -1,13 +1,9 @@
-﻿namespace Xilium.CefGlue
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Runtime.InteropServices;
-    using Xilium.CefGlue.Interop;
+﻿using Xilium.CefGlue.Interop;
 
+namespace Xilium.CefGlue
+{
     /// <summary>
-    /// Provides information about the context menu state. The ethods of this class
+    /// Provides information about the context menu state. The methods of this class
     /// can only be accessed on browser process the UI thread.
     /// </summary>
     public sealed unsafe partial class CefContextMenuParams
@@ -16,28 +12,19 @@
         /// Returns the X coordinate of the mouse where the context menu was invoked.
         /// Coords are relative to the associated RenderView's origin.
         /// </summary>
-        public int X
-        {
-            get { return cef_context_menu_params_t.get_xcoord(_self); }
-        }
+        public int X => cef_context_menu_params_t.get_xcoord(_self);
 
         /// <summary>
         /// Returns the Y coordinate of the mouse where the context menu was invoked.
         /// Coords are relative to the associated RenderView's origin.
         /// </summary>
-        public int Y
-        {
-            get { return cef_context_menu_params_t.get_ycoord(_self); }
-        }
+        public int Y => cef_context_menu_params_t.get_ycoord(_self);
 
         /// <summary>
         /// Returns flags representing the type of node that the context menu was
         /// invoked on.
         /// </summary>
-        public CefContextMenuTypeFlags ContextMenuType
-        {
-            get { return cef_context_menu_params_t.get_type_flags(_self); }
-        }
+        public CefContextMenuTypeFlags ContextMenuType => cef_context_menu_params_t.get_type_flags(_self);
 
         /// <summary>
         /// Returns the URL of the link, if any, that encloses the node that the
@@ -82,10 +69,7 @@
         /// Returns true if the context menu was invoked on an image which has
         /// non-empty contents.
         /// </summary>
-        public bool HasImageContents
-        {
-            get { return cef_context_menu_params_t.has_image_contents(_self) != 0; }
-        }
+        public bool HasImageContents => cef_context_menu_params_t.has_image_contents(_self) != 0;
 
         /// <summary>
         /// Returns the title text or the alt text if the context menu was invoked on
@@ -140,19 +124,13 @@
         /// <summary>
         /// Returns the type of context node that the context menu was invoked on.
         /// </summary>
-        public CefContextMenuMediaType MediaType
-        {
-            get { return cef_context_menu_params_t.get_media_type(_self); }
-        }
+        public CefContextMenuMediaType MediaType => cef_context_menu_params_t.get_media_type(_self);
 
         /// <summary>
         /// Returns flags representing the actions supported by the media element, if
         /// any, that the context menu was invoked on.
         /// </summary>
-        public CefContextMenuMediaStateFlags MediaState
-        {
-            get { return cef_context_menu_params_t.get_media_state_flags(_self); }
-        }
+        public CefContextMenuMediaStateFlags MediaState => cef_context_menu_params_t.get_media_state_flags(_self);
 
         /// <summary>
         /// Returns the text of the selection, if any, that the context menu was
@@ -193,36 +171,24 @@
         /// <summary>
         /// Returns true if the context menu was invoked on an editable node.
         /// </summary>
-        public bool IsEditable
-        {
-            get { return cef_context_menu_params_t.is_editable(_self) != 0; }
-        }
+        public bool IsEditable => cef_context_menu_params_t.is_editable(_self) != 0;
 
         /// <summary>
         /// Returns true if the context menu was invoked on an editable node where
         /// spell-check is enabled.
         /// </summary>
-        public bool IsSpellCheckEnabled
-        {
-            get { return cef_context_menu_params_t.is_spell_check_enabled(_self) != 0; }
-        }
+        public bool IsSpellCheckEnabled => cef_context_menu_params_t.is_spell_check_enabled(_self) != 0;
 
         /// <summary>
         /// Returns flags representing the actions supported by the editable node, if
         /// any, that the context menu was invoked on.
         /// </summary>
-        public CefContextMenuEditStateFlags EditState
-        {
-            get { return cef_context_menu_params_t.get_edit_state_flags(_self); }
-        }
+        public CefContextMenuEditStateFlags EditState => cef_context_menu_params_t.get_edit_state_flags(_self);
 
         /// <summary>
         /// Returns true if the context menu contains items specified by the renderer
         /// process (for example, plugin placeholder or pepper plugin menu items).
         /// </summary>
-        public bool IsCustomMenu
-        {
-            get { return cef_context_menu_params_t.is_custom_menu(_self) != 0; }
-        }
+        public bool IsCustomMenu => cef_context_menu_params_t.is_custom_menu(_self) != 0;
     }
 }

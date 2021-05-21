@@ -1,11 +1,8 @@
-﻿namespace Xilium.CefGlue
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Runtime.InteropServices;
-    using Xilium.CefGlue.Interop;
+﻿using System;
+using Xilium.CefGlue.Interop;
 
+namespace Xilium.CefGlue
+{
     /// <summary>
     /// Class used to represent the browser process aspects of a browser window. The
     /// methods of this class can only be called in the browser process. They may be
@@ -26,9 +23,12 @@
         /// </summary>
         public static void CreateBrowser(CefWindowInfo windowInfo, CefClient client, CefBrowserSettings settings, string url, CefDictionaryValue extraInfo = null, CefRequestContext requestContext = null)
         {
-            if (windowInfo == null) throw new ArgumentNullException("windowInfo");
-            if (client == null) throw new ArgumentNullException("client");
-            if (settings == null) throw new ArgumentNullException("settings");
+            if (windowInfo == null) 
+                throw new ArgumentNullException(nameof(windowInfo));
+            if (client == null) 
+                throw new ArgumentNullException(nameof(client));
+            if (settings == null) 
+                throw new ArgumentNullException(nameof(settings));
             // TODO: [ApiUsage] if windowInfo.WindowRenderingDisabled && client doesn't provide RenderHandler implementation -> throw exception
 
             var n_windowInfo = windowInfo.ToNative();
@@ -39,7 +39,7 @@
 
             fixed (char* url_ptr = url)
             {
-                cef_string_t n_url = new cef_string_t(url_ptr, url != null ? url.Length : 0);
+                cef_string_t n_url = new cef_string_t(url_ptr, url?.Length ?? 0);
                 var n_success = cef_browser_host_t.create_browser(n_windowInfo, n_client, &n_url, n_settings, n_extraInfo, n_requestContext);
                 if (n_success != 1) throw ExceptionBuilder.FailedToCreateBrowser();
             }
@@ -59,9 +59,12 @@
         /// </summary>
         public static CefBrowser CreateBrowserSync(CefWindowInfo windowInfo, CefClient client, CefBrowserSettings settings, string url, CefDictionaryValue extraInfo = null, CefRequestContext requestContext = null)
         {
-            if (windowInfo == null) throw new ArgumentNullException("windowInfo");
-            if (client == null) throw new ArgumentNullException("client");
-            if (settings == null) throw new ArgumentNullException("settings");
+            if (windowInfo == null)
+                throw new ArgumentNullException(nameof(windowInfo));
+            if (client == null)
+                throw new ArgumentNullException(nameof(client));
+            if (settings == null)
+                throw new ArgumentNullException(nameof(settings));
             // TODO: [ApiUsage] if windowInfo.WindowRenderingDisabled && client doesn't provide RenderHandler implementation -> throw exception
 
             var n_windowInfo = windowInfo.ToNative();
@@ -72,7 +75,7 @@
 
             fixed (char* url_ptr = url)
             {
-                cef_string_t n_url = new cef_string_t(url_ptr, url != null ? url.Length : 0);
+                cef_string_t n_url = new cef_string_t(url_ptr, url?.Length ?? 0);
                 var n_browser = cef_browser_host_t.create_browser_sync(n_windowInfo, n_client, &n_url, n_settings, n_extraInfo, n_requestContext);
                 return CefBrowser.FromNative(n_browser);
             }
@@ -149,10 +152,7 @@
         /// <summary>
         /// Returns true if this browser is wrapped in a CefBrowserView.
         /// </summary>
-        public bool HasView
-        {
-            get { return cef_browser_host_t.has_view(_self) != 0; }
-        }
+        public bool HasView => cef_browser_host_t.has_view(_self) != 0;
 
         /// <summary>
         /// Returns the client for this browser.
@@ -160,8 +160,7 @@
         public CefClient GetClient()
         {
             return CefClient.FromNative(
-                cef_browser_host_t.get_client(_self)
-                );
+                cef_browser_host_t.get_client(_self));
         }
 
 
@@ -171,8 +170,7 @@
         public CefRequestContext GetRequestContext()
         {
             return CefRequestContext.FromNative(
-                cef_browser_host_t.get_request_context(_self)
-                );
+                cef_browser_host_t.get_request_context(_self));
         }
 
 
@@ -214,13 +212,14 @@
         /// </summary>
         public void RunFileDialog(CefFileDialogMode mode, string title, string defaultFilePath, string[] acceptFilters, int selectedAcceptFilter, CefRunFileDialogCallback callback)
         {
-            if (callback == null) throw new ArgumentNullException("callback");
+            if (callback == null) 
+                throw new ArgumentNullException(nameof(callback));
 
             fixed (char* title_ptr = title)
             fixed (char* defaultFilePath_ptr = defaultFilePath)
             {
-                var n_title = new cef_string_t(title_ptr, title != null ? title.Length : 0);
-                var n_defaultFilePath = new cef_string_t(defaultFilePath_ptr, defaultFilePath != null ? defaultFilePath.Length : 0);
+                var n_title = new cef_string_t(title_ptr, title?.Length ?? 0);
+                var n_defaultFilePath = new cef_string_t(defaultFilePath_ptr, defaultFilePath?.Length ?? 0);
                 var n_acceptFilters = cef_string_list.From(acceptFilters);
 
                 cef_browser_host_t.run_file_dialog(_self, mode, &n_title, &n_defaultFilePath, n_acceptFilters, selectedAcceptFilter, callback.ToNative());
@@ -234,7 +233,8 @@
         /// </summary>
         public void StartDownload(string url)
         {
-            if (string.IsNullOrEmpty(url)) throw new ArgumentNullException("url");
+            if (string.IsNullOrEmpty(url))
+                throw new ArgumentNullException(nameof(url));
 
             fixed (char* url_ptr = url)
             {
@@ -258,7 +258,8 @@
         /// </summary>
         public void DownloadImage(string imageUrl, bool isFavIcon, uint maxImageSize, bool bypassCache, CefDownloadImageCallback callback)
         {
-            if (string.IsNullOrEmpty(imageUrl)) throw new ArgumentNullException("imageUrl");
+            if (string.IsNullOrEmpty(imageUrl)) 
+                throw new ArgumentNullException(nameof(imageUrl));
 
             fixed (char* imageUrl_ptr = imageUrl)
             {
@@ -293,8 +294,7 @@
                 cef_browser_host_t.print_to_pdf(_self,
                     &n_path,
                     n_settings,
-                    callback.ToNative()
-                    );
+                    callback.ToNative());
 
                 cef_pdf_print_settings_t.Clear(n_settings);
                 cef_pdf_print_settings_t.Free(n_settings);
@@ -358,13 +358,7 @@
         /// Returns true if this browser currently has an associated DevTools browser.
         /// Must be called on the browser process UI thread.
         /// </summary>
-        public bool HasDevTools
-        {
-            get
-            {
-                return cef_browser_host_t.has_dev_tools(_self) != 0;
-            }
-        }
+        public bool HasDevTools => cef_browser_host_t.has_dev_tools(_self) != 0;
 
         /// <summary>
         /// Send a method call message over the DevTools protocol. |message| must be a
@@ -417,7 +411,7 @@
         {
             fixed (char* method_str = method)
             {
-                var n_method = new cef_string_t(method_str, method != null ? method.Length : 0);
+                var n_method = new cef_string_t(method_str, method?.Length ?? 0);
 
                 return cef_browser_host_t.execute_dev_tools_method(
                     _self, messageId, &n_method, parameters.ToNative());
@@ -432,7 +426,8 @@
         /// </summary>
         public CefRegistration AddDevToolsMessageObserver(CefDevToolsMessageObserver observer)
         {
-            if (observer == null) throw new ArgumentNullException(nameof(observer));
+            if (observer == null) 
+                throw new ArgumentNullException(nameof(observer));
 
             var n_registration = cef_browser_host_t.add_dev_tools_message_observer(_self,
                 observer.ToNative());
@@ -457,7 +452,7 @@
         {
             fixed (char* word_str = word)
             {
-                var n_word = new cef_string_t(word_str, word != null ? word.Length : 0);
+                var n_word = new cef_string_t(word_str, word?.Length ?? 0);
                 cef_browser_host_t.replace_misspelling(_self, &n_word);
             }
         }
@@ -469,7 +464,7 @@
         {
             fixed (char* word_str = word)
             {
-                var n_word = new cef_string_t(word_str, word != null ? word.Length : 0);
+                var n_word = new cef_string_t(word_str, word?.Length ?? 0);
                 cef_browser_host_t.add_word_to_dictionary(_self, &n_word);
             }
         }
@@ -477,13 +472,7 @@
         /// <summary>
         /// Returns true if window rendering is disabled.
         /// </summary>
-        public bool IsWindowRenderingDisabled
-        {
-            get
-            {
-                return cef_browser_host_t.is_window_rendering_disabled(_self) != 0;
-            }
-        }
+        public bool IsWindowRenderingDisabled => cef_browser_host_t.is_window_rendering_disabled(_self) != 0;
 
         /// <summary>
         /// Notify the browser that the widget has been resized. The browser will first
@@ -543,7 +532,7 @@
         /// </summary>
         public void SendKeyEvent(CefKeyEvent keyEvent)
         {
-            if (keyEvent == null) throw new ArgumentNullException("keyEvent");
+            if (keyEvent == null) throw new ArgumentNullException(nameof(keyEvent));
 
             var n_event = new cef_key_event_t();
             keyEvent.ToNative(&n_event);
@@ -588,8 +577,7 @@
         /// </summary>
         public void SendTouchEvent(CefTouchEvent @event)
         {
-            cef_touch_event_t n_event;
-            @event.ToNative(out n_event);
+            @event.ToNative(out cef_touch_event_t n_event);
             cef_browser_host_t.send_touch_event(_self, &n_event);
         }
 
@@ -671,7 +659,7 @@
         {
             fixed (char* text_ptr = text)
             {
-                cef_string_t n_text = new cef_string_t(text_ptr, text != null ? text.Length : 0);
+                cef_string_t n_text = new cef_string_t(text_ptr, text?.Length ?? 0);
                 UIntPtr n_underlinesCount = checked((UIntPtr)underlinesCount);
                 var n_underlines = underlines.ToNative();
                 cef_range_t n_replacementRange = new cef_range_t(replacementRange.From, replacementRange.To);
@@ -694,7 +682,7 @@
         {
             fixed (char* text_ptr = text)
             {
-                cef_string_t n_text = new cef_string_t(text_ptr, text != null ? text.Length : 0);
+                cef_string_t n_text = new cef_string_t(text_ptr, text?.Length ?? 0);
                 var n_replacementRange = new cef_range_t(replacementRange.From, replacementRange.To);
                 cef_browser_host_t.ime_commit_text(_self, &n_text, &n_replacementRange, relativeCursorPos);
             }
@@ -810,8 +798,7 @@
         public CefNavigationEntry GetVisibleNavigationEntry()
         {
             return CefNavigationEntry.FromNativeOrNull(
-                cef_browser_host_t.get_visible_navigation_entry(_self)
-                );
+                cef_browser_host_t.get_visible_navigation_entry(_self));
         }
 
         /// <summary>
@@ -870,13 +857,7 @@
         /// Background hosts do not have a window and are not displayable. See
         /// CefRequestContext::LoadExtension for details.
         /// </summary>
-        public bool IsBackgroundHost
-        {
-            get
-            {
-                return cef_browser_host_t.is_background_host(_self) != 0;
-            }
-        }
+        public bool IsBackgroundHost => cef_browser_host_t.is_background_host(_self) != 0;
 
         /// <summary>
         /// Set whether the browser's audio is muted.
@@ -890,12 +871,6 @@
         /// Returns true if the browser's audio is muted.  This method can only be
         /// called on the UI thread.
         /// </summary>
-        public bool IsAudioMuted
-        {
-            get
-            {
-                return cef_browser_host_t.is_audio_muted(_self) != 0;
-            }
-        }
+        public bool IsAudioMuted => cef_browser_host_t.is_audio_muted(_self) != 0;
     }
 }

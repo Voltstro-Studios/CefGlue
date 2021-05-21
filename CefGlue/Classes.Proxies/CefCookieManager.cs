@@ -1,11 +1,9 @@
-﻿namespace Xilium.CefGlue
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Runtime.InteropServices;
-    using Xilium.CefGlue.Interop;
+﻿using System;
+using Xilium.CefGlue.Interop;
 
+#nullable enable
+namespace Xilium.CefGlue
+{
     /// <summary>
     /// Class used for managing cookies. The methods of this class may be called on
     /// any thread unless otherwise indicated.
@@ -19,12 +17,11 @@
         /// manager's storage has been initialized. Using this method is equivalent to
         /// calling CefRequestContext::GetGlobalContext()->GetDefaultCookieManager().
         /// </summary>
-        public static CefCookieManager GetGlobal(CefCompletionCallback callback)
+        public static CefCookieManager GetGlobal(CefCompletionCallback? callback)
         {
             var n_callback = callback != null ? callback.ToNative() : null;
             return CefCookieManager.FromNativeOrNull(
-                cef_cookie_manager_t.get_global_manager(n_callback)
-                );
+                cef_cookie_manager_t.get_global_manager(n_callback));
         }
 
         /// <summary>
@@ -34,7 +31,8 @@
         /// </summary>
         public bool VisitAllCookies(CefCookieVisitor visitor)
         {
-            if (visitor == null) throw new ArgumentNullException("visitor");
+            if (visitor == null) 
+                throw new ArgumentNullException(nameof(visitor));
 
             return cef_cookie_manager_t.visit_all_cookies(_self, visitor.ToNative()) != 0;
         }
@@ -48,8 +46,10 @@
         /// </summary>
         public bool VisitUrlCookies(string url, bool includeHttpOnly, CefCookieVisitor visitor)
         {
-            if (string.IsNullOrEmpty(url)) throw new ArgumentNullException("url");
-            if (visitor == null) throw new ArgumentNullException("visitor");
+            if (string.IsNullOrEmpty(url)) 
+                throw new ArgumentNullException(nameof(url));
+            if (visitor == null) 
+                throw new ArgumentNullException(nameof(visitor));
 
             fixed (char* url_str = url)
             {
@@ -68,10 +68,12 @@
         /// asnychronously on the UI thread after the cookie has been set. Returns
         /// false if an invalid URL is specified or if cookies cannot be accessed.
         /// </summary>
-        public bool SetCookie(string url, CefCookie cookie, CefSetCookieCallback callback)
+        public bool SetCookie(string url, CefCookie cookie, CefSetCookieCallback? callback)
         {
-            if (string.IsNullOrEmpty(url)) throw new ArgumentNullException("url");
-            if (cookie == null) throw new ArgumentNullException("cookie");
+            if (string.IsNullOrEmpty(url)) 
+                throw new ArgumentNullException(nameof(url));
+            if (cookie == null) 
+                throw new ArgumentNullException(nameof(cookie));
 
             int n_result;
             var n_cookie = cookie.ToNative();
@@ -97,13 +99,13 @@
         /// specified or if cookies cannot be accessed. Cookies can alternately be
         /// deleted using the Visit*Cookies() methods.
         /// </summary>
-        public bool DeleteCookies(string url, string cookieName, CefDeleteCookiesCallback callback)
+        public bool DeleteCookies(string? url, string? cookieName, CefDeleteCookiesCallback? callback)
         {
             fixed (char* url_str = url)
             fixed (char* cookieName_str = cookieName)
             {
-                var n_url = new cef_string_t(url_str, url != null ? url.Length : 0);
-                var n_cookieName = new cef_string_t(cookieName_str, cookieName != null ? cookieName.Length : 0);
+                var n_url = new cef_string_t(url_str, url?.Length ?? 0);
+                var n_cookieName = new cef_string_t(cookieName_str, cookieName?.Length ?? 0);
                 var n_callback = callback != null ? callback.ToNative() : null;
 
                 return cef_cookie_manager_t.delete_cookies(_self, &n_url, &n_cookieName, n_callback) != 0;
@@ -115,7 +117,7 @@
         /// be executed asnychronously on the UI thread after the flush is complete.
         /// Returns false if cookies cannot be accessed.
         /// </summary>
-        public bool FlushStore(CefCompletionCallback callback)
+        public bool FlushStore(CefCompletionCallback? callback)
         {
             var n_handler = callback != null ? callback.ToNative() : null;
 

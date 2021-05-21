@@ -1,9 +1,9 @@
-﻿namespace Xilium.CefGlue
-{
-    using System;
-    using System.Collections.Generic;
-    using Xilium.CefGlue.Interop;
+﻿using System;
+using System.Collections.Generic;
+using Xilium.CefGlue.Interop;
 
+namespace Xilium.CefGlue
+{
     /// <summary>
     /// Class used to create and/or parse command line arguments. Arguments with
     /// '--', '-' and, on Windows, '/' prefixes are considered switches. Switches
@@ -42,26 +42,20 @@
         /// Returns true if this object is valid. Do not call any other methods if this
         /// function returns false.
         /// </summary>
-        public bool IsValid
-        {
-            get { return cef_command_line_t.is_valid(_self) != 0; }
-        }
+        public bool IsValid => cef_command_line_t.is_valid(_self) != 0;
 
         /// <summary>
         /// Returns true if the values of this object are read-only. Some APIs may
         /// expose read-only objects.
         /// </summary>
-        public bool IsReadOnly
-        {
-            get { return cef_command_line_t.is_read_only(_self) != 0; }
-        }
+        public bool IsReadOnly => cef_command_line_t.is_read_only(_self) != 0;
 
         /// <summary>
         /// Returns a writable copy of this object.
         /// </summary>
         public CefCommandLine Copy()
         {
-            return CefCommandLine.FromNative(cef_command_line_t.copy(_self));
+            return FromNative(cef_command_line_t.copy(_self));
         }
 
         // fixme: what with InitFromArgv ?
@@ -108,8 +102,7 @@
         public override string ToString()
         {
             return cef_string_userfree.ToString(
-                cef_command_line_t.get_command_line_string(_self)
-                );
+                cef_command_line_t.get_command_line_string(_self));
         }
 
         /// <summary>
@@ -118,8 +111,7 @@
         public string GetProgram()
         {
             return cef_string_userfree.ToString(
-                cef_command_line_t.get_program(_self)
-                ) ?? "";
+                cef_command_line_t.get_program(_self)) ?? "";
         }
 
         /// <summary>
@@ -140,10 +132,7 @@
         /// <summary>
         /// Returns true if the command line has switches.
         /// </summary>
-        public bool HasSwitches
-        {
-            get { return cef_command_line_t.has_switches(_self) != 0; }
-        }
+        public bool HasSwitches => cef_command_line_t.has_switches(_self) != 0;
 
         /// <summary>
         /// Returns true if the command line contains the given switch.
@@ -173,8 +162,7 @@
                 var n_name = new cef_string_t(name_str, name.Length);
 
                 return cef_string_userfree.ToString(
-                    cef_command_line_t.get_switch_value(_self, &n_name)
-                    );
+                    cef_command_line_t.get_switch_value(_self, &n_name));
             }
         }
 
@@ -222,7 +210,7 @@
             fixed (char* value_str = value)
             {
                 var n_name = new cef_string_t(name_str, name.Length);
-                var n_value = new cef_string_t(value_str, value != null ? value.Length : 0);
+                var n_value = new cef_string_t(value_str, value?.Length ?? 0);
 
                 cef_command_line_t.append_switch_with_value(_self, &n_name, &n_value);
             }
@@ -231,10 +219,7 @@
         /// <summary>
         /// True if there are remaining command line arguments.
         /// </summary>
-        public bool HasArguments
-        {
-            get { return cef_command_line_t.has_arguments(_self) != 0; }
-        }
+        public bool HasArguments => cef_command_line_t.has_arguments(_self) != 0;
 
         /// <summary>
         /// Get the remaining command line arguments.
