@@ -1,11 +1,9 @@
-﻿namespace Xilium.CefGlue
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Runtime.InteropServices;
-    using Xilium.CefGlue.Interop;
+﻿using System;
+using Xilium.CefGlue.Interop;
 
+#nullable enable
+namespace Xilium.CefGlue
+{
     /// <summary>
     /// A request context provides request handling for a set of related browser
     /// or URL request objects. A request context can be specified when creating a
@@ -38,15 +36,14 @@
         /// Creates a new context object with the specified |settings| and optional
         /// |handler|.
         /// </summary>
-        public static CefRequestContext CreateContext(CefRequestContextSettings settings, CefRequestContextHandler handler)
+        public static CefRequestContext CreateContext(CefRequestContextSettings settings, CefRequestContextHandler? handler)
         {
             var n_settings = settings.ToNative();
 
             var result = CefRequestContext.FromNative(
                 cef_request_context_t.create_context(
                     n_settings,
-                    handler != null ? handler.ToNative() : null
-                    )
+                    handler != null ? handler.ToNative() : null)
                 );
 
             CefRequestContextSettings.Free(n_settings);
@@ -58,13 +55,12 @@
         /// Creates a new context object that shares storage with |other| and uses an
         /// optional |handler|.
         /// </summary>
-        public static CefRequestContext CreateContext(CefRequestContext other, CefRequestContextHandler handler)
+        public static CefRequestContext CreateContext(CefRequestContext other, CefRequestContextHandler? handler)
         {
             return CefRequestContext.FromNative(
                 cef_request_context_t.create_context(
                     other.ToNative(),
-                    handler != null ? handler.ToNative() : null
-                    )
+                    handler != null ? handler.ToNative() : null)
                 );
         }
 
@@ -73,7 +69,7 @@
         /// Returns true if this object is pointing to the same context as |that|
         /// object.
         /// </summary>
-        public bool IsSame(CefRequestContext other)
+        public bool IsSame(CefRequestContext? other)
         {
             if (other == null) return false;
 
@@ -93,13 +89,7 @@
         /// used by default when creating a browser or URL request with a NULL context
         /// argument.
         /// </summary>
-        public bool IsGlobal
-        {
-            get
-            {
-                return cef_request_context_t.is_global(_self) != 0;
-            }
-        }
+        public bool IsGlobal => cef_request_context_t.is_global(_self) != 0;
 
         /// <summary>
         /// Returns the handler for this context if any.
@@ -107,8 +97,7 @@
         public CefRequestContextHandler GetHandler()
         {
             return CefRequestContextHandler.FromNativeOrNull(
-                cef_request_context_t.get_handler(_self)
-                );
+                cef_request_context_t.get_handler(_self));
         }
 
         /// <summary>
@@ -129,7 +118,7 @@
         /// will be executed asnychronously on the UI thread after the manager's
         /// storage has been initialized.
         /// </summary>
-        public CefCookieManager GetCookieManager(CefCompletionCallback callback)
+        public CefCookieManager GetCookieManager(CefCompletionCallback? callback)
         {
             var n_callback = callback != null ? callback.ToNative() : null;
 
@@ -151,16 +140,18 @@
         /// |domain_name|. Returns false if an error occurs. This function may be
         /// called on any thread in the browser process.
         /// </summary>
-        public bool RegisterSchemeHandlerFactory(string schemeName, string domainName, CefSchemeHandlerFactory factory)
+        public bool RegisterSchemeHandlerFactory(string schemeName, string? domainName, CefSchemeHandlerFactory factory)
         {
-            if (string.IsNullOrEmpty(schemeName)) throw new ArgumentNullException("schemeName");
-            if (factory == null) throw new ArgumentNullException("factory");
+            if (string.IsNullOrEmpty(schemeName)) 
+                throw new ArgumentNullException(nameof(schemeName));
+            if (factory == null) 
+                throw new ArgumentNullException(nameof(factory));
 
             fixed (char* schemeName_str = schemeName)
             fixed (char* domainName_str = domainName)
             {
                 var n_schemeName = new cef_string_t(schemeName_str, schemeName.Length);
-                var n_domainName = new cef_string_t(domainName_str, domainName != null ? domainName.Length : 0);
+                var n_domainName = new cef_string_t(domainName_str, domainName?.Length ?? 0);
 
                 return cef_request_context_t.register_scheme_handler_factory(_self, &n_schemeName, &n_domainName, factory.ToNative()) != 0;
             }
@@ -190,11 +181,11 @@
         /// Returns true if a preference with the specified |name| exists. This method
         /// must be called on the browser process UI thread.
         /// </summary>
-        public bool HasPreference(string name)
+        public bool HasPreference(string? name)
         {
             fixed (char* name_str = name)
             {
-                var n_name = new cef_string_t(name_str, name != null ? name.Length : 0);
+                var n_name = new cef_string_t(name_str, name?.Length ?? 0);
                 return cef_request_context_t.has_preference(_self, &n_name) != 0;
             }
         }
@@ -206,11 +197,11 @@
         /// will not modify the underlying preference value. This method must be called
         /// on the browser process UI thread.
         /// </summary>
-        public CefValue GetPreference(string name)
+        public CefValue GetPreference(string? name)
         {
             fixed (char* name_str = name)
             {
-                var n_name = new cef_string_t(name_str, name != null ? name.Length : 0);
+                var n_name = new cef_string_t(name_str, name?.Length ?? 0);
                 var n_value = cef_request_context_t.get_preference(_self, &n_name);
                 return CefValue.FromNativeOrNull(n_value);
             }
@@ -236,11 +227,11 @@
         /// usually cannot be modified. This method must be called on the browser
         /// process UI thread.
         /// </summary>
-        public bool CanSetPreference(string name)
+        public bool CanSetPreference(string? name)
         {
             fixed (char* name_str = name)
             {
-                var n_name = new cef_string_t(name_str, name != null ? name.Length : 0);
+                var n_name = new cef_string_t(name_str, name?.Length ?? 0);
                 return cef_request_context_t.can_set_preference(_self, &n_name) != 0;
             }
         }
@@ -252,11 +243,11 @@
         /// fails then |error| will be populated with a detailed description of the
         /// problem. This method must be called on the browser process UI thread.
         /// </summary>
-        public bool SetPreference(string name, CefValue value, out string error)
+        public bool SetPreference(string? name, CefValue? value, out string error)
         {
             fixed (char* name_str = name)
             {
-                var n_name = new cef_string_t(name_str, name != null ? name.Length : 0);
+                var n_name = new cef_string_t(name_str, name?.Length ?? 0);
                 var n_value = value != null ? value.ToNative() : null;
                 cef_string_t n_error;
 
@@ -275,7 +266,7 @@
         /// If |callback| is non-NULL it will be executed on the UI thread after
         /// completion.
         /// </summary>
-        public void ClearCertificateExceptions(CefCompletionCallback callback)
+        public void ClearCertificateExceptions(CefCompletionCallback? callback)
         {
             var n_callback = callback != null ? callback.ToNative() : null;
             cef_request_context_t.clear_certificate_exceptions(_self, n_callback);
@@ -286,7 +277,7 @@
         /// handling GetAuthCredentials. If |callback| is non-NULL it will be executed
         /// on the UI thread after completion.
         /// </summary>
-        public void ClearHttpAuthCredentials(CefCompletionCallback callback)
+        public void ClearHttpAuthCredentials(CefCompletionCallback? callback)
         {
             var n_callback = callback != null ? callback.ToNative() : null;
             cef_request_context_t.clear_http_auth_credentials(_self, n_callback);
@@ -298,7 +289,7 @@
         /// don't yet want to call CefShutdown(). If |callback| is non-NULL it will be
         /// executed on the UI thread after completion.
         /// </summary>
-        public void CloseAllConnections(CefCompletionCallback callback)
+        public void CloseAllConnections(CefCompletionCallback? callback)
         {
             var n_callback = callback != null ? callback.ToNative() : null;
             cef_request_context_t.close_all_connections(_self, n_callback);
@@ -310,12 +301,14 @@
         /// </summary>
         public void ResolveHost(string origin, CefResolveCallback callback)
         {
-            if (string.IsNullOrEmpty(origin)) throw new ArgumentNullException("origin");
-            if (callback == null) throw new ArgumentNullException("callback");
+            if (string.IsNullOrEmpty(origin)) 
+                throw new ArgumentNullException(nameof(origin));
+            if (callback == null) 
+                throw new ArgumentNullException(nameof(callback));
 
             fixed (char* origin_str = origin)
             {
-                var n_origin = new cef_string_t(origin_str, origin != null ? origin.Length : 0);
+                var n_origin = new cef_string_t(origin_str, origin.Length);
                 var n_callback = callback.ToNative();
                 cef_request_context_t.resolve_host(_self, &n_origin, n_callback);
             }
@@ -359,11 +352,11 @@
         /// See https://developer.chrome.com/extensions for extension implementation
         /// and usage documentation.
         /// </summary>
-        public void LoadExtension(string rootDirectory, CefDictionaryValue manifest, CefExtensionHandler handler)
+        public void LoadExtension(string? rootDirectory, CefDictionaryValue? manifest, CefExtensionHandler? handler)
         {
             fixed(char* rootDirectory_str = rootDirectory)
             {
-                var n_rootDirectory = new cef_string_t(rootDirectory_str, rootDirectory != null ? rootDirectory.Length : 0);
+                var n_rootDirectory = new cef_string_t(rootDirectory_str, rootDirectory?.Length ?? 0);
                 var n_manifest = manifest != null ? manifest.ToNative() : null;
                 var n_handler = handler != null ? handler.ToNative() : null;
                 cef_request_context_t.load_extension(_self, &n_rootDirectory, n_manifest, n_handler);
@@ -376,11 +369,11 @@
         /// access to the extension (see HasExtension). This method must be called on
         /// the browser process UI thread.
         /// </summary>
-        public bool DidLoadExtension(string extensionId)
+        public bool DidLoadExtension(string? extensionId)
         {
             fixed(char* extensionId_str = extensionId)
             {
-                var n_extensionId = new cef_string_t(extensionId_str, extensionId != null ? extensionId.Length : 0);
+                var n_extensionId = new cef_string_t(extensionId_str, extensionId?.Length ?? 0);
                 return cef_request_context_t.did_load_extension(_self, &n_extensionId) != 0;
             }
         }
@@ -391,11 +384,11 @@
         /// extension (see DidLoadExtension). This method must be called on the browser
         /// process UI thread.
         /// </summary>
-        public bool HasExtension(string extensionId)
+        public bool HasExtension(string? extensionId)
         {
             fixed (char* extensionId_str = extensionId)
             {
-                var n_extensionId = new cef_string_t(extensionId_str, extensionId != null ? extensionId.Length : 0);
+                var n_extensionId = new cef_string_t(extensionId_str, extensionId?.Length ?? 0);
                 return cef_request_context_t.has_extension(_self, &n_extensionId) != 0;
             }
         }
@@ -406,7 +399,7 @@
         /// ID values. Returns true on success. This method must be called on the
         /// browser process UI thread.
         /// </summary>
-        public bool GetExtensions(out string[] extensionIds)
+        public bool GetExtensions(out string[]? extensionIds)
         {
             var n_extensionIds = libcef.string_list_alloc();
 
@@ -429,11 +422,11 @@
         /// extension is accessible in this context (see HasExtension). This method
         /// must be called on the browser process UI thread.
         /// </summary>
-        public CefExtension GetExtension(string extensionId)
+        public CefExtension GetExtension(string? extensionId)
         {
             fixed (char* extensionId_str = extensionId)
             {
-                var n_extensionId = new cef_string_t(extensionId_str, extensionId != null ? extensionId.Length : 0);
+                var n_extensionId = new cef_string_t(extensionId_str, extensionId?.Length ?? 0);
                 var n_result = cef_request_context_t.get_extension(_self, &n_extensionId);
                 return CefExtension.FromNativeOrNull(n_result);
             }

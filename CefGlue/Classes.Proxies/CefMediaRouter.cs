@@ -1,11 +1,8 @@
-﻿namespace Xilium.CefGlue
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Runtime.InteropServices;
-    using Xilium.CefGlue.Interop;
+﻿using Xilium.CefGlue.Interop;
 
+#nullable enable
+namespace Xilium.CefGlue
+{
     /// <summary>
     /// Supports discovery of and communication with media devices on the local
     /// network via the Cast and DIAL protocols. The methods of this class may be
