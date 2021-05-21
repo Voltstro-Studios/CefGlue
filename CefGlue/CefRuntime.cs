@@ -1,25 +1,24 @@
-﻿namespace Xilium.CefGlue
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.Runtime.InteropServices;
-    using System.Text;
-    using Xilium.CefGlue.Interop;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Runtime.InteropServices;
+using System.Text;
+using Xilium.CefGlue.Interop;
 
+namespace Xilium.CefGlue
+{
     public static unsafe class CefRuntime
     {
-        private static readonly CefRuntimePlatform _platform;
-
         private static bool _loaded;
         private static bool _initialized;
 
         static CefRuntime()
         {
-            _platform = DetectPlatform();
+            Platform = DetectPlatform();
         }
 
         #region Platform Detection
+        
         private static CefRuntimePlatform DetectPlatform()
         {
             var platformId = Environment.OSVersion.Platform;
@@ -62,10 +61,8 @@
         [DllImport("libc")]
         private static extern int uname(IntPtr buf);
 
-        public static CefRuntimePlatform Platform
-        {
-            get { return _platform; }
-        }
+        public static CefRuntimePlatform Platform { get; }
+
         #endregion
 
         /// <summary>
@@ -87,7 +84,8 @@
         /// <exception cref="InvalidOperationException"></exception>
         public static void Load(string path)
         {
-            if (_loaded) return;
+            if (_loaded) 
+                return;
 
             if (!string.IsNullOrEmpty(path))
             {
@@ -107,8 +105,7 @@
             Xilium.CefGlue.Platform.Windows.NativeMethods.LoadLibraryEx(
                 System.IO.Path.Combine(path, "libcef.dll"),
                 IntPtr.Zero,
-                Xilium.CefGlue.Platform.Windows.LoadLibraryFlags.LOAD_WITH_ALTERED_SEARCH_PATH
-                );
+                Xilium.CefGlue.Platform.Windows.LoadLibraryFlags.LOAD_WITH_ALTERED_SEARCH_PATH);
         }
 
         #region cef_version
