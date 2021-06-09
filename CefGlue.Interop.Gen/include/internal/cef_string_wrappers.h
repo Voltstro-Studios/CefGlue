@@ -34,6 +34,7 @@
 #include <memory.h>
 #include <string>
 
+#include "include/base/cef_string16.h"
 #include "include/internal/cef_string_types.h"
 
 #if defined(USING_CHROMIUM_INCLUDES)
@@ -90,34 +91,32 @@ struct CefStringTraitsWide {
                                                                    : false;
   }
 #if defined(WCHAR_T_IS_UTF32)
-  static inline std::u16string to_string16(const struct_type* s) {
+  static inline base::string16 to_string16(const struct_type* s) {
     cef_string_utf16_t cstr;
     memset(&cstr, 0, sizeof(cstr));
     cef_string_wide_to_utf16(s->str, s->length, &cstr);
-    std::u16string str;
+    base::string16 str;
     if (cstr.length > 0) {
-      str = std::u16string(
-          reinterpret_cast<std::u16string::value_type*>(cstr.str), cstr.length);
+      str = base::string16(
+          reinterpret_cast<base::string16::value_type*>(cstr.str), cstr.length);
     }
     cef_string_utf16_clear(&cstr);
     return str;
   }
-  static inline bool from_string16(const std::u16string& str, struct_type* s) {
+  static inline bool from_string16(const base::string16& str, struct_type* s) {
     return cef_string_utf16_to_wide(
                reinterpret_cast<const char16*>(str.c_str()), str.length(), s)
                ? true
                : false;
   }
 #else   // WCHAR_T_IS_UTF32
-  static inline std::u16string to_string16(const struct_type* s) {
-    return std::u16string(
-        reinterpret_cast<const std::u16string::value_type*>(s->str), s->length);
+  static inline base::string16 to_string16(const struct_type* s) {
+    return base::string16(
+        reinterpret_cast<const base::string16::value_type*>(s->str), s->length);
   }
-  static inline bool from_string16(const std::u16string& str, struct_type* s) {
-    return cef_string_wide_set(reinterpret_cast<const wchar_t*>(str.c_str()),
-                               str.length(), s, true)
-               ? true
-               : false;
+  static inline bool from_string16(const base::string16& str, struct_type* s) {
+    return cef_string_wide_set(str.c_str(), str.length(), s, true) ? true
+                                                                   : false;
   }
 #endif  // WCHAR_T_IS_UTF32
 };
@@ -170,19 +169,19 @@ struct CefStringTraitsUTF8 {
   static inline bool from_wstring(const std::wstring& str, struct_type* s) {
     return cef_string_wide_to_utf8(str.c_str(), str.length(), s) ? true : false;
   }
-  static inline std::u16string to_string16(const struct_type* s) {
+  static inline base::string16 to_string16(const struct_type* s) {
     cef_string_utf16_t cstr;
     memset(&cstr, 0, sizeof(cstr));
     cef_string_utf8_to_utf16(s->str, s->length, &cstr);
-    std::u16string str;
+    base::string16 str;
     if (cstr.length > 0) {
-      str = std::u16string(
-          reinterpret_cast<std::u16string::value_type*>(cstr.str), cstr.length);
+      str = base::string16(
+          reinterpret_cast<base::string16::value_type*>(cstr.str), cstr.length);
     }
     cef_string_utf16_clear(&cstr);
     return str;
   }
-  static inline bool from_string16(const std::u16string& str, struct_type* s) {
+  static inline bool from_string16(const base::string16& str, struct_type* s) {
     return cef_string_utf16_to_utf8(
                reinterpret_cast<const char16*>(str.c_str()), str.length(), s)
                ? true
@@ -257,11 +256,11 @@ struct CefStringTraitsUTF16 {
                                                                     : false;
   }
 #endif  // WCHAR_T_IS_UTF32
-  static inline std::u16string to_string16(const struct_type* s) {
-    return std::u16string(
-        reinterpret_cast<const std::u16string::value_type*>(s->str), s->length);
+  static inline base::string16 to_string16(const struct_type* s) {
+    return base::string16(
+        reinterpret_cast<const base::string16::value_type*>(s->str), s->length);
   }
-  static inline bool from_string16(const std::u16string& str, struct_type* s) {
+  static inline bool from_string16(const base::string16& str, struct_type* s) {
     return cef_string_utf16_set(reinterpret_cast<const char16*>(str.c_str()),
                                 str.length(), s, true)
                ? true
@@ -342,25 +341,19 @@ class CefStringBase {
       FromWString(std::wstring(src));
   }
 
+#if defined(WCHAR_T_IS_UTF32)
   ///
   // Create a new string from an existing string16. Data will be always
   // copied. Translation will occur if necessary based on the underlying string
   // type.
   ///
-  CefStringBase(const std::u16string& src) : string_(NULL), owner_(false) {
+  CefStringBase(const base::string16& src) : string_(NULL), owner_(false) {
     FromString16(src);
   }
-  CefStringBase(const std::u16string::value_type* src)
-      : string_(NULL), owner_(false) {
-    if (src)
-      FromString16(std::u16string(src));
-  }
-#if defined(WCHAR_T_IS_UTF32)
   CefStringBase(const char16* src) : string_(NULL), owner_(false) {
-    if (src) {
-      FromString16(std::u16string(
-          reinterpret_cast<const std::u16string::value_type*>(src)));
-    }
+    if (src)
+      FromString16(base::string16(
+          reinterpret_cast<const base::string16::value_type*>(src)));
   }
 #endif  // WCHAR_T_IS_UTF32
 
@@ -627,9 +620,9 @@ class CefStringBase {
   // Return this string's data as a string16. Translation will occur if
   // necessary based on the underlying string type.
   ///
-  std::u16string ToString16() const {
+  base::string16 ToString16() const {
     if (empty())
-      return std::u16string();
+      return base::string16();
     return traits::to_string16(string_);
   }
 
@@ -638,7 +631,7 @@ class CefStringBase {
   // copied. Translation will occur if necessary based on the underlying string
   // type.
   ///
-  bool FromString16(const std::u16string& str) {
+  bool FromString16(const base::string16& str) {
     if (str.empty()) {
       clear();
       return true;
@@ -690,19 +683,15 @@ class CefStringBase {
     FromWString(std::wstring(str));
     return *this;
   }
-  operator std::u16string() const { return ToString16(); }
-  CefStringBase& operator=(const std::u16string& str) {
+#if defined(WCHAR_T_IS_UTF32)
+  operator base::string16() const { return ToString16(); }
+  CefStringBase& operator=(const base::string16& str) {
     FromString16(str);
     return *this;
   }
-  CefStringBase& operator=(const std::u16string::value_type* str) {
-    FromString16(std::u16string(str));
-    return *this;
-  }
-#if defined(WCHAR_T_IS_UTF32)
   CefStringBase& operator=(const char16* str) {
-    FromString16(std::u16string(
-        reinterpret_cast<const std::u16string::value_type*>(str)));
+    FromString16(base::string16(
+        reinterpret_cast<const base::string16::value_type*>(str)));
     return *this;
   }
 #endif  // WCHAR_T_IS_UTF32
