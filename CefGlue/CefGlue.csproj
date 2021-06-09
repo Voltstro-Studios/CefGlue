@@ -10,7 +10,7 @@
     <LangVersion>latest</LangVersion>
     <AnalysisMode>Default</AnalysisMode>
 
-    <Version>91.1.6</Version>
+    <Version>90.6.7</Version>
     <IsPackable>true</IsPackable>
   </PropertyGroup>
 
@@ -284,12 +284,6 @@
     <Compile Include="Structs\CefTouchEvent.cs" />
     <Compile Include="Structs\CefUrlParts.cs" />
     <Compile Include="Structs\CefWindowInfo.cs" />
-    <Compile Include="Wrapper\MessageRouter\CefBrowserInfoMap.cs" />
-    <Compile Include="Wrapper\MessageRouter\CefMessageRouterBrowserSide.cs" />
-    <Compile Include="Wrapper\MessageRouter\CefMessageRouterConfig.cs" />
-    <Compile Include="Wrapper\MessageRouter\CefMessageRouterRendererSide.cs" />
-    <Compile Include="Wrapper\MessageRouter\CefMessageRouter.cs" />
-    <Compile Include="Wrapper\MessageRouter\Helpers.cs" />
   </ItemGroup>
 
   <!-- Disabled Sources -->
