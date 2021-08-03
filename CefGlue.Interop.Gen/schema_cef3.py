@@ -15,6 +15,7 @@ classdef = {
     'CefClient': { 'role': ROLE_HANDLER, 'reversible': True },
     'CefDisplayHandler': { 'role': ROLE_HANDLER },
     'CefFrame': { 'role': ROLE_PROXY },
+    'CefFrameHandler': { 'role': ROLE_HANDLER },
     'CefGeolocationCallback': { 'role': ROLE_PROXY },
     'CefGeolocationHandler': { 'role': ROLE_HANDLER },
     'CefLifeSpanHandler': { 'role': ROLE_HANDLER },

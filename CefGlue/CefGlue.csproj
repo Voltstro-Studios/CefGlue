@@ -10,7 +10,7 @@
     <LangVersion>latest</LangVersion>
     <AnalysisMode>Default</AnalysisMode>
 
-    <Version>90.6.7</Version>
+    <Version>92.0.21</Version>
     <IsPackable>true</IsPackable>
   </PropertyGroup>
 
@@ -38,6 +38,7 @@
     <Compile Include="Classes.Handlers\CefExtensionHandler.cs" />
     <Compile Include="Classes.Handlers\CefFindHandler.cs" />
     <Compile Include="Classes.Handlers\CefFocusHandler.cs" />
+    <Compile Include="Classes.Handlers\CefFrameHandler.cs" />
     <Compile Include="Classes.Handlers\CefJSDialogHandler.cs" />
     <Compile Include="Classes.Handlers\CefKeyboardHandler.cs" />
     <Compile Include="Classes.Handlers\CefLifeSpanHandler.cs" />

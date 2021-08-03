@@ -143,6 +143,21 @@
             return null;
         }
 
+        private cef_frame_handler_t* get_frame_handler(cef_client_t* self)
+        {
+            CheckSelf(self);
+
+            var result = GetFrameHandler();
+            return result != null ? result.ToNative() : null;
+        }
+
+        /// <summary>
+        ///     Return the handler for frame events
+        /// </summary>
+        protected virtual CefFrameHandler GetFrameHandler()
+        {
+            return null;
+        }
 
         private cef_jsdialog_handler_t* get_jsdialog_handler(cef_client_t* self)
         {
