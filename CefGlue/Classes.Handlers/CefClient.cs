@@ -1,11 +1,7 @@
-﻿namespace Xilium.CefGlue
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Runtime.InteropServices;
-    using Xilium.CefGlue.Interop;
+﻿using Xilium.CefGlue.Interop;
 
+namespace Xilium.CefGlue
+{
     public abstract unsafe partial class CefClient
     {
         private cef_audio_handler_t* get_audio_handler(cef_client_t* self)
@@ -23,7 +19,6 @@
             return null;
         }
 
-
         private cef_context_menu_handler_t* get_context_menu_handler(cef_client_t* self)
         {
             CheckSelf(self);
@@ -39,7 +34,6 @@
         {
             return null;
         }
-
 
         private cef_dialog_handler_t* get_dialog_handler(cef_client_t* self)
         {
@@ -57,7 +51,6 @@
             return null;
         }
 
-
         private cef_display_handler_t* get_display_handler(cef_client_t* self)
         {
             CheckSelf(self);
@@ -73,7 +66,6 @@
         {
             return null;
         }
-
 
         private cef_download_handler_t* get_download_handler(cef_client_t* self)
         {
@@ -92,7 +84,6 @@
             return null;
         }
 
-
         private cef_drag_handler_t* get_drag_handler(cef_client_t* self)
         {
             CheckSelf(self);
@@ -109,7 +100,6 @@
             return null;
         }
 
-
         private cef_find_handler_t* get_find_handler(cef_client_t* self)
         {
             CheckSelf(self);
@@ -125,7 +115,6 @@
         {
             return null;
         }
-
 
         private cef_focus_handler_t* get_focus_handler(cef_client_t* self)
         {
@@ -152,7 +141,9 @@
         }
 
         /// <summary>
-        ///     Return the handler for frame events
+        ///     Return the handler for events related to CefFrame lifespan. This method
+        ///     will be called once during CefBrowser creation and the result will be
+        ///     cached for performance reasons.
         /// </summary>
         protected virtual CefFrameHandler GetFrameHandler()
         {
@@ -176,7 +167,6 @@
             return null;
         }
 
-
         private cef_keyboard_handler_t* get_keyboard_handler(cef_client_t* self)
         {
             CheckSelf(self);
@@ -192,7 +182,6 @@
         {
             return null;
         }
-
 
         private cef_life_span_handler_t* get_life_span_handler(cef_client_t* self)
         {
@@ -210,7 +199,6 @@
             return null;
         }
 
-
         private cef_load_handler_t* get_load_handler(cef_client_t* self)
         {
             CheckSelf(self);
@@ -226,7 +214,6 @@
         {
             return null;
         }
-
 
         private cef_print_handler_t* get_print_handler(cef_client_t* self)
         {
@@ -244,7 +231,6 @@
             return null;
         }
 
-
         private cef_render_handler_t* get_render_handler(cef_client_t* self)
         {
             CheckSelf(self);
@@ -261,7 +247,6 @@
             return null;
         }
 
-
         private cef_request_handler_t* get_request_handler(cef_client_t* self)
         {
             CheckSelf(self);
@@ -277,7 +262,6 @@
         {
             return null;
         }
-
 
         private int on_process_message_received(cef_client_t* self, cef_browser_t* browser, cef_frame_t* frame, CefProcessId source_process, cef_process_message_t* message)
         {

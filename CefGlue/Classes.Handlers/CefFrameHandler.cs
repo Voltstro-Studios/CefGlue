@@ -2,6 +2,9 @@
 
 namespace Xilium.CefGlue
 {
+    /// <summary>
+    ///     Implement this interface to handle events related to CefFrame life span.
+    /// </summary>
     public abstract unsafe partial class CefFrameHandler
     {
         private void on_frame_created(cef_frame_handler_t* self, cef_browser_t* browser, cef_frame_t* frame)
