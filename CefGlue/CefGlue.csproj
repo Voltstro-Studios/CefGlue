@@ -10,7 +10,7 @@
     <LangVersion>latest</LangVersion>
     <AnalysisMode>Default</AnalysisMode>
 
-    <Version>92.0.21</Version>
+    <Version>93.1.11</Version>
     <IsPackable>true</IsPackable>
   </PropertyGroup>
 
@@ -51,7 +51,6 @@
     <Compile Include="Classes.Handlers\CefPdfPrintCallback.cs" />
     <Compile Include="Classes.Handlers\CefPrintHandler.cs" />
     <Compile Include="Classes.Handlers\CefReadHandler.cs" />
-    <Compile Include="Classes.Handlers\CefRegisterCdmCallback.cs" />
     <Compile Include="Classes.Handlers\CefRenderHandler.cs" />
     <Compile Include="Classes.Handlers\CefRenderProcessHandler.cs" />
     <Compile Include="Classes.Handlers\CefRequestContextHandler.cs" />
