@@ -10,7 +10,7 @@
     <LangVersion>latest</LangVersion>
     <AnalysisMode>Default</AnalysisMode>
 
-    <Version>93.1.11</Version>
+    <Version>94.4.1</Version>
     <IsPackable>true</IsPackable>
   </PropertyGroup>
 
@@ -139,7 +139,6 @@
     <Compile Include="Classes.Proxies\CefXmlReader.cs" />
     <Compile Include="Classes.Proxies\CefZipReader.cs" />
     <Compile Include="Enums\CefAlphaType.cs" />
-    <Compile Include="Enums\CefCdmRegistrationError.cs" />
     <Compile Include="Enums\CefCertStatus.cs" />
     <Compile Include="Enums\CefChannelLayout.cs" />
     <Compile Include="Enums\CefChromeToolbarType.cs" />
