@@ -1,5 +1,6 @@
 # Repository/Project Specific
 /src.g/
+CefGlue.Interop.Gen/*.tmpl/
 
 # Repository/Project Shared
 /bin/
