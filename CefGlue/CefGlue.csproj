@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net5.0;netstandard2.0;net45</TargetFrameworks>
+    <TargetFrameworks>net6.0;netstandard2.1</TargetFrameworks>
 
     <AssemblyName>Xilium.CefGlue</AssemblyName>
     <RootNamespace>Xilium.CefGlue</RootNamespace>
@@ -10,7 +10,7 @@
     <LangVersion>latest</LangVersion>
     <AnalysisMode>Default</AnalysisMode>
 
-    <Version>94.4.9</Version>
+    <Version>95.7.18</Version>
     <IsPackable>true</IsPackable>
   </PropertyGroup>
 
