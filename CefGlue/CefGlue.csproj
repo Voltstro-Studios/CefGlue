@@ -10,7 +10,7 @@
     <LangVersion>latest</LangVersion>
     <AnalysisMode>Default</AnalysisMode>
 
-    <Version>97.1.5</Version>
+    <Version>99.2.6</Version>
     <IsPackable>true</IsPackable>
   </PropertyGroup>
 

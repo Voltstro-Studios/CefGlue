@@ -36,4 +36,5 @@
 #define CEF_INCLUDE_CEF_CONFIG_H_
 
 #define CEF_X11 1
+
 #endif  // CEF_INCLUDE_CEF_CONFIG_H_
