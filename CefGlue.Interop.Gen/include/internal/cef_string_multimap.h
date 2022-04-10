@@ -47,7 +47,7 @@ typedef void* cef_string_multimap_t;
 ///
 // Allocate a new string multimap.
 ///
-CEF_EXPORT cef_string_multimap_t cef_string_multimap_alloc(void);
+CEF_EXPORT cef_string_multimap_t cef_string_multimap_alloc();
 
 ///
 // Return the number of elements in the string multimap.
