@@ -13,6 +13,7 @@ using Xilium.CefGlue.Interop;
 namespace Xilium.CefGlue
 {
     // Role: PROXY
+    #nullable enable
     public sealed unsafe partial class CefXmlReader : IDisposable
     {
         internal static CefXmlReader FromNative(cef_xml_reader_t* ptr)
@@ -20,7 +21,7 @@ namespace Xilium.CefGlue
             return new CefXmlReader(ptr);
         }
         
-        internal static CefXmlReader FromNativeOrNull(cef_xml_reader_t* ptr)
+        internal static CefXmlReader? FromNativeOrNull(cef_xml_reader_t* ptr)
         {
             if (ptr == null) return null;
             return new CefXmlReader(ptr);

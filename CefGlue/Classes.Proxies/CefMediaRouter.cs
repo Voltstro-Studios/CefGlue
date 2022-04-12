@@ -1,6 +1,5 @@
 ﻿using Xilium.CefGlue.Interop;
 
-#nullable enable
 namespace Xilium.CefGlue
 {
     /// <summary>
@@ -38,7 +37,7 @@ namespace Xilium.CefGlue
         /// URN schemes include "cast:" and "dial:", and will be already known by the
         /// client application (e.g. "cast:&lt;appId&gt;?clientId=&lt;clientId&gt;").
         /// </summary>
-        public CefMediaSource GetSource(string urn)
+        public CefMediaSource? GetSource(string urn)
         {
             fixed (char* urn_str = urn)
             {

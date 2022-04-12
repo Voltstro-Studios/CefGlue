@@ -13,6 +13,7 @@ using Xilium.CefGlue.Interop;
 namespace Xilium.CefGlue
 {
     // Role: PROXY
+    #nullable enable
     public sealed unsafe partial class CefGetExtensionResourceCallback : IDisposable
     {
         internal static CefGetExtensionResourceCallback FromNative(cef_get_extension_resource_callback_t* ptr)
@@ -20,7 +21,7 @@ namespace Xilium.CefGlue
             return new CefGetExtensionResourceCallback(ptr);
         }
         
-        internal static CefGetExtensionResourceCallback FromNativeOrNull(cef_get_extension_resource_callback_t* ptr)
+        internal static CefGetExtensionResourceCallback? FromNativeOrNull(cef_get_extension_resource_callback_t* ptr)
         {
             if (ptr == null) return null;
             return new CefGetExtensionResourceCallback(ptr);

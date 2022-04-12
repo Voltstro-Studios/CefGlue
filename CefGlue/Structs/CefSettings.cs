@@ -1,9 +1,9 @@
-﻿namespace Xilium.CefGlue
+﻿using Xilium.CefGlue.Interop;
+
+namespace Xilium.CefGlue
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using Xilium.CefGlue.Interop;
+    // ReSharper disable UnusedAutoPropertyAccessor.Global
+    // ReSharper disable PropertyCanBeMadeInitOnly.Global
 
     /// <summary>
     /// Initialization settings. Specify <c>null</c> or 0 to get the recommended default
@@ -33,7 +33,8 @@
         /// details. If this value is non-empty then it must be an absolute path. Also
         /// configurable using the "browser-subprocess-path" command-line switch.
         /// </summary>
-        public string BrowserSubprocessPath { get; set; }
+        
+        public string? BrowserSubprocessPath { get; set; }
 
         /// <summary>
         /// The path to the CEF framework directory on macOS. If this value is empty
@@ -42,7 +43,7 @@
         /// non-empty then it must be an absolute path. Also configurable using the
         /// "framework-dir-path" command-line switch.
         /// </summary>
-        public string FrameworkDirPath { get; set; }
+        public string? FrameworkDirPath { get; set; }
 
         /// <summary>
         /// The path to the main bundle on macOS. If this value is empty then it
@@ -50,7 +51,7 @@
         /// must be an absolute path. Also configurable using the "main-bundle-path"
         /// command-line switch.
         /// </summary>
-        public string MainBundlePath { get; set; }
+        public string? MainBundlePath { get; set; }
 
         /// <summary>
         /// Set to true to enable use of the Chrome runtime in CEF. This feature is
@@ -77,6 +78,7 @@
         /// recommended for most users; leave this option disabled and use either the
         /// CefRunMessageLoop() function or multi_threaded_message_loop if possible.
         /// </summary>
+       
         public bool ExternalMessagePump { get; set; }
 
         /// <summary>
@@ -106,7 +108,7 @@
         /// the Chrome runtime the "default" profile will be used if |cache_path| and
         /// |root_cache_path| have the same value.
         /// </summary>
-        public string CachePath { get; set; }
+        public string? CachePath { get; set; }
 
         /// <summary>
         /// The root directory that all CefSettings.cache_path and
@@ -117,7 +119,7 @@
         /// result in the sandbox blocking read/write access to the cache_path
         /// directory.
         /// </summary>
-        public string RootCachePath { get; set; }
+        public string? RootCachePath { get; set; }
 
         /// <summary>
         /// The location where user data such as the Widevine CDM module and spell
@@ -129,7 +131,7 @@
         /// non-empty then it must be an absolute path. When using the Chrome runtime
         /// this value will be ignored in favor of the |root_cache_path| value.
         /// </summary>
-        public string UserDataPath { get; set; }
+        public string? UserDataPath { get; set; }
 
         /// <summary>
         /// To persist session cookies (cookies without an expiry date or validity
@@ -158,7 +160,7 @@
         /// default User-Agent string will be used. Also configurable using the
         /// "user-agent" command-line switch.
         /// </summary>
-        public string UserAgent { get; set; }
+        public string? UserAgent { get; set; }
 
         /// <summary>
         /// Value that will be inserted as the product portion of the default
@@ -166,7 +168,7 @@
         /// |userAgent| is specified this value will be ignored. Also configurable
         /// using the "user-agent-product" command-line switch.
         /// </summary>
-        public string UserAgentProduct { get; set; }
+        public string? UserAgentProduct { get; set; }
 
         /// <summary>
         /// The locale string that will be passed to WebKit. If empty the default
@@ -175,7 +177,7 @@
         /// LANGUAGE, LC_ALL, LC_MESSAGES and LANG. Also configurable using the "lang"
         /// command-line switch.
         /// </summary>
-        public string Locale { get; set; }
+        public string? Locale { get; set; }
 
         /// <summary>
         /// The directory and file name to use for the debug log. If empty a default
@@ -185,7 +187,7 @@
         /// is the name of the main app executable. Also configurable using the
         /// "log-file" command-line switch.
         /// </summary>
-        public string LogFile { get; set; }
+        public string? LogFile { get; set; }
 
         /// <summary>
         /// The log severity. Only messages of this severity level or higher will be
@@ -201,7 +203,7 @@
         /// The consequences of using custom flags may not be well tested. Also
         /// configurable using the "js-flags" command-line switch.
         /// </summary>
-        public string JavaScriptFlags { get; set; }
+        public string? JavaScriptFlags { get; set; }
 
         /// <summary>
         /// The fully qualified path for the resources directory. If this value is
@@ -210,7 +212,7 @@
         /// value is non-empty then it must be an absolute path. Also configurable
         /// using the "resources-dir-path" command-line switch.
         /// </summary>
-        public string ResourcesDirPath { get; set; }
+        public string? ResourcesDirPath { get; set; }
 
         /// <summary>
         /// The fully qualified path for the locales directory. If this value is empty
@@ -220,7 +222,7 @@
         /// directory. Also configurable using the "locales-dir-path" command-line
         /// switch.
         /// </summary>
-        public string LocalesDirPath { get; set; }
+        public string? LocalesDirPath { get; set; }
 
         /// <summary>
         /// Set to <c>true</c> to disable loading of pack files for resources and locales.
@@ -280,7 +282,7 @@
         /// for individual CefRequestContext instances via the
         /// CefRequestContextSettings.accept_language_list value.
         /// </summary>
-        public string AcceptLanguageList { get; set; }
+        public string? AcceptLanguageList { get; set; }
 
         /// <summary>
         /// Comma delimited list of schemes supported by the associated
@@ -293,7 +295,7 @@
         /// CefRequestContextSettings.cookieable_schemes_list and
         /// CefRequestContextSettings.cookieable_schemes_exclude_defaults values.
         /// </summary>
-        public string CookieableSchemesList { get; set; }
+        public string? CookieableSchemesList { get; set; }
 
         public bool CookieableSchemesExcludeDefaults { get; set; }
 
@@ -303,7 +305,7 @@
         /// will be an empty string and the file will be treated as an untrusted
         /// file when the GUID is empty.
         /// </summary>
-        public string ApplicationClientIdForFileScanning { get; set; }
+        public string? ApplicationClientIdForFileScanning { get; set; }
 
         internal cef_settings_t* ToNative()
         {
@@ -367,5 +369,8 @@
             Clear(ptr);
             cef_settings_t.Free(ptr);
         }
+        
+        // ReSharper restore PropertyCanBeMadeInitOnly.Global
+        // ReSharper restore UnusedAutoPropertyAccessor.Global
     }
 }

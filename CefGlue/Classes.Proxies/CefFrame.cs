@@ -1,11 +1,8 @@
-﻿namespace Xilium.CefGlue
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Runtime.InteropServices;
-    using Xilium.CefGlue.Interop;
+﻿using System;
+using Xilium.CefGlue.Interop;
 
+namespace Xilium.CefGlue
+{
     /// <summary>
     /// Class used to represent a frame in the browser window. When used in the
     /// browser process the methods of this class may be called on any thread unless
@@ -17,10 +14,7 @@
         /// <summary>
         /// True if this object is currently attached to a valid frame.
         /// </summary>
-        public bool IsValid
-        {
-            get { return cef_frame_t.is_valid(_self) != 0; }
-        }
+        public bool IsValid => cef_frame_t.is_valid(_self) != 0;
 
         /// <summary>
         /// Execute undo in this frame.
@@ -94,7 +88,8 @@
         /// </summary>
         public void GetSource(CefStringVisitor visitor)
         {
-            if (visitor == null) throw new ArgumentNullException("visitor");
+            if (visitor == null) 
+                throw new ArgumentNullException(nameof(visitor));
 
             cef_frame_t.get_source(_self, visitor.ToNative());
         }
@@ -105,7 +100,8 @@
         /// </summary>
         public void GetText(CefStringVisitor visitor)
         {
-            if (visitor == null) throw new ArgumentNullException("visitor");
+            if (visitor == null) 
+                throw new ArgumentNullException(nameof(visitor));
 
             cef_frame_t.get_text(_self, visitor.ToNative());
         }
@@ -118,7 +114,8 @@
         /// </summary>
         public void LoadRequest(CefRequest request)
         {
-            if (request == null) throw new ArgumentNullException("request");
+            if (request == null)
+                throw new ArgumentNullException(nameof(request));
 
             cef_frame_t.load_request(_self, request.ToNative());
         }
@@ -126,11 +123,11 @@
         /// <summary>
         /// Load the specified |url|.
         /// </summary>
-        public void LoadUrl(string url)
+        public void LoadUrl(string? url)
         {
             fixed (char* url_str = url)
             {
-                var n_url = new cef_string_t(url_str, url != null ? url.Length : 0);
+                var n_url = new cef_string_t(url_str, url?.Length ?? 0);
                 cef_frame_t.load_url(_self, &n_url);
             }
         }
@@ -142,13 +139,13 @@
         /// error.  The |start_line| parameter is the base line number to use for error
         /// reporting.
         /// </summary>
-        public void ExecuteJavaScript(string code, string url, int line)
+        public void ExecuteJavaScript(string? code, string? url, int line)
         {
             fixed (char* code_str = code)
             fixed (char* url_str = url)
             {
-                var n_code = new cef_string_t(code_str, code != null ? code.Length : 0);
-                var n_url = new cef_string_t(url_str, url != null ? url.Length : 0);
+                var n_code = new cef_string_t(code_str, code?.Length ?? 0);
+                var n_url = new cef_string_t(url_str, url?.Length ?? 0);
                 cef_frame_t.execute_java_script(_self, &n_code, &n_url, line);
             }
         }
@@ -156,18 +153,12 @@
         /// <summary>
         /// Returns true if this is the main (top-level) frame.
         /// </summary>
-        public bool IsMain
-        {
-            get { return cef_frame_t.is_main(_self) != 0; }
-        }
+        public bool IsMain => cef_frame_t.is_main(_self) != 0;
 
         /// <summary>
         /// Returns true if this is the focused frame.
         /// </summary>
-        public bool IsFocused
-        {
-            get { return cef_frame_t.is_focused(_self) != 0; }
-        }
+        public bool IsFocused => cef_frame_t.is_focused(_self) != 0;
 
         /// <summary>
         /// Returns the name for this frame. If the frame has an assigned name (for
@@ -189,24 +180,13 @@
         /// Returns the globally unique identifier for this frame or &lt; 0 if the
         /// underlying frame does not yet exist.
         /// </summary>
-        public long Identifier
-        {
-            get { return cef_frame_t.get_identifier(_self); }
-        }
+        public long Identifier => cef_frame_t.get_identifier(_self);
 
         /// <summary>
         /// Returns the parent of this frame or NULL if this is the main (top-level)
         /// frame.
         /// </summary>
-        public CefFrame Parent
-        {
-            get
-            {
-                return CefFrame.FromNativeOrNull(
-                    cef_frame_t.get_parent(_self)
-                    );
-            }
-        }
+        public CefFrame? Parent => FromNativeOrNull(cef_frame_t.get_parent(_self));
 
         /// <summary>
         /// Returns the URL currently loaded in this frame.
@@ -223,29 +203,13 @@
         /// <summary>
         /// Returns the browser that this frame belongs to.
         /// </summary>
-        public CefBrowser Browser
-        {
-            get
-            {
-                return CefBrowser.FromNative(
-                    cef_frame_t.get_browser(_self)
-                    );
-            }
-        }
+        public CefBrowser Browser => CefBrowser.FromNative(cef_frame_t.get_browser(_self));
 
         /// <summary>
         /// Get the V8 context associated with the frame. This method can only be
         /// called from the render process.
         /// </summary>
-        public CefV8Context V8Context
-        {
-            get
-            {
-                return CefV8Context.FromNative(
-                    cef_frame_t.get_v8context(_self)
-                    );
-            }
-        }
+        public CefV8Context V8Context => CefV8Context.FromNative(cef_frame_t.get_v8context(_self));
 
         /// <summary>
         /// Visit the DOM document. This method can only be called from the render
@@ -253,7 +217,8 @@
         /// </summary>
         public void VisitDom(CefDomVisitor visitor)
         {
-            if (visitor == null) throw new ArgumentNullException("visitor");
+            if (visitor == null) 
+                throw new ArgumentNullException(nameof(visitor));
 
             cef_frame_t.visit_dom(_self, visitor.ToNative());
         }
@@ -277,7 +242,7 @@
         /// code path instead of the URL request code path).
         /// The |request| object will be marked as read-only after calling this method.
         /// </summary>
-        public CefUrlRequest CreateUrlRequest(CefRequest request, CefUrlRequestClient client = null)
+        public CefUrlRequest? CreateUrlRequest(CefRequest request, CefUrlRequestClient? client = null)
         {
             var n_request = request.ToNative();
             var n_client = client != null ? client.ToNative() : null;
@@ -297,7 +262,8 @@
         /// </summary>
         public void SendProcessMessage(CefProcessId targetProcess, CefProcessMessage message)
         {
-            if (message == null) throw new ArgumentNullException("message");
+            if (message == null) 
+                throw new ArgumentNullException(nameof(message));
 
             cef_frame_t.send_process_message(_self, targetProcess, message.ToNative());
         }

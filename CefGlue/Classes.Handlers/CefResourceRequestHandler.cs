@@ -1,11 +1,7 @@
-﻿namespace Xilium.CefGlue
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Runtime.InteropServices;
-    using Xilium.CefGlue.Interop;
+﻿using Xilium.CefGlue.Interop;
 
+namespace Xilium.CefGlue
+{
     /// <summary>
     /// Implement this interface to handle events related to browser requests. The
     /// methods of this class will be called on the IO thread unless otherwise
@@ -33,7 +29,7 @@
         /// filter cookies for the request return a CefCookieAccessFilter object. The
         /// |request| object cannot not be modified in this callback.
         /// </summary>
-        protected abstract CefCookieAccessFilter GetCookieAccessFilter(CefBrowser browser, CefFrame frame, CefRequest request);
+        protected abstract CefCookieAccessFilter? GetCookieAccessFilter(CefBrowser? browser, CefFrame? frame, CefRequest request);
 
 
         private CefReturnValue on_before_resource_load(cef_resource_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, cef_callback_t* callback)
@@ -49,8 +45,8 @@
 
             if (result != CefReturnValue.ContinueAsync)
             {
-                m_browser.Dispose();
-                m_frame.Dispose();
+                m_browser?.Dispose();
+                m_frame?.Dispose();
                 m_request.Dispose();
                 m_callback.Dispose();
             }
@@ -68,7 +64,7 @@
         /// CefRequestCallback:: Continue() at a later time to continue or cancel the
         /// request asynchronously. Return RV_CANCEL to cancel the request immediately.
         /// </summary>
-        protected virtual CefReturnValue OnBeforeResourceLoad(CefBrowser browser, CefFrame frame, CefRequest request, CefCallback callback)
+        protected virtual CefReturnValue OnBeforeResourceLoad(CefBrowser? browser, CefFrame? frame, CefRequest request, CefCallback callback)
         {
             return CefReturnValue.Continue;
         }
@@ -97,7 +93,7 @@
         /// handler for the resource return a CefResourceHandler object. The |request|
         /// object cannot not be modified in this callback.
         /// </summary>
-        protected virtual CefResourceHandler GetResourceHandler(CefBrowser browser, CefFrame frame, CefRequest request)
+        protected virtual CefResourceHandler? GetResourceHandler(CefBrowser? browser, CefFrame? frame, CefRequest request)
         {
             return null;
         }
@@ -116,7 +112,7 @@
             var o_newUrl = m_newUrl;
             OnResourceRedirect(m_browser, m_frame, m_request, m_response, ref m_newUrl);
 
-            if ((object)m_newUrl != (object)o_newUrl)
+            if (m_newUrl != o_newUrl)
             {
                 cef_string_t.Copy(m_newUrl, new_url);
             }
@@ -132,7 +128,7 @@
         /// changed if desired. The |request| and |response| objects cannot be modified
         /// in this callback.
         /// </summary>
-        protected virtual void OnResourceRedirect(CefBrowser browser, CefFrame frame, CefRequest request, CefResponse response, ref string newUrl)
+        protected virtual void OnResourceRedirect(CefBrowser? browser, CefFrame? frame, CefRequest request, CefResponse response, ref string? newUrl)
         {
         }
 
@@ -163,7 +159,7 @@
         /// WARNING: Redirecting using this method is deprecated. Use
         /// OnBeforeResourceLoad or GetResourceHandler to perform redirects.
         /// </summary>
-        protected virtual bool OnResourceResponse(CefBrowser browser, CefFrame frame, CefRequest request, CefResponse response)
+        protected virtual bool OnResourceResponse(CefBrowser? browser, CefFrame? frame, CefRequest request, CefResponse response)
         {
             return false;
         }
@@ -195,7 +191,7 @@
         /// |request| and |response| represent the request and response respectively
         /// and cannot be modified in this callback.
         /// </summary>
-        protected virtual CefResponseFilter GetResourceResponseFilter(CefBrowser browser, CefFrame frame, CefRequest request, CefResponse response)
+        protected virtual CefResponseFilter? GetResourceResponseFilter(CefBrowser? browser, CefFrame? frame, CefRequest request, CefResponse response)
         {
             return null;
         }
@@ -228,7 +224,8 @@
         /// should be taken not to call |browser| or |frame| methods that modify state
         /// (like LoadURL, SendProcessMessage, etc.) if the frame is invalid.
         /// </summary>
-        protected virtual void OnResourceLoadComplete(CefBrowser browser, CefFrame frame, CefRequest request, CefResponse response, CefUrlRequestStatus status, long receivedContentLength)
+        protected virtual void OnResourceLoadComplete(CefBrowser? browser, CefFrame? frame, CefRequest request,
+            CefResponse response, CefUrlRequestStatus status, long receivedContentLength)
         {
         }
 
@@ -257,7 +254,7 @@
         /// SECURITY WARNING: YOU SHOULD USE THIS METHOD TO ENFORCE RESTRICTIONS BASED
         /// ON SCHEME, HOST OR OTHER URL ANALYSIS BEFORE ALLOWING OS EXECUTION.
         /// </summary>
-        protected virtual void OnProtocolExecution(CefBrowser browser, CefFrame frame, CefRequest request, ref bool allowOSExecution)
+        protected virtual void OnProtocolExecution(CefBrowser? browser, CefFrame? frame, CefRequest request, ref bool allowOSExecution)
         {
         }
     }

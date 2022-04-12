@@ -370,7 +370,7 @@
         /// |selected_text| is the currently selected text and |selected_range| is
         /// the character range.
         /// </summary>
-        protected virtual void OnTextSelectionChanged(CefBrowser browser, string selectedText, CefRange selectedRange) { }
+        protected virtual void OnTextSelectionChanged(CefBrowser browser, string? selectedText, CefRange selectedRange) { }
 
 
         private void on_virtual_keyboard_requested(cef_render_handler_t* self, cef_browser_t* browser, CefTextInputMode input_mode)

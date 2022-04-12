@@ -337,12 +337,15 @@ def make_wrapper_g_file(cls):
             proxyBase = ""
         else:
             raise Exception("Unknown base class type.")
+
+        body.append('#nullable enable')
         body.append(('public sealed unsafe partial class %s' + proxyBase) % schema.cpp2csname(cls.get_name()))
         body.append('{')
         body.append( indent + ('\n' + indent + indent).join( make_proxy_g_body(cls) ) )
         body.append('}')
 
     if schema.is_handler(cls):
+        body.append('#nullable enable')
         body.append('public abstract unsafe partial class %s' % schema.cpp2csname(cls.get_name()))
         body.append('{')
         body.append( indent + ('\n' + indent + indent).join( make_handler_g_body(cls) ) )
@@ -382,7 +385,7 @@ def make_proxy_g_body(cls):
     result.append('}')
     result.append('')
 
-    result.append('internal static %(csname)s FromNativeOrNull(%(iname)s* ptr)' % { 'csname' : csname, 'iname' : iname })
+    result.append('internal static %(csname)s? FromNativeOrNull(%(iname)s* ptr)' % { 'csname' : csname, 'iname' : iname })
     result.append('{')
     result.append(indent + 'if (ptr == null) return null;')
     result.append(indent + 'return new %s(ptr);' % csname)
@@ -499,9 +502,9 @@ def make_handler_g_body(cls):
     result.append('')
 
     if schema.is_reversible(cls):
-        result.append('internal static %s FromNativeOrNull(%s* ptr)' % (csname, iname))
+        result.append('internal static %s? FromNativeOrNull(%s* ptr)' % (csname, iname))
         result.append('{')
-        result.append(indent + '%s value = null;' % csname)
+        result.append(indent + '%s? value = null;' % csname)
         result.append(indent + 'bool found;')
         result.append(indent + 'lock (_roots)')
         result.append(indent + '{')

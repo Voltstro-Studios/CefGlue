@@ -45,7 +45,7 @@
         /// modal or modeless. If a custom dialog is used the application must execute
         /// |callback| once the custom dialog is dismissed.
         /// </summary>
-        protected abstract bool OnJSDialog(CefBrowser browser, string originUrl, CefJSDialogType dialogType, string message_text, string default_prompt_text, CefJSDialogCallback callback, out bool suppress_message);
+        protected abstract bool OnJSDialog(CefBrowser browser, string? originUrl, CefJSDialogType dialogType, string? messageText, string? defaultPromptText, CefJSDialogCallback callback, out bool suppress_message);
 
 
         private int on_before_unload_dialog(cef_jsdialog_handler_t* self, cef_browser_t* browser, cef_string_t* message_text, int is_reload, cef_jsdialog_callback_t* callback)
@@ -67,7 +67,7 @@
         /// dialog is used the application must execute |callback| once the custom
         /// dialog is dismissed.
         /// </summary>
-        protected abstract bool OnBeforeUnloadDialog(CefBrowser browser, string messageText, bool isReload, CefJSDialogCallback callback);
+        protected abstract bool OnBeforeUnloadDialog(CefBrowser browser, string? messageText, bool isReload, CefJSDialogCallback callback);
 
 
         private void on_reset_dialog_state(cef_jsdialog_handler_t* self, cef_browser_t* browser)

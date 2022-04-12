@@ -13,6 +13,7 @@ using Xilium.CefGlue.Interop;
 namespace Xilium.CefGlue
 {
     // Role: PROXY
+    #nullable enable
     public sealed unsafe partial class CefProcessMessage : IDisposable
     {
         internal static CefProcessMessage FromNative(cef_process_message_t* ptr)
@@ -20,7 +21,7 @@ namespace Xilium.CefGlue
             return new CefProcessMessage(ptr);
         }
         
-        internal static CefProcessMessage FromNativeOrNull(cef_process_message_t* ptr)
+        internal static CefProcessMessage? FromNativeOrNull(cef_process_message_t* ptr)
         {
             if (ptr == null) return null;
             return new CefProcessMessage(ptr);

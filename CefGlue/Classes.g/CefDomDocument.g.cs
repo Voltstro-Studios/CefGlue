@@ -13,6 +13,7 @@ using Xilium.CefGlue.Interop;
 namespace Xilium.CefGlue
 {
     // Role: PROXY
+    #nullable enable
     public sealed unsafe partial class CefDomDocument : IDisposable
     {
         internal static CefDomDocument FromNative(cef_domdocument_t* ptr)
@@ -20,7 +21,7 @@ namespace Xilium.CefGlue
             return new CefDomDocument(ptr);
         }
         
-        internal static CefDomDocument FromNativeOrNull(cef_domdocument_t* ptr)
+        internal static CefDomDocument? FromNativeOrNull(cef_domdocument_t* ptr)
         {
             if (ptr == null) return null;
             return new CefDomDocument(ptr);

@@ -1,11 +1,7 @@
-﻿namespace Xilium.CefGlue
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Runtime.InteropServices;
-    using Xilium.CefGlue.Interop;
+﻿using Xilium.CefGlue.Interop;
 
+namespace Xilium.CefGlue
+{
     /// <summary>
     /// Implement this interface to handle dialog events. The methods of this class
     /// will be called on the browser process UI thread.
@@ -42,7 +38,7 @@
         /// dialog return true and execute |callback| either inline or at a later time.
         /// To display the default dialog return false.
         /// </summary>
-        protected virtual bool OnFileDialog(CefBrowser browser, CefFileDialogMode mode, string title, string defaultFilePath, string[] acceptFilters, int selectedAcceptFilter, CefFileDialogCallback callback)
+        protected virtual bool OnFileDialog(CefBrowser browser, CefFileDialogMode mode, string? title, string? defaultFilePath, string[] acceptFilters, int selectedAcceptFilter, CefFileDialogCallback callback)
         {
             return false;
         }

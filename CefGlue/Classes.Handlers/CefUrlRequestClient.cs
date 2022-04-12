@@ -112,7 +112,7 @@
         /// returning false will cancel the request immediately. This method will only
         /// be called for requests initiated from the browser process.
         /// </summary>
-        protected virtual bool GetAuthCredentials(bool isProxy, string host, int port, string realm, string scheme, CefAuthCallback callback)
+        protected virtual bool GetAuthCredentials(bool isProxy, string? host, int port, string? realm, string? scheme, CefAuthCallback callback)
         {
             return false;
         }

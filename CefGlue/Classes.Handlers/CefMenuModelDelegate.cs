@@ -114,15 +114,13 @@
                 cef_string_t.Copy(m_label, label);
                 return 1;
             }
-            else
-            {
-                return 0;
-            }
+
+            return 0;
         }
 
         /// <summary>
         /// Optionally modify a menu item label. Return true if |label| was modified.
         /// </summary>
-        protected abstract bool FormatLabel(CefMenuModel menuModel, ref string label);
+        protected abstract bool FormatLabel(CefMenuModel menuModel, ref string? label);
     }
 }

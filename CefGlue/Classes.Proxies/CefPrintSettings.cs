@@ -91,11 +91,11 @@
         /// <summary>
         /// Set the device name.
         /// </summary>
-        public void SetDeviceName(string name)
+        public void SetDeviceName(string? name)
         {
             fixed (char* name_str = name)
             {
-                var n_name = new cef_string_t(name_str, name != null ? name.Length : 0);
+                var n_name = new cef_string_t(name_str, name?.Length ?? 0);
                 cef_print_settings_t.set_device_name(_self, &n_name);
             }
         }
@@ -103,13 +103,12 @@
         /// <summary>
         /// Get the device name.
         /// </summary>
-        public string DeviceName
+        public string? DeviceName
         {
             get
             {
                 var n_result = cef_print_settings_t.get_device_name(_self);
-                if (n_result == null) return null;
-                return cef_string_userfree.ToString(n_result);
+                return n_result == null ? null : cef_string_userfree.ToString(n_result);
             }
         }
 
@@ -132,14 +131,14 @@
         /// <summary>
         /// Set the page ranges.
         /// </summary>
-        public void SetPageRanges(CefRange[] ranges)
+        public void SetPageRanges(CefRange[]? ranges)
         {
-            var count = ranges != null ? ranges.Length : 0;
+            var count = ranges?.Length ?? 0;
             var n_ranges = new cef_range_t[count];
 
             for (var i = 0; i < count; i++)
             {
-                n_ranges[i].from = ranges[i].From;
+                n_ranges[i].from = ranges![i].From;
                 n_ranges[i].to = ranges[i].To;
             }
 

@@ -104,7 +104,7 @@
         /// contents (URL, method, headers and optional POST data). Call CefServer
         /// methods either synchronously or asynchronusly to send a response.
         /// </summary>
-        protected abstract void OnHttpRequest(CefServer server, int connectionId, string clientAddress, CefRequest request);
+        protected abstract void OnHttpRequest(CefServer server, int connectionId, string? clientAddress, CefRequest request);
 
 
         private void on_web_socket_request(cef_server_handler_t* self, cef_server_t* server, int connection_id, cef_string_t* client_address, cef_request_t* request, cef_callback_t* callback)
@@ -132,7 +132,7 @@
         /// called. Call the CefServer::SendWebSocketMessage method after receiving the
         /// OnWebSocketConnected callback to respond with WebSocket messages.
         /// </summary>
-        protected abstract void OnWebSocketRequest(CefServer server, int connectionId, string clientAddress, CefRequest request, CefCallback callback);
+        protected abstract void OnWebSocketRequest(CefServer server, int connectionId, string? clientAddress, CefRequest request, CefCallback callback);
 
 
         private void on_web_socket_connected(cef_server_handler_t* self, cef_server_t* server, int connection_id)

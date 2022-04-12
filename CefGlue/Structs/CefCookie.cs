@@ -16,25 +16,25 @@
         /// <summary>
         /// The cookie name.
         /// </summary>
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         /// <summary>
         /// The cookie value.
         /// </summary>
-        public string Value { get; set; }
+        public string? Value { get; set; }
 
         /// <summary>
         /// If |domain| is empty a host cookie will be created instead of a domain
         /// cookie. Domain cookies are stored with a leading "." and are visible to
         /// sub-domains whereas host cookies are not.
         /// </summary>
-        public string Domain { get; set; }
+        public string? Domain { get; set; }
 
         /// <summary>
         /// If |path| is non-empty only URLs at or below the path will get the cookie
         /// value.
         /// </summary>
-        public string Path { get; set; }
+        public string? Path { get; set; }
 
         /// <summary>
         /// If |secure| is true the cookie will only be sent for HTTPS requests.

@@ -13,6 +13,7 @@ using Xilium.CefGlue.Interop;
 namespace Xilium.CefGlue
 {
     // Role: HANDLER
+    #nullable enable
     public abstract unsafe partial class CefV8Accessor
     {
         private static Dictionary<IntPtr, CefV8Accessor> _roots = new Dictionary<IntPtr, CefV8Accessor>();

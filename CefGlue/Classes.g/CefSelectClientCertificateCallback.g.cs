@@ -13,6 +13,7 @@ using Xilium.CefGlue.Interop;
 namespace Xilium.CefGlue
 {
     // Role: PROXY
+    #nullable enable
     public sealed unsafe partial class CefSelectClientCertificateCallback : IDisposable
     {
         internal static CefSelectClientCertificateCallback FromNative(cef_select_client_certificate_callback_t* ptr)
@@ -20,7 +21,7 @@ namespace Xilium.CefGlue
             return new CefSelectClientCertificateCallback(ptr);
         }
         
-        internal static CefSelectClientCertificateCallback FromNativeOrNull(cef_select_client_certificate_callback_t* ptr)
+        internal static CefSelectClientCertificateCallback? FromNativeOrNull(cef_select_client_certificate_callback_t* ptr)
         {
             if (ptr == null) return null;
             return new CefSelectClientCertificateCallback(ptr);

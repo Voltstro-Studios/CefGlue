@@ -27,6 +27,6 @@
         /// resulting HTTP status code. |image| is the resulting image, possibly at
         /// multiple scale factors, or empty if the download failed.
         /// </summary>
-        protected abstract void OnDownloadImageFinished(string imageUrl, int httpStatusCode, CefImage image);
+        protected abstract void OnDownloadImageFinished(string? imageUrl, int httpStatusCode, CefImage? image);
     }
 }

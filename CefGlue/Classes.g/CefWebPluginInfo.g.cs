@@ -13,6 +13,7 @@ using Xilium.CefGlue.Interop;
 namespace Xilium.CefGlue
 {
     // Role: PROXY
+    #nullable enable
     public sealed unsafe partial class CefWebPluginInfo : IDisposable
     {
         internal static CefWebPluginInfo FromNative(cef_web_plugin_info_t* ptr)
@@ -20,7 +21,7 @@ namespace Xilium.CefGlue
             return new CefWebPluginInfo(ptr);
         }
         
-        internal static CefWebPluginInfo FromNativeOrNull(cef_web_plugin_info_t* ptr)
+        internal static CefWebPluginInfo? FromNativeOrNull(cef_web_plugin_info_t* ptr)
         {
             if (ptr == null) return null;
             return new CefWebPluginInfo(ptr);

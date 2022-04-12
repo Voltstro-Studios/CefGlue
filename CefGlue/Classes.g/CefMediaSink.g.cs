@@ -13,6 +13,7 @@ using Xilium.CefGlue.Interop;
 namespace Xilium.CefGlue
 {
     // Role: PROXY
+    #nullable enable
     public sealed unsafe partial class CefMediaSink : IDisposable
     {
         internal static CefMediaSink FromNative(cef_media_sink_t* ptr)
@@ -20,7 +21,7 @@ namespace Xilium.CefGlue
             return new CefMediaSink(ptr);
         }
         
-        internal static CefMediaSink FromNativeOrNull(cef_media_sink_t* ptr)
+        internal static CefMediaSink? FromNativeOrNull(cef_media_sink_t* ptr)
         {
             if (ptr == null) return null;
             return new CefMediaSink(ptr);

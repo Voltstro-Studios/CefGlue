@@ -28,6 +28,6 @@
         /// description of the error if the route creation failed. |route| is the
         /// resulting route, or empty if the route creation failed.
         /// </summary>
-        protected abstract void OnMediaRouteCreateFinished(CefMediaRouteCreateResult result, string error, CefMediaRoute route);
+        protected abstract void OnMediaRouteCreateFinished(CefMediaRouteCreateResult result, string? error, CefMediaRoute? route);
     }
 }

@@ -21,17 +21,17 @@
         /// task runners. An empty reference will be returned if this method is called
         /// on an invalid thread.
         /// </summary>
-        public static CefTaskRunner GetForCurrentThread()
+        public static CefTaskRunner? GetForCurrentThread()
         {
-            return CefTaskRunner.FromNativeOrNull(cef_task_runner_t.get_for_current_thread());
+            return FromNativeOrNull(cef_task_runner_t.get_for_current_thread());
         }
 
         /// <summary>
         /// Returns the task runner for the specified CEF thread.
         /// </summary>
-        public static CefTaskRunner GetForThread(CefThreadId threadId)
+        public static CefTaskRunner? GetForThread(CefThreadId threadId)
         {
-            return CefTaskRunner.FromNativeOrNull(cef_task_runner_t.get_for_thread(threadId));
+            return FromNativeOrNull(cef_task_runner_t.get_for_thread(threadId));
         }
 
         /// <summary>

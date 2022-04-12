@@ -13,6 +13,7 @@ using Xilium.CefGlue.Interop;
 namespace Xilium.CefGlue
 {
     // Role: PROXY
+    #nullable enable
     public sealed unsafe partial class CefTaskRunner : IDisposable
     {
         internal static CefTaskRunner FromNative(cef_task_runner_t* ptr)
@@ -20,7 +21,7 @@ namespace Xilium.CefGlue
             return new CefTaskRunner(ptr);
         }
         
-        internal static CefTaskRunner FromNativeOrNull(cef_task_runner_t* ptr)
+        internal static CefTaskRunner? FromNativeOrNull(cef_task_runner_t* ptr)
         {
             if (ptr == null) return null;
             return new CefTaskRunner(ptr);

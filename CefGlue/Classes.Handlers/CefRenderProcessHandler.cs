@@ -79,7 +79,7 @@
         /// <summary>
         /// Return the handler for browser load status events.
         /// </summary>
-        protected virtual CefLoadHandler GetLoadHandler()
+        protected virtual CefLoadHandler? GetLoadHandler()
         {
             return null;
         }
@@ -161,7 +161,7 @@
 
             OnFocusedNodeChanged(m_browser, m_frame, m_node);
 
-            if (m_node != null) m_node.Dispose();
+            m_node?.Dispose();
         }
 
         /// <summary>
@@ -172,7 +172,7 @@
         /// keep references to or attempt to access any DOM objects outside the scope
         /// of this method.
         /// </summary>
-        protected virtual void OnFocusedNodeChanged(CefBrowser browser, CefFrame frame, CefDomNode node)
+        protected virtual void OnFocusedNodeChanged(CefBrowser browser, CefFrame frame, CefDomNode? node)
         {
         }
 

@@ -18,10 +18,8 @@
 
             var m_name = cef_string_t.ToString(name);
             var m_obj = CefV8Value.FromNative(@object);
-            CefV8Value m_returnValue;
-            string mException;
 
-            var handled = Get(m_name, m_obj, out m_returnValue, out mException);
+            var handled = Get(m_name, m_obj, out var m_returnValue, out var mException);
 
             if (handled)
             {
@@ -45,7 +43,7 @@
         /// exception that will be thrown. Return true if accessor retrieval was
         /// handled.
         /// </summary>
-        protected abstract bool Get(string name, CefV8Value obj, out CefV8Value returnValue, out string exception);
+        protected abstract bool Get(string? name, CefV8Value obj, out CefV8Value? returnValue, out string? exception);
 
 
         private int set(cef_v8accessor_t* self, cef_string_t* name, cef_v8value_t* @object, cef_v8value_t* value, cef_string_t* exception)
@@ -55,9 +53,8 @@
             var m_name = cef_string_t.ToString(name);
             var m_obj = CefV8Value.FromNative(@object);
             var m_value = CefV8Value.FromNative(value);
-            string mException;
 
-            var handled = this.Set(m_name, m_obj, m_value, out mException);
+            var handled = Set(m_name, m_obj, m_value, out var mException);
 
             if (handled)
             {
@@ -77,6 +74,6 @@
         /// exception that will be thrown. Return true if accessor assignment was
         /// handled.
         /// </summary>
-        protected abstract bool Set(string name, CefV8Value obj, CefV8Value value, out string exception);
+        protected abstract bool Set(string? name, CefV8Value obj, CefV8Value? value, out string? exception);
     }
 }

@@ -13,6 +13,7 @@ using Xilium.CefGlue.Interop;
 namespace Xilium.CefGlue
 {
     // Role: HANDLER
+    #nullable enable
     public abstract unsafe partial class CefUrlRequestClient
     {
         private static Dictionary<IntPtr, CefUrlRequestClient> _roots = new Dictionary<IntPtr, CefUrlRequestClient>();
@@ -22,9 +23,9 @@ namespace Xilium.CefGlue
         
         protected object SyncRoot { get { return this; } }
         
-        internal static CefUrlRequestClient FromNativeOrNull(cef_urlrequest_client_t* ptr)
+        internal static CefUrlRequestClient? FromNativeOrNull(cef_urlrequest_client_t* ptr)
         {
-            CefUrlRequestClient value = null;
+            CefUrlRequestClient? value = null;
             bool found;
             lock (_roots)
             {

@@ -43,7 +43,11 @@
                 {
                     var n_key = new cef_string_t(key_ptr, key.Length);
 
-                    foreach (var value in collection.GetValues(key))
+                    var values = collection.GetValues(key);
+                    if (values == null)
+                        continue;
+                    
+                    foreach (var value in values)
                     {
                         fixed (char* value_ptr = value)
                         {

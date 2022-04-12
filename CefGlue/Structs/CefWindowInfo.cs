@@ -85,15 +85,15 @@
             return ptr;
         }
 
-        protected internal void ThrowIfDisposed()
+        protected void ThrowIfDisposed()
         {
             if (_disposed) throw ExceptionBuilder.ObjectDisposed();
         }
 
-        public bool Disposed { get { return _disposed; } }
+        public bool Disposed => _disposed;
 
         internal abstract cef_window_info_t* GetNativePointer();
-        protected internal abstract void DisposeNativePointer();
+        protected abstract void DisposeNativePointer();
 
         // Common properties for all platforms
         /// <summary>
@@ -107,7 +107,7 @@
         public abstract IntPtr Handle { get; set; }
 
         // Common properties for windows & macosx
-        public abstract string Name { get; set; }
+        public abstract string? Name { get; set; }
         public abstract int X { get; set; }
         public abstract int Y { get; set; }
         public abstract int Width { get; set; }

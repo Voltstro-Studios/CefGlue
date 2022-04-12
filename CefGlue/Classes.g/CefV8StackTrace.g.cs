@@ -13,6 +13,7 @@ using Xilium.CefGlue.Interop;
 namespace Xilium.CefGlue
 {
     // Role: PROXY
+    #nullable enable
     public sealed unsafe partial class CefV8StackTrace : IDisposable
     {
         internal static CefV8StackTrace FromNative(cef_v8stack_trace_t* ptr)
@@ -20,7 +21,7 @@ namespace Xilium.CefGlue
             return new CefV8StackTrace(ptr);
         }
         
-        internal static CefV8StackTrace FromNativeOrNull(cef_v8stack_trace_t* ptr)
+        internal static CefV8StackTrace? FromNativeOrNull(cef_v8stack_trace_t* ptr)
         {
             if (ptr == null) return null;
             return new CefV8StackTrace(ptr);

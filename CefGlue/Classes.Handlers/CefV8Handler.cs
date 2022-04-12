@@ -12,7 +12,7 @@
     /// </summary>
     public abstract unsafe partial class CefV8Handler
     {
-        private static readonly CefV8Value[] emtpyArgs = new CefV8Value[0];
+        private static readonly CefV8Value[] EmptyArgs = Array.Empty<CefV8Value>();
 
         private int execute(cef_v8handler_t* self, cef_string_t* name, cef_v8value_t* @object, UIntPtr argumentsCount, cef_v8value_t** arguments, cef_v8value_t** retval, cef_string_t* exception)
         {
@@ -22,7 +22,7 @@
             var m_obj = CefV8Value.FromNative(@object);
             var argc = (int)argumentsCount;
             CefV8Value[] m_arguments;
-            if (argc == 0) { m_arguments = emtpyArgs; }
+            if (argc == 0) { m_arguments = EmptyArgs; }
             else
             {
                 m_arguments = new CefV8Value[argc];
@@ -32,10 +32,7 @@
                 }
             }
 
-            CefV8Value m_returnValue;
-            string m_exception;
-
-            var handled = Execute(m_name, m_obj, m_arguments, out m_returnValue, out m_exception);
+            var handled = Execute(m_name, m_obj, m_arguments, out var m_returnValue, out var m_exception);
 
             if (handled)
             {
@@ -59,6 +56,6 @@
         /// function return value. If execution fails set |exception| to the exception
         /// that will be thrown. Return true if execution was handled.
         /// </summary>
-        protected abstract bool Execute(string name, CefV8Value obj, CefV8Value[] arguments, out CefV8Value returnValue, out string exception);
+        protected abstract bool Execute(string? name, CefV8Value obj, CefV8Value[] arguments, out CefV8Value? returnValue, out string? exception);
     }
 }

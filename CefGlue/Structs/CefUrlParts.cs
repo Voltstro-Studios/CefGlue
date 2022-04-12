@@ -1,10 +1,7 @@
-﻿namespace Xilium.CefGlue
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using Xilium.CefGlue.Interop;
+﻿using Xilium.CefGlue.Interop;
 
+namespace Xilium.CefGlue
+{
     /// <summary>
     /// URL component parts.
     /// </summary>
@@ -13,33 +10,33 @@
         /// <summary>
         /// The complete URL specification.
         /// </summary>
-        public string Spec { get; set; }
+        public string? Spec { get; set; }
 
         /// <summary>
         /// Scheme component not including the colon (e.g., "http").
         /// </summary>
-        public string Scheme { get; set; }
+        public string? Scheme { get; set; }
 
         /// <summary>
         /// User name component.
         /// </summary>
-        public string UserName { get; set; }
+        public string? UserName { get; set; }
 
         /// <summary>
         /// Password component.
         /// </summary>
-        public string Password { get; set; }
+        public string? Password { get; set; }
 
         /// <summary>
         /// Host component. This may be a hostname, an IPv4 address or an IPv6 literal
         /// surrounded by square brackets (e.g., "[2001:db8::1]").
         /// </summary>
-        public string Host { get; set; }
+        public string? Host { get; set; }
 
         /// <summary>
         /// Port number component.
         /// </summary>
-        public string Port { get; set; }
+        public string? Port { get; set; }
 
         /// <summary>
         /// Origin contains just the scheme, host, and port from a URL. Equivalent to
@@ -47,36 +44,38 @@
         /// clearing everything after that. This value will be empty for non-standard
         /// URLs.
         /// </summary>
-        public string Origin { get; set; }
+        public string? Origin { get; set; }
 
         /// <summary>
         /// Path component including the first slash following the host.
         /// </summary>
-        public string Path { get; set; }
+        public string? Path { get; set; }
 
         /// <summary>
         /// Query string component (i.e., everything following the '?').
         /// </summary>
-        public string Query { get; set; }
+        public string? Query { get; set; }
 
         /// <summary>
         /// Fragment (hash) identifier component (i.e., the string following the '#').
         /// </summary>
-        public string Fragment { get; set; }
+        public string? Fragment { get; set; }
 
         internal static unsafe CefUrlParts FromNative(cef_urlparts_t* n_parts)
         {
-            var result = new CefUrlParts();
-            result.Spec = cef_string_t.ToString(&n_parts->spec);
-            result.Scheme = cef_string_t.ToString(&n_parts->scheme);
-            result.UserName = cef_string_t.ToString(&n_parts->username);
-            result.Password = cef_string_t.ToString(&n_parts->password);
-            result.Host = cef_string_t.ToString(&n_parts->host);
-            result.Port = cef_string_t.ToString(&n_parts->port);
-            result.Origin = cef_string_t.ToString(&n_parts->origin);
-            result.Path = cef_string_t.ToString(&n_parts->path);
-            result.Query = cef_string_t.ToString(&n_parts->query);
-            result.Fragment = cef_string_t.ToString(&n_parts->fragment);
+            var result = new CefUrlParts
+            {
+                Spec = cef_string_t.ToString(&n_parts->spec),
+                Scheme = cef_string_t.ToString(&n_parts->scheme),
+                UserName = cef_string_t.ToString(&n_parts->username),
+                Password = cef_string_t.ToString(&n_parts->password),
+                Host = cef_string_t.ToString(&n_parts->host),
+                Port = cef_string_t.ToString(&n_parts->port),
+                Origin = cef_string_t.ToString(&n_parts->origin),
+                Path = cef_string_t.ToString(&n_parts->path),
+                Query = cef_string_t.ToString(&n_parts->query),
+                Fragment = cef_string_t.ToString(&n_parts->fragment)
+            };
             return result;
         }
 

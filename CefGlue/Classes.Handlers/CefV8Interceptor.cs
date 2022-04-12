@@ -23,18 +23,14 @@
             var m_name = cef_string_t.ToString(name);
             var m_obj = CefV8Value.FromNative(@object);
 
-            CefV8Value m_retval;
-            string m_exception;
-            if (GetByName(m_name, m_obj, out m_retval, out m_exception))
+            if (GetByName(m_name, m_obj, out var m_retval, out var m_exception))
             {
                 *retval = m_retval != null ? m_retval.ToNative() : null;
                 cef_string_t.Copy(m_exception, exception);
                 return 1;
             }
-            else
-            {
-                return 0;
-            }
+            
+            return 0;
         }
 
         /// <summary>
@@ -46,7 +42,7 @@
         /// accessor, it will be called only if you don't set |retval|.
         /// Return true if interceptor retrieval was handled, false otherwise.
         /// </summary>
-        protected virtual bool GetByName(string name, CefV8Value @object, out CefV8Value retval, out string exception)
+        protected virtual bool GetByName(string? name, CefV8Value @object, out CefV8Value? retval, out string? exception)
         {
             retval = null;
             exception = null;
@@ -60,18 +56,14 @@
 
             var m_obj = CefV8Value.FromNative(@object);
 
-            CefV8Value m_retval;
-            string m_exception;
-            if (GetByIndex(index, m_obj, out m_retval, out m_exception))
+            if (GetByIndex(index, m_obj, out var m_retval, out var m_exception))
             {
                 *retval = m_retval != null ? m_retval.ToNative() : null;
                 cef_string_t.Copy(m_exception, exception);
                 return 1;
             }
-            else
-            {
-                return 0;
-            }
+            
+            return 0;
         }
 
         /// <summary>
@@ -82,7 +74,7 @@
         /// |exception| to the exception that will be thrown.
         /// Return true if interceptor retrieval was handled, false otherwise.
         /// </summary>
-        protected virtual bool GetByIndex(int index, CefV8Value @object, out CefV8Value retval, out string exception)
+        protected virtual bool GetByIndex(int index, CefV8Value @object, out CefV8Value? retval, out string? exception)
         {
             retval = null;
             exception = null;
@@ -98,16 +90,13 @@
             var m_obj = CefV8Value.FromNative(@object);
             var m_value = CefV8Value.FromNative(value);
 
-            string m_exception;
-            if (SetByName(m_name, m_obj, m_value, out m_exception))
+            if (SetByName(m_name, m_obj, m_value, out var m_exception))
             {
                 cef_string_t.Copy(m_exception, exception);
                 return 1;
             }
-            else
-            {
-                return 0;
-            }
+            
+            return 0;
         }
 
         /// <summary>
@@ -118,7 +107,7 @@
         /// be called, even when the property has an associated accessor.
         /// Return true if interceptor assignment was handled, false otherwise.
         /// </summary>
-        protected virtual bool SetByName(string name, CefV8Value @object, CefV8Value value, out string exception)
+        protected virtual bool SetByName(string? name, CefV8Value @object, CefV8Value value, out string? exception)
         {
             exception = null;
             return false;
@@ -132,8 +121,7 @@
             var m_obj = CefV8Value.FromNative(@object);
             var m_value = CefV8Value.FromNative(value);
 
-            string m_exception;
-            if (SetByIndex(index, m_obj, m_value, out m_exception))
+            if (SetByIndex(index, m_obj, m_value, out var m_exception))
             {
                 cef_string_t.Copy(m_exception, exception);
                 return 1;
@@ -151,7 +139,7 @@
         /// |exception| to the exception that will be thrown.
         /// Return true if interceptor assignment was handled, false otherwise.
         /// </summary>
-        protected virtual bool SetByIndex(int index, CefV8Value @object, CefV8Value value, out string exception)
+        protected virtual bool SetByIndex(int index, CefV8Value @object, CefV8Value value, out string? exception)
         {
             exception = null;
             return false;

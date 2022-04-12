@@ -1,11 +1,7 @@
-﻿namespace Xilium.CefGlue
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Runtime.InteropServices;
-    using Xilium.CefGlue.Interop;
+﻿using Xilium.CefGlue.Interop;
 
+namespace Xilium.CefGlue
+{
     /// <summary>
     /// Class used to implement browser process callbacks. The methods of this class
     /// will be called on the browser process main thread unless otherwise indicated.
@@ -27,7 +23,6 @@
         {
         }
 
-
         private void on_before_child_process_launch(cef_browser_process_handler_t* self, cef_command_line_t* command_line)
         {
             CheckSelf(self);
@@ -47,8 +42,7 @@
         protected virtual void OnBeforeChildProcessLaunch(CefCommandLine commandLine)
         {
         }
-
-
+        
         private void on_schedule_message_pump_work(cef_browser_process_handler_t* self, long delay_ms)
         {
             CheckSelf(self);
@@ -70,7 +64,6 @@
         /// </summary>
         protected virtual void OnScheduleMessagePumpWork(long delayMs) { }
 
-
         private cef_client_t* get_default_client(cef_browser_process_handler_t* self)
         {
             CheckSelf(self);
@@ -87,6 +80,6 @@
         /// the browser window is closed manually. This method is currently only used
         /// with the chrome runtime.
         /// </summary>
-        protected virtual CefClient GetDefaultClient() => null;
+        protected virtual CefClient? GetDefaultClient() => null;
     }
 }

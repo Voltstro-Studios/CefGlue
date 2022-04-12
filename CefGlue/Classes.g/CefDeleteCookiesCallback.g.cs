@@ -13,6 +13,7 @@ using Xilium.CefGlue.Interop;
 namespace Xilium.CefGlue
 {
     // Role: HANDLER
+    #nullable enable
     public abstract unsafe partial class CefDeleteCookiesCallback
     {
         private static Dictionary<IntPtr, CefDeleteCookiesCallback> _roots = new Dictionary<IntPtr, CefDeleteCookiesCallback>();

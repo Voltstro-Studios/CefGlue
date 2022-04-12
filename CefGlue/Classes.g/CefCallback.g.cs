@@ -13,6 +13,7 @@ using Xilium.CefGlue.Interop;
 namespace Xilium.CefGlue
 {
     // Role: PROXY
+    #nullable enable
     public sealed unsafe partial class CefCallback : IDisposable
     {
         internal static CefCallback FromNative(cef_callback_t* ptr)
@@ -20,7 +21,7 @@ namespace Xilium.CefGlue
             return new CefCallback(ptr);
         }
         
-        internal static CefCallback FromNativeOrNull(cef_callback_t* ptr)
+        internal static CefCallback? FromNativeOrNull(cef_callback_t* ptr)
         {
             if (ptr == null) return null;
             return new CefCallback(ptr);

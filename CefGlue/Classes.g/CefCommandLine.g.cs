@@ -13,6 +13,7 @@ using Xilium.CefGlue.Interop;
 namespace Xilium.CefGlue
 {
     // Role: PROXY
+    #nullable enable
     public sealed unsafe partial class CefCommandLine : IDisposable
     {
         internal static CefCommandLine FromNative(cef_command_line_t* ptr)
@@ -20,7 +21,7 @@ namespace Xilium.CefGlue
             return new CefCommandLine(ptr);
         }
         
-        internal static CefCommandLine FromNativeOrNull(cef_command_line_t* ptr)
+        internal static CefCommandLine? FromNativeOrNull(cef_command_line_t* ptr)
         {
             if (ptr == null) return null;
             return new CefCommandLine(ptr);

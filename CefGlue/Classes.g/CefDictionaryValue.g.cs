@@ -13,6 +13,7 @@ using Xilium.CefGlue.Interop;
 namespace Xilium.CefGlue
 {
     // Role: PROXY
+    #nullable enable
     public sealed unsafe partial class CefDictionaryValue : IDisposable
     {
         internal static CefDictionaryValue FromNative(cef_dictionary_value_t* ptr)
@@ -20,7 +21,7 @@ namespace Xilium.CefGlue
             return new CefDictionaryValue(ptr);
         }
         
-        internal static CefDictionaryValue FromNativeOrNull(cef_dictionary_value_t* ptr)
+        internal static CefDictionaryValue? FromNativeOrNull(cef_dictionary_value_t* ptr)
         {
             if (ptr == null) return null;
             return new CefDictionaryValue(ptr);

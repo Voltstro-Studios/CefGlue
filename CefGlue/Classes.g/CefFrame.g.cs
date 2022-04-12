@@ -13,6 +13,7 @@ using Xilium.CefGlue.Interop;
 namespace Xilium.CefGlue
 {
     // Role: PROXY
+    #nullable enable
     public sealed unsafe partial class CefFrame : IDisposable
     {
         internal static CefFrame FromNative(cef_frame_t* ptr)
@@ -20,7 +21,7 @@ namespace Xilium.CefGlue
             return new CefFrame(ptr);
         }
         
-        internal static CefFrame FromNativeOrNull(cef_frame_t* ptr)
+        internal static CefFrame? FromNativeOrNull(cef_frame_t* ptr)
         {
             if (ptr == null) return null;
             return new CefFrame(ptr);

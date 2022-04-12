@@ -1,11 +1,7 @@
-﻿namespace Xilium.CefGlue
+﻿using Xilium.CefGlue.Interop;
+
+namespace Xilium.CefGlue
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Runtime.InteropServices;
-    using Xilium.CefGlue.Interop;
-    
     /// <summary>
     /// Implement this interface to handle events related to browser extensions.
     /// The methods of this class will be called on the UI thread. See
@@ -24,8 +20,9 @@
         /// Called if the CefRequestContext::LoadExtension request fails. |result| will
         /// be the error code.
         /// </summary>
-        protected virtual void OnExtensionLoadFailed(CefErrorCode result) { }
-
+        protected virtual void OnExtensionLoadFailed(CefErrorCode result)
+        {
+        }
 
         private void on_extension_loaded(cef_extension_handler_t* self, cef_extension_t* extension)
         {
@@ -39,8 +36,9 @@
         /// Called if the CefRequestContext::LoadExtension request succeeds.
         /// |extension| is the loaded extension.
         /// </summary>
-        protected virtual void OnExtensionLoaded(CefExtension extension) { }
-
+        protected virtual void OnExtensionLoaded(CefExtension extension)
+        {
+        }
 
         private void on_extension_unloaded(cef_extension_handler_t* self, cef_extension_t* extension)
         {
@@ -53,10 +51,12 @@
         /// <summary>
         /// Called after the CefExtension::Unload request has completed.
         /// </summary>
-        protected virtual void OnExtensionUnloaded(CefExtension extension) { }
+        protected virtual void OnExtensionUnloaded(CefExtension extension)
+        {
+        }
 
-
-        private int on_before_background_browser(cef_extension_handler_t* self, cef_extension_t* extension, cef_string_t* url, cef_client_t** client, cef_browser_settings_t* settings)
+        private int on_before_background_browser(cef_extension_handler_t* self, cef_extension_t* extension, 
+            cef_string_t* url, cef_client_t** client, cef_browser_settings_t* settings)
         {
             CheckSelf(self);
 
@@ -68,7 +68,7 @@
             var o_client = m_client;
             var cancel = OnBeforeBackgroundBrowser(m_extension, m_url, ref m_client, m_settings);
 
-            if (!cancel && ((object)o_client != m_client && m_client != null))
+            if (!cancel && o_client != m_client && m_client != null)
             {
                 *client = m_client.ToNative();
             }
@@ -93,13 +93,14 @@
         /// https://developer.chrome.com/extensions/event_pages for more information
         /// about extension background script usage.
         /// </summary>
-        protected virtual bool OnBeforeBackgroundBrowser(CefExtension extension, string url, ref CefClient client, CefBrowserSettings settings)
+        protected virtual bool OnBeforeBackgroundBrowser(CefExtension extension, string? url, ref CefClient? client, CefBrowserSettings settings)
         {
             return false;
         }
-
-
-        private int on_before_browser(cef_extension_handler_t* self, cef_extension_t* extension, cef_browser_t* browser, cef_browser_t* active_browser, int index, cef_string_t* url, int active, cef_window_info_t* windowInfo, cef_client_t** client, cef_browser_settings_t* settings)
+        
+        private int on_before_browser(cef_extension_handler_t* self, cef_extension_t* extension, cef_browser_t* browser, 
+            cef_browser_t* active_browser, int index, cef_string_t* url, int active, cef_window_info_t* windowInfo, 
+            cef_client_t** client, cef_browser_settings_t* settings)
         {
             CheckSelf(self);
 
@@ -115,7 +116,7 @@
             var o_client = m_client;
             var cancel = OnBeforeBrowser(m_extension, m_browser, m_activeBrowser, index, m_url, m_active, m_windowInfo, ref m_client, m_settings);
 
-            if (!cancel && ((object)o_client != m_client && m_client != null))
+            if (!cancel && o_client != m_client && m_client != null)
             {
                 *client = m_client.ToNative();
             }
@@ -141,7 +142,8 @@
         /// to CefLifeSpanHandler::OnAfterCreated. Any modifications to |windowInfo|
         /// will be ignored if |active_browser| is wrapped in a CefBrowserView.
         /// </summary>
-        protected virtual bool OnBeforeBrowser(CefExtension extension, CefBrowser browser, CefBrowser activeBrowser, int index, string url, bool active, CefWindowInfo windowInfo, ref CefClient client, CefBrowserSettings settings)
+        protected virtual bool OnBeforeBrowser(CefExtension extension, CefBrowser? browser, CefBrowser? activeBrowser, 
+            int index, string? url, bool active, CefWindowInfo windowInfo, ref CefClient? client, CefBrowserSettings settings)
         {
             return false;
         }
@@ -169,13 +171,14 @@
         /// considered unless the source extension has incognito access enabled, in
         /// which case |include_incognito| will be true.
         /// </summary>
-        protected virtual CefBrowser GetActiveBrowser(CefExtension extension, CefBrowser browser, bool includeIncognito)
+        protected virtual CefBrowser? GetActiveBrowser(CefExtension extension, CefBrowser browser, bool includeIncognito)
         {
             return null;
         }
 
 
-        private int can_access_browser(cef_extension_handler_t* self, cef_extension_t* extension, cef_browser_t* browser, int include_incognito, cef_browser_t* target_browser)
+        private int can_access_browser(cef_extension_handler_t* self, cef_extension_t* extension, cef_browser_t* browser,
+            int include_incognito, cef_browser_t* target_browser)
         {
             CheckSelf(self);
 
@@ -197,7 +200,7 @@
         /// should not be allowed unless the source extension has incognito access
         /// enabled, in which case |include_incognito| will be true.
         /// </summary>
-        protected virtual bool CanAccessBrowser(CefExtension extension, CefBrowser browser, bool includeIncognito, CefBrowser targetBrowser)
+        protected virtual bool CanAccessBrowser(CefExtension extension, CefBrowser? browser, bool includeIncognito, CefBrowser? targetBrowser)
         {
             return true;
         }
@@ -216,7 +219,7 @@
 
             if (!handled)
             {
-                m_callback.Dispose();
+                m_callback?.Dispose();
             }
 
             return handled ? 1 : 0;
@@ -232,7 +235,7 @@
         /// disk return false. Localization substitutions will not be applied to
         /// resources handled via this method.
         /// </summary>
-        protected virtual bool GetExtensionResource(CefExtension extension, CefBrowser browser, string file, CefGetExtensionResourceCallback callback)
+        protected virtual bool GetExtensionResource(CefExtension extension, CefBrowser? browser, string? file, CefGetExtensionResourceCallback? callback)
         {
             return false;
         }

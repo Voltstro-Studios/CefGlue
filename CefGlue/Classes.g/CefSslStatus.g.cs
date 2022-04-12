@@ -13,6 +13,7 @@ using Xilium.CefGlue.Interop;
 namespace Xilium.CefGlue
 {
     // Role: PROXY
+    #nullable enable
     public sealed unsafe partial class CefSslStatus : IDisposable
     {
         internal static CefSslStatus FromNative(cef_sslstatus_t* ptr)
@@ -20,7 +21,7 @@ namespace Xilium.CefGlue
             return new CefSslStatus(ptr);
         }
         
-        internal static CefSslStatus FromNativeOrNull(cef_sslstatus_t* ptr)
+        internal static CefSslStatus? FromNativeOrNull(cef_sslstatus_t* ptr)
         {
             if (ptr == null) return null;
             return new CefSslStatus(ptr);

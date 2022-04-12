@@ -13,6 +13,7 @@ using Xilium.CefGlue.Interop;
 namespace Xilium.CefGlue
 {
     // Role: PROXY
+    #nullable enable
     public sealed unsafe partial class CefV8Exception : IDisposable
     {
         internal static CefV8Exception FromNative(cef_v8exception_t* ptr)
@@ -20,7 +21,7 @@ namespace Xilium.CefGlue
             return new CefV8Exception(ptr);
         }
         
-        internal static CefV8Exception FromNativeOrNull(cef_v8exception_t* ptr)
+        internal static CefV8Exception? FromNativeOrNull(cef_v8exception_t* ptr)
         {
             if (ptr == null) return null;
             return new CefV8Exception(ptr);

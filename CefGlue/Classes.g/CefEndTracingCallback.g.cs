@@ -13,6 +13,7 @@ using Xilium.CefGlue.Interop;
 namespace Xilium.CefGlue
 {
     // Role: HANDLER
+    #nullable enable
     public abstract unsafe partial class CefEndTracingCallback
     {
         private static Dictionary<IntPtr, CefEndTracingCallback> _roots = new Dictionary<IntPtr, CefEndTracingCallback>();

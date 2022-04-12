@@ -10,13 +10,13 @@
         /// Page title to display in the header. Only used if |header_footer_enabled|
         /// is set to true (1).
         /// </summary>
-        public string HeaderFooterTitle { get; set; }
+        public string? HeaderFooterTitle { get; set; }
 
         /// <summary>
         /// URL to display in the footer. Only used if |header_footer_enabled| is set
         /// to true (1).
         /// </summary>
-        public string HeaderFooterUrl { get; set; }
+        public string? HeaderFooterUrl { get; set; }
 
         /// <summary>
         /// Output page size in microns. If either of these values is less than or

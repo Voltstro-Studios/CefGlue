@@ -13,6 +13,7 @@ using Xilium.CefGlue.Interop;
 namespace Xilium.CefGlue
 {
     // Role: PROXY
+    #nullable enable
     public sealed unsafe partial class CefPostDataElement : IDisposable
     {
         internal static CefPostDataElement FromNative(cef_post_data_element_t* ptr)
@@ -20,7 +21,7 @@ namespace Xilium.CefGlue
             return new CefPostDataElement(ptr);
         }
         
-        internal static CefPostDataElement FromNativeOrNull(cef_post_data_element_t* ptr)
+        internal static CefPostDataElement? FromNativeOrNull(cef_post_data_element_t* ptr)
         {
             if (ptr == null) return null;
             return new CefPostDataElement(ptr);

@@ -28,9 +28,9 @@
         /// - If |request_context| is empty the global request context will be used.
         /// The |request| object will be marked as read-only after calling this method.
         /// </summary>
-        public static CefUrlRequest Create(CefRequest request, CefUrlRequestClient client, CefRequestContext requestContext)
+        public static CefUrlRequest Create(CefRequest request, CefUrlRequestClient? client, CefRequestContext? requestContext)
         {
-            if (request == null) throw new ArgumentNullException("request");
+            if (request == null) throw new ArgumentNullException(nameof(request));
 
             var n_request = request.ToNative();
             var n_client = client != null ? client.ToNative() : null;
@@ -65,43 +65,30 @@
         /// <summary>
         /// Returns the request status.
         /// </summary>
-        public CefUrlRequestStatus RequestStatus
-        {
-            get { return cef_urlrequest_t.get_request_status(_self); }
-        }
+        public CefUrlRequestStatus RequestStatus => cef_urlrequest_t.get_request_status(_self);
 
         /// <summary>
         /// Returns the request error if status is UR_CANCELED or UR_FAILED, or 0
         /// otherwise.
         /// </summary>
-        public CefErrorCode RequestError
-        {
-            get { return cef_urlrequest_t.get_request_error(_self); }
-        }
+        public CefErrorCode RequestError => cef_urlrequest_t.get_request_error(_self);
 
         /// <summary>
         /// Returns the response, or NULL if no response information is available.
         /// Response information will only be available after the upload has completed.
         /// The returned object is read-only and should not be modified.
         /// </summary>
-        public CefResponse GetResponse()
+        public CefResponse? GetResponse()
         {
             return CefResponse.FromNativeOrNull(
-                cef_urlrequest_t.get_response(_self)
-                );
+                cef_urlrequest_t.get_response(_self));
         }
 
         /// <summary>
         /// Returns true if the response body was served from the cache. This includes
         /// responses for which revalidation was required.
         /// </summary>
-        public bool ResponseWasCached
-        {
-            get
-            {
-                return cef_urlrequest_t.response_was_cached(_self) != 0;
-            }
-        }
+        public bool ResponseWasCached => cef_urlrequest_t.response_was_cached(_self) != 0;
 
         /// <summary>
         /// Cancel the request.

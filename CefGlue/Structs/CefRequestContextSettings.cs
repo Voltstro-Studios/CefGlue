@@ -21,7 +21,7 @@
         /// cache path is specified. To share the global browser cache and related
         /// configuration set this value to match the CefSettings.cache_path value.
         /// </summary>
-        public string CachePath { get; set; }
+        public string? CachePath { get; set; }
 
         /// <summary>
         /// To persist session cookies (cookies without an expiry date or validity
@@ -59,7 +59,7 @@
         /// all values are empty then "en-US,en" will be used. This value will be
         /// ignored if |cache_path| matches the CefSettings.cache_path value.
         /// </summary>
-        public string AcceptLanguageList { get; set; }
+        public string? AcceptLanguageList { get; set; }
 
         /// <summary>
         /// Comma delimited list of schemes supported by the associated
@@ -70,7 +70,7 @@
         /// and saving of cookies for this manager. These values will be ignored if
         /// |cache_path| matches the CefSettings.cache_path value.
         /// </summary>
-        public string CookieableSchemesList { get; set; }
+        public string? CookieableSchemesList { get; set; }
 
         public bool CookieableSchemesExcludeDefaults { get; set; }
 

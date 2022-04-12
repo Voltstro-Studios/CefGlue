@@ -13,6 +13,7 @@ using Xilium.CefGlue.Interop;
 namespace Xilium.CefGlue
 {
     // Role: PROXY
+    #nullable enable
     public sealed unsafe partial class CefPrintSettings : IDisposable
     {
         internal static CefPrintSettings FromNative(cef_print_settings_t* ptr)
@@ -20,7 +21,7 @@ namespace Xilium.CefGlue
             return new CefPrintSettings(ptr);
         }
         
-        internal static CefPrintSettings FromNativeOrNull(cef_print_settings_t* ptr)
+        internal static CefPrintSettings? FromNativeOrNull(cef_print_settings_t* ptr)
         {
             if (ptr == null) return null;
             return new CefPrintSettings(ptr);

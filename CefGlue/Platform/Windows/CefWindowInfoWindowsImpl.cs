@@ -31,7 +31,7 @@
             return (cef_window_info_t*)_self;
         }
 
-        protected internal override void DisposeNativePointer()
+        protected override void DisposeNativePointer()
         {
             cef_window_info_t_windows.Free(_self);
             _self = null;
@@ -49,7 +49,7 @@
             set { ThrowIfDisposed(); _self->window = value; }
         }
 
-        public override string Name
+        public override string? Name
         {
             get { ThrowIfDisposed(); return cef_string_t.ToString(&_self->window_name); }
             set { ThrowIfDisposed(); cef_string_t.Copy(value, &_self->window_name); }

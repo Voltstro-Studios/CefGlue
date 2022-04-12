@@ -1,11 +1,7 @@
-﻿namespace Xilium.CefGlue
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Runtime.InteropServices;
-    using Xilium.CefGlue.Interop;
+﻿using Xilium.CefGlue.Interop;
 
+namespace Xilium.CefGlue
+{
     /// <summary>
     /// Class used to handle file downloads. The methods of this class will called
     /// on the browser process UI thread.
@@ -33,7 +29,7 @@
         /// if desired. Do not keep a reference to |download_item| outside of this
         /// method.
         /// </summary>
-        protected virtual void OnBeforeDownload(CefBrowser browser, CefDownloadItem downloadItem, string suggestedName, CefBeforeDownloadCallback callback)
+        protected virtual void OnBeforeDownload(CefBrowser browser, CefDownloadItem downloadItem, string? suggestedName, CefBeforeDownloadCallback callback)
         {
         }
 

@@ -13,6 +13,7 @@ using Xilium.CefGlue.Interop;
 namespace Xilium.CefGlue
 {
     // Role: PROXY
+    #nullable enable
     public sealed unsafe partial class CefDragData : IDisposable
     {
         internal static CefDragData FromNative(cef_drag_data_t* ptr)
@@ -20,7 +21,7 @@ namespace Xilium.CefGlue
             return new CefDragData(ptr);
         }
         
-        internal static CefDragData FromNativeOrNull(cef_drag_data_t* ptr)
+        internal static CefDragData? FromNativeOrNull(cef_drag_data_t* ptr)
         {
             if (ptr == null) return null;
             return new CefDragData(ptr);

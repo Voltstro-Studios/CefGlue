@@ -13,6 +13,7 @@ using Xilium.CefGlue.Interop;
 namespace Xilium.CefGlue
 {
     // Role: PROXY
+    #nullable enable
     public sealed unsafe partial class CefDownloadItemCallback : IDisposable
     {
         internal static CefDownloadItemCallback FromNative(cef_download_item_callback_t* ptr)
@@ -20,7 +21,7 @@ namespace Xilium.CefGlue
             return new CefDownloadItemCallback(ptr);
         }
         
-        internal static CefDownloadItemCallback FromNativeOrNull(cef_download_item_callback_t* ptr)
+        internal static CefDownloadItemCallback? FromNativeOrNull(cef_download_item_callback_t* ptr)
         {
             if (ptr == null) return null;
             return new CefDownloadItemCallback(ptr);

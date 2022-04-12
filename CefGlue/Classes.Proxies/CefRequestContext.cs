@@ -94,10 +94,9 @@ namespace Xilium.CefGlue
         /// <summary>
         /// Returns the handler for this context if any.
         /// </summary>
-        public CefRequestContextHandler GetHandler()
+        public CefRequestContextHandler? GetHandler()
         {
-            return CefRequestContextHandler.FromNativeOrNull(
-                cef_request_context_t.get_handler(_self));
+            return CefRequestContextHandler.FromNativeOrNull(cef_request_context_t.get_handler(_self));
         }
 
         /// <summary>
@@ -118,13 +117,11 @@ namespace Xilium.CefGlue
         /// will be executed asnychronously on the UI thread after the manager's
         /// storage has been initialized.
         /// </summary>
-        public CefCookieManager GetCookieManager(CefCompletionCallback? callback)
+        public CefCookieManager? GetCookieManager(CefCompletionCallback? callback)
         {
             var n_callback = callback != null ? callback.ToNative() : null;
 
-            return CefCookieManager.FromNativeOrNull(
-                cef_request_context_t.get_cookie_manager(_self, n_callback)
-                );
+            return CefCookieManager.FromNativeOrNull(cef_request_context_t.get_cookie_manager(_self, n_callback));
         }
 
         /// <summary>
@@ -186,7 +183,7 @@ namespace Xilium.CefGlue
         /// will not modify the underlying preference value. This method must be called
         /// on the browser process UI thread.
         /// </summary>
-        public CefValue GetPreference(string? name)
+        public CefValue? GetPreference(string? name)
         {
             fixed (char* name_str = name)
             {
@@ -232,7 +229,7 @@ namespace Xilium.CefGlue
         /// fails then |error| will be populated with a detailed description of the
         /// problem. This method must be called on the browser process UI thread.
         /// </summary>
-        public bool SetPreference(string? name, CefValue? value, out string error)
+        public bool SetPreference(string? name, CefValue? value, out string? error)
         {
             fixed (char* name_str = name)
             {
@@ -411,7 +408,7 @@ namespace Xilium.CefGlue
         /// extension is accessible in this context (see HasExtension). This method
         /// must be called on the browser process UI thread.
         /// </summary>
-        public CefExtension GetExtension(string? extensionId)
+        public CefExtension? GetExtension(string? extensionId)
         {
             fixed (char* extensionId_str = extensionId)
             {

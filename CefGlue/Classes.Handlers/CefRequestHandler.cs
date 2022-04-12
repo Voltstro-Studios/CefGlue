@@ -12,7 +12,8 @@
     /// </summary>
     public abstract unsafe partial class CefRequestHandler
     {
-        private int on_before_browse(cef_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, int user_gesture, int is_redirect)
+        private int on_before_browse(cef_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, 
+            cef_request_t* request, int user_gesture, int is_redirect)
         {
             CheckSelf(self);
 
@@ -45,7 +46,8 @@
         }
 
 
-        private int on_open_urlfrom_tab(cef_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_string_t* target_url, CefWindowOpenDisposition target_disposition, int user_gesture)
+        private int on_open_urlfrom_tab(cef_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, 
+            cef_string_t* target_url, CefWindowOpenDisposition target_disposition, int user_gesture)
         {
             CheckSelf(self);
 
@@ -75,13 +77,16 @@
         /// to cancel the navigation or false to allow the navigation to proceed in the
         /// source browser's top-level frame.
         /// </summary>
-        protected virtual bool OnOpenUrlFromTab(CefBrowser browser, CefFrame frame, string targetUrl, CefWindowOpenDisposition targetDisposition, bool userGesture)
+        protected virtual bool OnOpenUrlFromTab(CefBrowser browser, CefFrame frame, string? targetUrl, 
+            CefWindowOpenDisposition targetDisposition, bool userGesture)
         {
             return false;
         }
 
 
-        private cef_resource_request_handler_t* get_resource_request_handler(cef_request_handler_t* self, cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, int is_navigation, int is_download, cef_string_t* request_initiator, int* disable_default_handling)
+        private cef_resource_request_handler_t* get_resource_request_handler(cef_request_handler_t* self, 
+            cef_browser_t* browser, cef_frame_t* frame, cef_request_t* request, int is_navigation, int is_download, 
+            cef_string_t* request_initiator, int* disable_default_handling)
         {
             CheckSelf(self);
 
@@ -93,7 +98,8 @@
             var m_requestInitiator = cef_string_t.ToString(request_initiator);
             var m_disableDefaultHandling = *disable_default_handling != 0;
 
-            var m_result = GetResourceRequestHandler(m_browser, m_frame, m_request, m_isNavigation, m_isDownload, m_requestInitiator, ref m_disableDefaultHandling);
+            var m_result = GetResourceRequestHandler(m_browser, m_frame, m_request, m_isNavigation,
+                m_isDownload, m_requestInitiator, ref m_disableDefaultHandling);
 
             *disable_default_handling = m_disableDefaultHandling ? 1 : 0;
 
@@ -115,7 +121,8 @@
         /// CefResourceRequestHandler object. If this callback returns NULL the same
         /// method will be called on the associated CefRequestContextHandler, if any.
         /// </summary>
-        protected abstract CefResourceRequestHandler GetResourceRequestHandler(CefBrowser browser, CefFrame frame, CefRequest request, bool isNavigation, bool isDownload, string requestInitiator, ref bool disableDefaultHandling);
+        protected abstract CefResourceRequestHandler? GetResourceRequestHandler(CefBrowser? browser, CefFrame? frame, CefRequest request,
+            bool isNavigation, bool isDownload, string? requestInitiator, ref bool disableDefaultHandling);
 
 
         private int get_auth_credentials(cef_request_handler_t* self, cef_browser_t* browser, cef_string_t* origin_url, int isProxy, cef_string_t* host, int port, cef_string_t* realm, cef_string_t* scheme, cef_auth_callback_t* callback)
@@ -146,7 +153,8 @@
         /// the authentication information is available. Return false to cancel the
         /// request immediately.
         /// </summary>
-        protected virtual bool GetAuthCredentials(CefBrowser browser, string originUrl, bool isProxy, string host, int port, string realm, string scheme, CefAuthCallback callback)
+        protected virtual bool GetAuthCredentials(CefBrowser browser, string? originUrl, bool isProxy, string? host, 
+            int port, string? realm, string? scheme, CefAuthCallback callback)
         {
             return false;
         }
@@ -173,13 +181,14 @@
         /// methods either in this method or at a later time to grant or deny the
         /// request. Return false to cancel the request immediately.
         /// </summary>
-        protected virtual bool OnQuotaRequest(CefBrowser browser, string originUrl, long newSize, CefCallback callback)
+        protected virtual bool OnQuotaRequest(CefBrowser browser, string? originUrl, long newSize, CefCallback callback)
         {
             return true;
         }
 
 
-        private int on_certificate_error(cef_request_handler_t* self, cef_browser_t* browser, CefErrorCode cert_error, cef_string_t* request_url, cef_sslinfo_t* ssl_info, cef_callback_t* callback)
+        private int on_certificate_error(cef_request_handler_t* self, cef_browser_t* browser, CefErrorCode cert_error,
+            cef_string_t* request_url, cef_sslinfo_t* ssl_info, cef_callback_t* callback)
         {
             CheckSelf(self);
 
@@ -201,7 +210,7 @@
         /// CefSettings.ignore_certificate_errors is set all invalid certificates will
         /// be accepted without calling this method.
         /// </summary>
-        protected virtual bool OnCertificateError(CefBrowser browser, CefErrorCode certError, string requestUrl, CefSslInfo sslInfo, CefCallback callback)
+        protected virtual bool OnCertificateError(CefBrowser browser, CefErrorCode certError, string? requestUrl, CefSslInfo sslInfo, CefCallback? callback)
         {
             return false;
         }
@@ -246,7 +255,7 @@
         /// certificates to choose from; this list has already been pruned by Chromium
         /// so that it only contains certificates from issuers that the server trusts.
         /// </summary>
-        protected virtual bool OnSelectClientCertificate(CefBrowser browser, bool isProxy, string host, int port, CefX509Certificate[] certificates, CefSelectClientCertificateCallback callback)
+        protected virtual bool OnSelectClientCertificate(CefBrowser browser, bool isProxy, string? host, int port, CefX509Certificate[] certificates, CefSelectClientCertificateCallback callback)
         {
             return false;
         }
@@ -266,7 +275,7 @@
         /// Called on the browser process UI thread when a plugin has crashed.
         /// |plugin_path| is the path of the plugin that crashed.
         /// </summary>
-        protected virtual void OnPluginCrashed(CefBrowser browser, string pluginPath)
+        protected virtual void OnPluginCrashed(CefBrowser browser, string? pluginPath)
         {
         }
 

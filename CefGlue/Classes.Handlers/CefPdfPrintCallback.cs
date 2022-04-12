@@ -25,6 +25,6 @@
         /// is the output path. |ok| will be true if the printing completed
         /// successfully or false otherwise.
         /// </summary>
-        protected abstract void OnPdfPrintFinished(string path, bool ok);
+        protected abstract void OnPdfPrintFinished(string? path, bool ok);
     }
 }

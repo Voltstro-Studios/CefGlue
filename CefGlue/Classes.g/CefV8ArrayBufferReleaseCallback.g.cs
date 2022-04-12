@@ -13,6 +13,7 @@ using Xilium.CefGlue.Interop;
 namespace Xilium.CefGlue
 {
     // Role: HANDLER
+    #nullable enable
     public abstract unsafe partial class CefV8ArrayBufferReleaseCallback
     {
         private static Dictionary<IntPtr, CefV8ArrayBufferReleaseCallback> _roots = new Dictionary<IntPtr, CefV8ArrayBufferReleaseCallback>();
@@ -22,9 +23,9 @@ namespace Xilium.CefGlue
         
         protected object SyncRoot { get { return this; } }
         
-        internal static CefV8ArrayBufferReleaseCallback FromNativeOrNull(cef_v8array_buffer_release_callback_t* ptr)
+        internal static CefV8ArrayBufferReleaseCallback? FromNativeOrNull(cef_v8array_buffer_release_callback_t* ptr)
         {
-            CefV8ArrayBufferReleaseCallback value = null;
+            CefV8ArrayBufferReleaseCallback? value = null;
             bool found;
             lock (_roots)
             {

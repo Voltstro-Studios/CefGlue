@@ -13,6 +13,7 @@ using Xilium.CefGlue.Interop;
 namespace Xilium.CefGlue
 {
     // Role: PROXY
+    #nullable enable
     public sealed unsafe partial class CefStreamWriter : IDisposable
     {
         internal static CefStreamWriter FromNative(cef_stream_writer_t* ptr)
@@ -20,7 +21,7 @@ namespace Xilium.CefGlue
             return new CefStreamWriter(ptr);
         }
         
-        internal static CefStreamWriter FromNativeOrNull(cef_stream_writer_t* ptr)
+        internal static CefStreamWriter? FromNativeOrNull(cef_stream_writer_t* ptr)
         {
             if (ptr == null) return null;
             return new CefStreamWriter(ptr);

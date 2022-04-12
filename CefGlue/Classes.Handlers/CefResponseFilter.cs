@@ -34,8 +34,8 @@
             // TODO: Use some buffers instead of UnmanagedMemoryStream.
 
             // TODO: Remove UnmanagedMemoryStream - normal usage is buffer operations.
-            UnmanagedMemoryStream m_in_stream = null;
-            UnmanagedMemoryStream m_out_stream = null;
+            UnmanagedMemoryStream? m_in_stream = null;
+            UnmanagedMemoryStream? m_out_stream = null;
             try
             {
                 if (data_in != null)
@@ -91,6 +91,6 @@
         ///
         /// Do not keep a reference to the buffers passed to this method.
         /// </summary>
-        protected abstract CefResponseFilterStatus Filter(UnmanagedMemoryStream dataIn, long dataInSize, out long dataInRead, UnmanagedMemoryStream dataOut, long dataOutSize, out long dataOutWritten);
+        protected abstract CefResponseFilterStatus Filter(UnmanagedMemoryStream? dataIn, long dataInSize, out long dataInRead, UnmanagedMemoryStream dataOut, long dataOutSize, out long dataOutWritten);
     }
 }

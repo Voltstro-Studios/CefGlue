@@ -64,7 +64,7 @@
         /// purge the plugin list cache and potentially trigger new calls to this
         /// method call CefRequestContext::PurgePluginListCache.
         /// </summary>
-        protected virtual bool OnBeforePluginLoad(string mimeType, string pluginUrl, bool isMainFrame, string topOriginUrl, CefWebPluginInfo pluginInfo, ref CefPluginPolicy pluginPolicy)
+        protected virtual bool OnBeforePluginLoad(string? mimeType, string? pluginUrl, bool isMainFrame, string? topOriginUrl, CefWebPluginInfo pluginInfo, ref CefPluginPolicy pluginPolicy)
         {
             return false;
         }
@@ -107,6 +107,7 @@
         /// CefRequestHandler::GetResourceRequestHandler for the same request
         /// (identified by CefRequest::GetIdentifier).
         /// </summary>
-        protected abstract CefResourceRequestHandler GetResourceRequestHandler(CefBrowser browser, CefFrame frame, CefRequest request, bool isNavigation, bool isDownload, string requestInitiator, ref bool disableDefaultHandling);
+        protected abstract CefResourceRequestHandler? GetResourceRequestHandler(CefBrowser? browser, CefFrame? frame, CefRequest request, 
+            bool isNavigation, bool isDownload, string? requestInitiator, ref bool disableDefaultHandling);
     }
 }

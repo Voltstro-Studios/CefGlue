@@ -13,6 +13,7 @@ using Xilium.CefGlue.Interop;
 namespace Xilium.CefGlue
 {
     // Role: HANDLER
+    #nullable enable
     public abstract unsafe partial class CefLifeSpanHandler
     {
         private static Dictionary<IntPtr, CefLifeSpanHandler> _roots = new Dictionary<IntPtr, CefLifeSpanHandler>();

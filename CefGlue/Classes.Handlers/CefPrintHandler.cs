@@ -1,11 +1,7 @@
-﻿namespace Xilium.CefGlue
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Runtime.InteropServices;
-    using Xilium.CefGlue.Interop;
+﻿using Xilium.CefGlue.Interop;
 
+namespace Xilium.CefGlue
+{
     /// <summary>
     /// Implement this interface to handle printing on Linux. Each browser will have
     /// only one print job in progress at a time. The methods of this class will be
@@ -85,7 +81,7 @@
         /// completed. Return true if the job will proceed or false to cancel the job
         /// immediately.
         /// </summary>
-        protected abstract bool OnPrintJob(CefBrowser browser, string documentName, string pdfFilePath, CefPrintJobCallback callback);
+        protected abstract bool OnPrintJob(CefBrowser browser, string? documentName, string? pdfFilePath, CefPrintJobCallback callback);
 
 
         private void on_print_reset(cef_print_handler_t* self, cef_browser_t* browser)
@@ -123,7 +119,7 @@
         /// Return the PDF paper size in device units. Used in combination with
         /// CefBrowserHost::PrintToPDF().
         /// </summary>
-        protected virtual CefSize GetPdfPaperSize(CefBrowser browser, int deviceUnitsPerInch)
+        protected virtual CefSize GetPdfPaperSize(CefBrowser? browser, int deviceUnitsPerInch)
             => new CefSize();
     }
 }

@@ -19,10 +19,7 @@
             var mIPAddress = cef_string_t.ToString(&device_info->ip_address);
             var mModelName = cef_string_t.ToString(&device_info->model_name);
 
-            var mDeviceInfo = new CefMediaSinkDeviceInfo(
-                ipAddress: mIPAddress,
-                port: device_info->port,
-                modelName: mModelName);
+            var mDeviceInfo = new CefMediaSinkDeviceInfo(mIPAddress, device_info->port, mModelName);
 
             OnMediaSinkDeviceInfo(in mDeviceInfo);
         }

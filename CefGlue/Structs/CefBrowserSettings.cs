@@ -44,72 +44,72 @@
         /// </summary>
         public int WindowlessFrameRate
         {
-            get { return _self->windowless_frame_rate; }
-            set { _self->windowless_frame_rate = value; }
+            get => _self->windowless_frame_rate;
+            set => _self->windowless_frame_rate = value;
         }
 
         // The below values map to WebPreferences settings.
 
         #region Font Settings
 
-        public string StandardFontFamily
+        public string? StandardFontFamily
         {
-            get { return cef_string_t.ToString(&_self->standard_font_family); }
-            set { cef_string_t.Copy(value, &_self->standard_font_family); }
+            get => cef_string_t.ToString(&_self->standard_font_family);
+            set => cef_string_t.Copy(value, &_self->standard_font_family);
         }
 
-        public string FixedFontFamily
+        public string? FixedFontFamily
         {
-            get { return cef_string_t.ToString(&_self->fixed_font_family); }
-            set { cef_string_t.Copy(value, &_self->fixed_font_family); }
+            get => cef_string_t.ToString(&_self->fixed_font_family);
+            set => cef_string_t.Copy(value, &_self->fixed_font_family);
         }
 
-        public string SerifFontFamily
+        public string? SerifFontFamily
         {
-            get { return cef_string_t.ToString(&_self->serif_font_family); }
-            set { cef_string_t.Copy(value, &_self->serif_font_family); }
+            get => cef_string_t.ToString(&_self->serif_font_family);
+            set => cef_string_t.Copy(value, &_self->serif_font_family);
         }
 
-        public string SansSerifFontFamily
+        public string? SansSerifFontFamily
         {
-            get { return cef_string_t.ToString(&_self->sans_serif_font_family); }
-            set { cef_string_t.Copy(value, &_self->sans_serif_font_family); }
+            get => cef_string_t.ToString(&_self->sans_serif_font_family);
+            set => cef_string_t.Copy(value, &_self->sans_serif_font_family);
         }
 
-        public string CursiveFontFamily
+        public string? CursiveFontFamily
         {
-            get { return cef_string_t.ToString(&_self->cursive_font_family); }
-            set { cef_string_t.Copy(value, &_self->cursive_font_family); }
+            get => cef_string_t.ToString(&_self->cursive_font_family);
+            set => cef_string_t.Copy(value, &_self->cursive_font_family);
         }
 
-        public string FantasyFontFamily
+        public string? FantasyFontFamily
         {
-            get { return cef_string_t.ToString(&_self->fantasy_font_family); }
-            set { cef_string_t.Copy(value, &_self->fantasy_font_family); }
+            get => cef_string_t.ToString(&_self->fantasy_font_family);
+            set => cef_string_t.Copy(value, &_self->fantasy_font_family);
         }
 
         public int DefaultFontSize
         {
-            get { return _self->default_font_size; }
-            set { _self->default_font_size = value; }
+            get => _self->default_font_size;
+            set => _self->default_font_size = value;
         }
 
         public int DefaultFixedFontSize
         {
-            get { return _self->default_fixed_font_size; }
-            set { _self->default_fixed_font_size = value; }
+            get => _self->default_fixed_font_size;
+            set => _self->default_fixed_font_size = value;
         }
 
         public int MinimumFontSize
         {
-            get { return _self->minimum_font_size; }
-            set { _self->minimum_font_size = value; }
+            get => _self->minimum_font_size;
+            set => _self->minimum_font_size = value;
         }
 
         public int MinimumLogicalFontSize
         {
-            get { return _self->minimum_logical_font_size; }
-            set { _self->minimum_logical_font_size = value; }
+            get => _self->minimum_logical_font_size;
+            set => _self->minimum_logical_font_size = value;
         }
 
         #endregion
@@ -119,10 +119,10 @@
         /// Default encoding for Web content. If empty "ISO-8859-1" will be used. Also
         /// configurable using the "default-encoding" command-line switch.
         /// </summary>
-        public string DefaultEncoding
+        public string? DefaultEncoding
         {
-            get { return cef_string_t.ToString(&_self->default_encoding); }
-            set { cef_string_t.Copy(value, &_self->default_encoding); }
+            get => cef_string_t.ToString(&_self->default_encoding);
+            set => cef_string_t.Copy(value, &_self->default_encoding);
         }
 
 
@@ -132,8 +132,8 @@
         /// </summary>
         public CefState RemoteFonts
         {
-            get { return _self->remote_fonts; }
-            set { _self->remote_fonts = value; }
+            get => _self->remote_fonts;
+            set => _self->remote_fonts = value;
         }
 
         /// <summary>
@@ -142,8 +142,8 @@
         /// </summary>
         public CefState JavaScript
         {
-            get { return _self->javascript; }
-            set { _self->javascript = value; }
+            get => _self->javascript;
+            set => _self->javascript = value;
         }
 
         /// <summary>
@@ -155,8 +155,8 @@
         /// </summary>
         public CefState JavaScriptCloseWindows
         {
-            get { return _self->javascript_close_windows; }
-            set { _self->javascript_close_windows = value; }
+            get => _self->javascript_close_windows;
+            set => _self->javascript_close_windows = value;
         }
 
         /// <summary>
@@ -165,8 +165,8 @@
         /// </summary>
         public CefState JavaScriptAccessClipboard
         {
-            get { return _self->javascript_access_clipboard; }
-            set { _self->javascript_access_clipboard = value; }
+            get => _self->javascript_access_clipboard;
+            set => _self->javascript_access_clipboard = value;
         }
 
         /// <summary>
@@ -177,8 +177,8 @@
         /// </summary>
         public CefState JavaScriptDomPaste
         {
-            get { return _self->javascript_dom_paste; }
-            set { _self->javascript_dom_paste = value; }
+            get => _self->javascript_dom_paste;
+            set => _self->javascript_dom_paste = value;
         }
 
         /// <summary>
@@ -187,8 +187,8 @@
         /// </summary>
         public CefState Plugins
         {
-            get { return _self->plugins; }
-            set { _self->plugins = value; }
+            get => _self->plugins;
+            set => _self->plugins = value;
         }
 
         /// <summary>
@@ -197,8 +197,8 @@
         /// </summary>
         public CefState UniversalAccessFromFileUrls
         {
-            get { return _self->universal_access_from_file_urls; }
-            set { _self->universal_access_from_file_urls = value; }
+            get => _self->universal_access_from_file_urls;
+            set => _self->universal_access_from_file_urls = value;
         }
 
         /// <summary>
@@ -207,8 +207,8 @@
         /// </summary>
         public CefState FileAccessFromFileUrls
         {
-            get { return _self->file_access_from_file_urls; }
-            set { _self->file_access_from_file_urls = value; }
+            get => _self->file_access_from_file_urls;
+            set => _self->file_access_from_file_urls = value;
         }
 
         /// <summary>
@@ -218,8 +218,8 @@
         /// </summary>
         public CefState ImageLoading
         {
-            get { return _self->image_loading; }
-            set { _self->image_loading = value; }
+            get => _self->image_loading;
+            set => _self->image_loading = value;
         }
 
         /// <summary>
@@ -229,8 +229,8 @@
         /// </summary>
         public CefState ImageShrinkStandaloneToFit
         {
-            get { return _self->image_shrink_standalone_to_fit; }
-            set { _self->image_shrink_standalone_to_fit = value; }
+            get => _self->image_shrink_standalone_to_fit;
+            set => _self->image_shrink_standalone_to_fit = value;
         }
 
         /// <summary>
@@ -239,8 +239,8 @@
         /// </summary>
         public CefState TextAreaResize
         {
-            get { return _self->text_area_resize; }
-            set { _self->text_area_resize = value; }
+            get => _self->text_area_resize;
+            set => _self->text_area_resize = value;
         }
 
         /// <summary>
@@ -249,8 +249,8 @@
         /// </summary>
         public CefState TabToLinks
         {
-            get { return _self->tab_to_links; }
-            set { _self->tab_to_links = value; }
+            get => _self->tab_to_links;
+            set => _self->tab_to_links = value;
         }
 
         /// <summary>
@@ -259,8 +259,8 @@
         /// </summary>
         public CefState LocalStorage
         {
-            get { return _self->local_storage; }
-            set { _self->local_storage = value; }
+            get => _self->local_storage;
+            set => _self->local_storage = value;
         }
 
         /// <summary>
@@ -269,8 +269,8 @@
         /// </summary>
         public CefState Databases
         {
-            get { return _self->databases; }
-            set { _self->databases = value; }
+            get => _self->databases;
+            set => _self->databases = value;
         }
 
         /// <summary>
@@ -279,8 +279,8 @@
         /// </summary>
         public CefState ApplicationCache
         {
-            get { return _self->application_cache; }
-            set { _self->application_cache = value; }
+            get => _self->application_cache;
+            set => _self->application_cache = value;
         }
 
         /// <summary>
@@ -290,8 +290,8 @@
         /// </summary>
         public CefState WebGL
         {
-            get { return _self->webgl; }
-            set { _self->webgl = value; }
+            get => _self->webgl;
+            set => _self->webgl = value;
         }
 
         /// <summary>
@@ -306,8 +306,8 @@
         /// </summary>
         public CefColor BackgroundColor
         {
-            get { return new CefColor(_self->background_color); }
-            set { _self->background_color = value.ToArgb(); }
+            get => new CefColor(_self->background_color);
+            set => _self->background_color = value.ToArgb();
         }
 
         /// <summary>
@@ -316,10 +316,10 @@
         /// using the CefSettings.accept_language_list value. If both values are
         /// empty then "en-US,en" will be used.
         /// </summary>
-        public string AcceptLanguageList
+        public string? AcceptLanguageList
         {
-            get { return cef_string_t.ToString(&_self->accept_language_list); }
-            set { cef_string_t.Copy(value, &_self->accept_language_list); }
+            get => cef_string_t.ToString(&_self->accept_language_list);
+            set => cef_string_t.Copy(value, &_self->accept_language_list);
         }
     }
 }

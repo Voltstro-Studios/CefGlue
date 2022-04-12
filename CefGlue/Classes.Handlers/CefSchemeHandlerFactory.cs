@@ -35,6 +35,6 @@
         /// (for example, if the request came from CefURLRequest). The |request| object
         /// passed to this method cannot be modified.
         /// </summary>
-        protected abstract CefResourceHandler Create(CefBrowser browser, CefFrame frame, string schemeName, CefRequest request);
+        protected abstract CefResourceHandler? Create(CefBrowser? browser, CefFrame? frame, string? schemeName, CefRequest request);
     }
 }

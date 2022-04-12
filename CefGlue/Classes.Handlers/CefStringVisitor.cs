@@ -21,7 +21,7 @@
         /// <summary>
         /// Method that will be executed.
         /// </summary>
-        protected abstract void Visit(string value);
+        protected abstract void Visit(string? value);
 
     }
 }

@@ -13,6 +13,7 @@ using Xilium.CefGlue.Interop;
 namespace Xilium.CefGlue
 {
     // Role: PROXY
+    #nullable enable
     public sealed unsafe partial class CefRunContextMenuCallback : IDisposable
     {
         internal static CefRunContextMenuCallback FromNative(cef_run_context_menu_callback_t* ptr)
@@ -20,7 +21,7 @@ namespace Xilium.CefGlue
             return new CefRunContextMenuCallback(ptr);
         }
         
-        internal static CefRunContextMenuCallback FromNativeOrNull(cef_run_context_menu_callback_t* ptr)
+        internal static CefRunContextMenuCallback? FromNativeOrNull(cef_run_context_menu_callback_t* ptr)
         {
             if (ptr == null) return null;
             return new CefRunContextMenuCallback(ptr);

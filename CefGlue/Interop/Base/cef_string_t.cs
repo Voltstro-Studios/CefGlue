@@ -1,11 +1,9 @@
-﻿namespace Xilium.CefGlue.Interop
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Runtime.InteropServices;
-    using System.Security;
-    using System.Text;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
 
+namespace Xilium.CefGlue.Interop
+{
     [StructLayout(LayoutKind.Sequential, Pack = libcef.ALIGN)]
     internal unsafe partial struct cef_string_t
     {
@@ -26,7 +24,7 @@
             _dtor = IntPtr.Zero;
         }
 
-        public static void Copy(string value, cef_string_t* str)
+        public static void Copy(string? value, cef_string_t* str)
         {
             fixed (char* value_ptr = value)
             {
@@ -34,11 +32,10 @@
             }
         }
 
-        public static string ToString(cef_string_t* obj)
+        [return: NotNullIfNotNull("obj")]
+        public static string? ToString(cef_string_t* obj)
         {
-            if (obj == null) return null;
-
-            return new string((char*)obj->_str, 0, (int)obj->_length);
+            return obj == null ? null : new string(obj->_str, 0, (int)obj->_length);
         }
     }
 }

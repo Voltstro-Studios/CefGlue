@@ -15,42 +15,27 @@
         /// <summary>
         /// Returns the type for this node.
         /// </summary>
-        public CefDomNodeType NodeType
-        {
-            get { return cef_domnode_t.get_type(_self); }
-        }
+        public CefDomNodeType NodeType => cef_domnode_t.get_type(_self);
 
         /// <summary>
         /// Returns true if this is a text node.
         /// </summary>
-        public bool IsText
-        {
-            get { return cef_domnode_t.is_text(_self) != 0; }
-        }
+        public bool IsText => cef_domnode_t.is_text(_self) != 0;
 
         /// <summary>
         /// Returns true if this is an element node.
         /// </summary>
-        public bool IsElement
-        {
-            get { return cef_domnode_t.is_element(_self) != 0; }
-        }
+        public bool IsElement => cef_domnode_t.is_element(_self) != 0;
 
         /// <summary>
         /// Returns true if this is an editable node.
         /// </summary>
-        public bool IsEditable
-        {
-            get { return cef_domnode_t.is_editable(_self) != 0; }
-        }
+        public bool IsEditable => cef_domnode_t.is_editable(_self) != 0;
 
         /// <summary>
         /// Returns true if this is a form control element node.
         /// </summary>
-        public bool IsFormControlElement
-        {
-            get { return cef_domnode_t.is_form_control_element(_self) != 0; }
-        }
+        public bool IsFormControlElement => cef_domnode_t.is_form_control_element(_self) != 0;
 
         /// <summary>
         /// Returns the type of this form control element node.
@@ -100,11 +85,11 @@
         /// <summary>
         /// Set the value of this node. Returns true on success.
         /// </summary>
-        public bool SetValue(string value)
+        public bool SetValue(string? value)
         {
             fixed (char* value_str = value)
             {
-                var n_value = new cef_string_t(value_str, value != null ? value.Length : 0);
+                var n_value = new cef_string_t(value_str, value?.Length ?? 0);
 
                 return cef_domnode_t.set_value(_self, &n_value) != 0;
             }
@@ -122,88 +107,37 @@
         /// <summary>
         /// Returns the document associated with this node.
         /// </summary>
-        public CefDomDocument Document
-        {
-            get
-            {
-                return CefDomDocument.FromNative(
-                    cef_domnode_t.get_document(_self)
-                    );
-            }
-        }
+        public CefDomDocument Document => CefDomDocument.FromNative(cef_domnode_t.get_document(_self));
 
         /// <summary>
         /// Returns the parent node.
         /// </summary>
-        public CefDomNode Parent
-        {
-            get
-            {
-                return CefDomNode.FromNativeOrNull(
-                    cef_domnode_t.get_parent(_self)
-                    );
-            }
-        }
+        public CefDomNode? Parent => FromNativeOrNull(cef_domnode_t.get_parent(_self));
 
         /// <summary>
         /// Returns the previous sibling node.
         /// </summary>
-        public CefDomNode PreviousSibling
-        {
-            get
-            {
-                return CefDomNode.FromNativeOrNull(
-                    cef_domnode_t.get_previous_sibling(_self)
-                    );
-            }
-        }
+        public CefDomNode? PreviousSibling => FromNativeOrNull(cef_domnode_t.get_previous_sibling(_self));
 
         /// <summary>
         /// Returns the next sibling node.
         /// </summary>
-        public CefDomNode NextSibling
-        {
-            get
-            {
-                return CefDomNode.FromNativeOrNull(
-                    cef_domnode_t.get_next_sibling(_self)
-                    );
-            }
-        }
+        public CefDomNode? NextSibling => FromNativeOrNull(cef_domnode_t.get_next_sibling(_self));
 
         /// <summary>
         /// Returns true if this node has child nodes.
         /// </summary>
-        public bool HasChildren
-        {
-            get { return cef_domnode_t.has_children(_self) != 0; }
-        }
+        public bool HasChildren => cef_domnode_t.has_children(_self) != 0;
 
         /// <summary>
         /// Return the first child node.
         /// </summary>
-        public CefDomNode FirstChild
-        {
-            get
-            {
-                return CefDomNode.FromNativeOrNull(
-                    cef_domnode_t.get_first_child(_self)
-                    );
-            }
-        }
+        public CefDomNode? FirstChild => FromNativeOrNull(cef_domnode_t.get_first_child(_self));
 
         /// <summary>
         /// Returns the last child node.
         /// </summary>
-        public CefDomNode LastChild
-        {
-            get
-            {
-                return CefDomNode.FromNativeOrNull(
-                    cef_domnode_t.get_last_child(_self)
-                    );
-            }
-        }
+        public CefDomNode? LastChild => FromNativeOrNull(cef_domnode_t.get_last_child(_self));
 
         /// <summary>
         /// The following methods are valid only for element nodes.
@@ -221,10 +155,7 @@
         /// <summary>
         /// Returns true if this element has attributes.
         /// </summary>
-        public bool HasAttributes
-        {
-            get { return cef_domnode_t.has_element_attributes(_self) != 0; }
-        }
+        public bool HasAttributes => cef_domnode_t.has_element_attributes(_self) != 0;
 
         /// <summary>
         /// Returns true if this element has an attribute named |attrName|.
@@ -267,13 +198,13 @@
         /// Set the value for the element attribute named |attrName|. Returns true on
         /// success.
         /// </summary>
-        public bool SetAttribute(string attrName, string value)
+        public bool SetAttribute(string attrName, string? value)
         {
             fixed (char* attrName_str = attrName)
             fixed (char* value_str = value)
             {
                 var n_attrName = new cef_string_t(attrName_str, attrName.Length);
-                var n_value = new cef_string_t(value_str, value != null ? value.Length : 0);
+                var n_value = new cef_string_t(value_str, value?.Length ?? 0);
                 return cef_domnode_t.set_element_attribute(_self, &n_attrName, &n_value) != 0;
             }
         }

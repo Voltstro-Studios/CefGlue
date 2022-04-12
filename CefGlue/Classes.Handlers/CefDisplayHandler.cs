@@ -1,11 +1,8 @@
-﻿namespace Xilium.CefGlue
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Runtime.InteropServices;
-    using Xilium.CefGlue.Interop;
+﻿using System;
+using Xilium.CefGlue.Interop;
 
+namespace Xilium.CefGlue
+{
     /// <summary>
     /// Implement this interface to handle events related to browser display state.
     /// The methods of this class will be called on the UI thread.
@@ -26,7 +23,7 @@
         /// <summary>
         /// Called when a frame's address has changed.
         /// </summary>
-        protected virtual void OnAddressChange(CefBrowser browser, CefFrame frame, string url)
+        protected virtual void OnAddressChange(CefBrowser browser, CefFrame frame, string? url)
         {
         }
 
@@ -44,7 +41,7 @@
         /// <summary>
         /// Called when the page title changes.
         /// </summary>
-        protected virtual void OnTitleChange(CefBrowser browser, string title)
+        protected virtual void OnTitleChange(CefBrowser browser, string? title)
         {
         }
 
@@ -103,7 +100,7 @@
         /// When window rendering is disabled the application is responsible for
         /// drawing tooltips and the return value is ignored.
         /// </summary>
-        protected virtual bool OnTooltip(CefBrowser browser, string text)
+        protected virtual bool OnTooltip(CefBrowser browser, string? text)
         {
             return false;
         }
@@ -123,7 +120,7 @@
         /// Called when the browser receives a status message. |value| contains the
         /// text that will be displayed in the status message.
         /// </summary>
-        protected virtual void OnStatusMessage(CefBrowser browser, string value)
+        protected virtual void OnStatusMessage(CefBrowser browser, string? value)
         {
         }
 
@@ -143,7 +140,7 @@
         /// Called to display a console message. Return true to stop the message from
         /// being output to the console.
         /// </summary>
-        protected virtual bool OnConsoleMessage(CefBrowser browser, CefLogSeverity level, string message, string source, int line)
+        protected virtual bool OnConsoleMessage(CefBrowser browser, CefLogSeverity level, string? message, string? source, int line)
         {
             return false;
         }
@@ -202,7 +199,7 @@
 
             var m_result = OnCursorChange(m_browser, cursor, type, m_cefCursorInfo);
 
-            if (m_cefCursorInfo != null) m_cefCursorInfo.Dispose();
+            m_cefCursorInfo?.Dispose();
             return m_result ? 1 : 0;
         }
 
@@ -211,7 +208,7 @@
         /// |custom_cursor_info| will be populated with the custom cursor information.
         /// Return true if the cursor change was handled or false for default handling.
         /// </summary>
-        protected virtual bool OnCursorChange(CefBrowser browser, IntPtr cursorHandle, CefCursorType type, CefCursorInfo customCursorInfo)
+        protected virtual bool OnCursorChange(CefBrowser browser, IntPtr cursorHandle, CefCursorType type, CefCursorInfo? customCursorInfo)
             => false;
     }
 }

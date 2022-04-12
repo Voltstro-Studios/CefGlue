@@ -103,6 +103,6 @@
         /// in the capturing phase it will be called on the audio stream thread. The
         /// stream will be stopped immediately.
         /// </summary>
-        protected abstract void OnAudioStreamError(CefBrowser browser, string message);
+        protected abstract void OnAudioStreamError(CefBrowser browser, string? message);
     }
 }

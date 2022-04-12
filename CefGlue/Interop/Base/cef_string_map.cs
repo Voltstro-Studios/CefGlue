@@ -1,4 +1,6 @@
-﻿namespace Xilium.CefGlue.Interop
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Xilium.CefGlue.Interop
 {
     using System;
     using System.Collections.Generic;
@@ -9,10 +11,12 @@
     [StructLayout(LayoutKind.Sequential, Pack = libcef.ALIGN)]
     internal unsafe struct cef_string_map
     {
-        public static Dictionary<string, string> ToDictionary(cef_string_map* map)
+        [return: NotNullIfNotNull("map")]
+        public static Dictionary<string, string>? ToDictionary(cef_string_map* map)
         {
-            if (map == null) return null;
-
+            if (map == null)
+                return null;
+            
             var result = new Dictionary<string, string>();
             var count = libcef.string_map_size(map);
             if (count == 0) return result;

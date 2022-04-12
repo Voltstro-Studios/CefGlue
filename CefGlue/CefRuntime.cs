@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
-using System.Text;
 using Xilium.CefGlue.Interop;
 
 namespace Xilium.CefGlue
@@ -27,7 +25,7 @@ namespace Xilium.CefGlue
                 return CefRuntimePlatform.MacOS;
 
             int p = (int)platformId;
-            if ((p == 4) || (p == 128))
+            if (p is 4 or 128)
                 return IsRunningOnMac() ? CefRuntimePlatform.MacOS : CefRuntimePlatform.Linux;
 
             return CefRuntimePlatform.Windows;
@@ -43,7 +41,7 @@ namespace Xilium.CefGlue
                 // This is a hacktastic way of getting sysname from uname ()
                 if (uname(buf) == 0)
                 {
-                    string os = Marshal.PtrToStringAnsi(buf);
+                    string? os = Marshal.PtrToStringAnsi(buf);
                     if (os == "Darwin")
                         return true;
                 }
@@ -82,7 +80,7 @@ namespace Xilium.CefGlue
         /// <exception cref="DllNotFoundException"></exception>
         /// <exception cref="CefVersionMismatchException"></exception>
         /// <exception cref="InvalidOperationException"></exception>
-        public static void Load(string path)
+        public static void Load(string? path)
         {
             if (_loaded) 
                 return;
@@ -110,13 +108,7 @@ namespace Xilium.CefGlue
 
         #region cef_version
 
-        public static string ChromeVersion
-        {
-            get
-            {
-                return string.Format("{0}.{1}.{2}.{3}", libcef.CHROME_VERSION_MAJOR, libcef.CHROME_VERSION_MINOR, libcef.CHROME_VERSION_BUILD, libcef.CHROME_VERSION_PATCH);
-            }
-        }
+        public static string ChromeVersion => $"{libcef.CHROME_VERSION_MAJOR}.{libcef.CHROME_VERSION_MINOR}.{libcef.CHROME_VERSION_BUILD}.{libcef.CHROME_VERSION_PATCH}";
 
         private static void CheckVersion()
         {
@@ -126,7 +118,7 @@ namespace Xilium.CefGlue
         private static void CheckVersionByApiHash()
         {
             // get CEF_API_HASH_PLATFORM
-            string actual;
+            string? actual;
             try
             {
                 var n_actual = libcef.api_hash(0);
@@ -138,18 +130,17 @@ namespace Xilium.CefGlue
             }
             if (string.IsNullOrEmpty(actual)) throw new NotSupportedException();
 
-            string expected;
-            switch (CefRuntime.Platform)
+            string expected = CefRuntime.Platform switch
             {
-                case CefRuntimePlatform.Windows: expected = libcef.CEF_API_HASH_PLATFORM_WIN; break;
-                case CefRuntimePlatform.MacOS: expected = libcef.CEF_API_HASH_PLATFORM_MACOS; break;
-                case CefRuntimePlatform.Linux: expected = libcef.CEF_API_HASH_PLATFORM_LINUX; break;
-                default: throw new PlatformNotSupportedException();
-            }
+                CefRuntimePlatform.Windows => libcef.CEF_API_HASH_PLATFORM_WIN,
+                CefRuntimePlatform.MacOS => libcef.CEF_API_HASH_PLATFORM_MACOS,
+                CefRuntimePlatform.Linux => libcef.CEF_API_HASH_PLATFORM_LINUX,
+                _ => throw new PlatformNotSupportedException()
+            };
 
             if (string.Compare(actual, expected, StringComparison.OrdinalIgnoreCase) != 0)
             {
-                var expectedVersion = libcef.CEF_VERSION;
+                const string expectedVersion = libcef.CEF_VERSION;
                 throw ExceptionBuilder.RuntimeVersionApiHashMismatch(actual, expected, expectedVersion);
             }
         }
@@ -170,7 +161,7 @@ namespace Xilium.CefGlue
         /// |windows_sandbox_info| parameter is only used on Windows and may be NULL (see
         /// cef_sandbox_win.h for details).
         /// </summary>
-        public static int ExecuteProcess(CefMainArgs args, CefApp application, IntPtr windowsSandboxInfo)
+        public static int ExecuteProcess(CefMainArgs args, CefApp? application, IntPtr windowsSandboxInfo)
         {
             LoadIfNeed();
 
@@ -201,12 +192,12 @@ namespace Xilium.CefGlue
         /// The |windows_sandbox_info| parameter is only used on Windows and may be NULL
         /// (see cef_sandbox_win.h for details).
         /// </summary>
-        public static void Initialize(CefMainArgs args, CefSettings settings, CefApp application, IntPtr windowsSandboxInfo)
+        public static void Initialize(CefMainArgs args, CefSettings settings, CefApp? application, IntPtr windowsSandboxInfo)
         {
             LoadIfNeed();
 
-            if (args == null) throw new ArgumentNullException("args");
-            if (settings == null) throw new ArgumentNullException("settings");
+            if (args == null) throw new ArgumentNullException(nameof(args));
+            if (settings == null) throw new ArgumentNullException(nameof(settings));
 
             if (_initialized) throw ExceptionBuilder.CefRuntimeAlreadyInitialized();
 
@@ -231,13 +222,6 @@ namespace Xilium.CefGlue
                 CefSettings.Free(n_settings);
             }
         }
-
-        [Obsolete]
-        public static void Initialize(CefMainArgs args, CefSettings settings, CefApp application)
-        {
-            Initialize(args, settings, application, IntPtr.Zero);
-        }
-
 
         /// <summary>
         /// This function should be called on the main application thread to shut down
@@ -337,7 +321,7 @@ namespace Xilium.CefGlue
         /// </summary>
         public static bool PostTask(CefThreadId threadId, CefTask task)
         {
-            if (task == null) throw new ArgumentNullException("task");
+            if (task == null) throw new ArgumentNullException(nameof(task));
 
             return libcef.post_task(threadId, task.ToNative()) != 0;
         }
@@ -349,7 +333,7 @@ namespace Xilium.CefGlue
         /// </summary>
         public static bool PostTask(CefThreadId threadId, CefTask task, long delay)
         {
-            if (task == null) throw new ArgumentNullException("task");
+            if (task == null) throw new ArgumentNullException(nameof(task));
 
             return libcef.post_delayed_task(threadId, task.ToNative(), delay) != 0;
         }
@@ -393,10 +377,10 @@ namespace Xilium.CefGlue
         /// This function may be called on any thread. Returns false if |source_origin|
         /// is invalid or the whitelist cannot be accessed.
         /// </summary>
-        public static bool AddCrossOriginWhitelistEntry(string sourceOrigin, string targetProtocol, string targetDomain, bool allowTargetSubdomains)
+        public static bool AddCrossOriginWhitelistEntry(string sourceOrigin, string targetProtocol, string? targetDomain, bool allowTargetSubdomains)
         {
-            if (string.IsNullOrEmpty("sourceOrigin")) throw new ArgumentNullException("sourceOrigin");
-            if (string.IsNullOrEmpty("targetProtocol")) throw new ArgumentNullException("targetProtocol");
+            if (string.IsNullOrEmpty(sourceOrigin)) throw new ArgumentNullException(nameof(sourceOrigin));
+            if (string.IsNullOrEmpty(targetProtocol)) throw new ArgumentNullException(nameof(targetProtocol));
 
             fixed (char* sourceOrigin_ptr = sourceOrigin)
             fixed (char* targetProtocol_ptr = targetProtocol)
@@ -404,7 +388,7 @@ namespace Xilium.CefGlue
             {
                 var n_sourceOrigin = new cef_string_t(sourceOrigin_ptr, sourceOrigin.Length);
                 var n_targetProtocol = new cef_string_t(targetProtocol_ptr, targetProtocol.Length);
-                var n_targetDomain = new cef_string_t(targetDomain_ptr, targetDomain != null ? targetDomain.Length : 0);
+                var n_targetDomain = new cef_string_t(targetDomain_ptr, targetDomain?.Length ?? 0);
 
                 return libcef.add_cross_origin_whitelist_entry(
                     &n_sourceOrigin,
@@ -419,10 +403,10 @@ namespace Xilium.CefGlue
         /// Remove an entry from the cross-origin access whitelist. Returns false if
         /// |source_origin| is invalid or the whitelist cannot be accessed.
         /// </summary>
-        public static bool RemoveCrossOriginWhitelistEntry(string sourceOrigin, string targetProtocol, string targetDomain, bool allowTargetSubdomains)
+        public static bool RemoveCrossOriginWhitelistEntry(string sourceOrigin, string targetProtocol, string? targetDomain, bool allowTargetSubdomains)
         {
-            if (string.IsNullOrEmpty("sourceOrigin")) throw new ArgumentNullException("sourceOrigin");
-            if (string.IsNullOrEmpty("targetProtocol")) throw new ArgumentNullException("targetProtocol");
+            if (string.IsNullOrEmpty("sourceOrigin")) throw new ArgumentNullException(nameof(sourceOrigin));
+            if (string.IsNullOrEmpty("targetProtocol")) throw new ArgumentNullException(nameof(targetProtocol));
 
             fixed (char* sourceOrigin_ptr = sourceOrigin)
             fixed (char* targetProtocol_ptr = targetProtocol)
@@ -430,7 +414,7 @@ namespace Xilium.CefGlue
             {
                 var n_sourceOrigin = new cef_string_t(sourceOrigin_ptr, sourceOrigin.Length);
                 var n_targetProtocol = new cef_string_t(targetProtocol_ptr, targetProtocol.Length);
-                var n_targetDomain = new cef_string_t(targetDomain_ptr, targetDomain != null ? targetDomain.Length : 0);
+                var n_targetDomain = new cef_string_t(targetDomain_ptr, targetDomain?.Length ?? 0);
 
                 return libcef.remove_cross_origin_whitelist_entry(
                     &n_sourceOrigin,
@@ -467,16 +451,16 @@ namespace Xilium.CefGlue
         /// Returns false if an error occurs. This function may be called on any thread
         /// in the browser process.
         /// </summary>
-        public static bool RegisterSchemeHandlerFactory(string schemeName, string domainName, CefSchemeHandlerFactory factory)
+        public static bool RegisterSchemeHandlerFactory(string schemeName, string? domainName, CefSchemeHandlerFactory factory)
         {
-            if (string.IsNullOrEmpty(schemeName)) throw new ArgumentNullException("schemeName");
-            if (factory == null) throw new ArgumentNullException("factory");
+            if (string.IsNullOrEmpty(schemeName)) throw new ArgumentNullException(nameof(schemeName));
+            if (factory == null) throw new ArgumentNullException(nameof(factory));
 
             fixed (char* schemeName_str = schemeName)
             fixed (char* domainName_str = domainName)
             {
                 var n_schemeName = new cef_string_t(schemeName_str, schemeName.Length);
-                var n_domainName = new cef_string_t(domainName_str, domainName != null ? domainName.Length : 0);
+                var n_domainName = new cef_string_t(domainName_str, domainName?.Length ?? 0);
 
                 return libcef.register_scheme_handler_factory(&n_schemeName, &n_domainName, factory.ToNative()) != 0;
             }
@@ -514,11 +498,11 @@ namespace Xilium.CefGlue
         ///
         /// This function must be called on the browser process UI thread.
         /// </summary>
-        public static bool BeginTracing(string categories = null, CefCompletionCallback callback = null)
+        public static bool BeginTracing(string? categories = null, CefCompletionCallback? callback = null)
         {
             fixed (char* categories_str = categories)
             {
-                var n_categories = new cef_string_t(categories_str, categories != null ? categories.Length : 0);
+                var n_categories = new cef_string_t(categories_str, categories?.Length ?? 0);
                 var n_callback = callback != null ? callback.ToNative() : null;
                 return libcef.begin_tracing(&n_categories, n_callback) != 0;
             }
@@ -537,11 +521,11 @@ namespace Xilium.CefGlue
         ///
         /// This function must be called on the browser process UI thread.
         /// </summary>
-        public static bool EndTracing(string tracingFile = null, CefEndTracingCallback callback = null)
+        public static bool EndTracing(string? tracingFile = null, CefEndTracingCallback? callback = null)
         {
             fixed (char* tracingFile_str = tracingFile)
             {
-                var n_tracingFile = new cef_string_t(tracingFile_str, tracingFile != null ? tracingFile.Length : 0);
+                var n_tracingFile = new cef_string_t(tracingFile_str, tracingFile?.Length ?? 0);
                 var n_callback = callback != null ? callback.ToNative() : null;
                 return libcef.end_tracing(&n_tracingFile, n_callback) != 0;
             }
@@ -569,11 +553,11 @@ namespace Xilium.CefGlue
         /// Parse the specified |url| into its component parts.
         /// Returns false if the URL is empty or invalid.
         /// </summary>
-        public static bool ParseUrl(string url, out CefUrlParts parts)
+        public static bool ParseUrl(string url, [NotNullWhen(true)] out CefUrlParts? parts)
         {
             fixed (char* url_str = url)
             {
-                var n_url = new cef_string_t(url_str, url != null ? url.Length : 0);
+                var n_url = new cef_string_t(url_str, url.Length);
                 var n_parts = new cef_urlparts_t();
 
                 var result = libcef.parse_url(&n_url, &n_parts) != 0;
@@ -584,9 +568,14 @@ namespace Xilium.CefGlue
             }
         }
 
-        public static bool CreateUrl(CefUrlParts parts, out string url)
+        /// <summary>
+        /// Creates a URL from the specified <see cref="parts"/>, which must contain a non-empty
+        /// spec or a non-empty host and path (at a minimum), but not both.
+        /// Returns false if <see cref="parts"/> isn't initialized as described.
+        /// </summary>
+        public static bool CreateUrl(CefUrlParts parts, [NotNullWhen(true)] out string? url)
         {
-            if (parts == null) throw new ArgumentNullException("parts");
+            if (parts == null) throw new ArgumentNullException(nameof(parts));
 
             var n_parts = parts.ToNative();
             var n_url = new cef_string_t();
@@ -605,11 +594,11 @@ namespace Xilium.CefGlue
         /// Returns the mime type for the specified file extension or an empty string if
         /// unknown.
         /// </summary>
-        public static string GetMimeType(string extension)
+        public static string GetMimeType(string? extension)
         {
             fixed (char* extension_str = extension)
             {
-                var n_extension = new cef_string_t(extension_str, extension != null ? extension.Length : 0);
+                var n_extension = new cef_string_t(extension_str, extension?.Length ?? 0);
 
                 var n_result = libcef.get_mime_type(&n_extension);
                 return cef_string_userfree.ToString(n_result);
@@ -622,11 +611,11 @@ namespace Xilium.CefGlue
         /// "html,htm" for "text/html", or "txt,text,html,..." for "text/*". Any existing
         /// elements in the provided vector will not be erased.
         /// </summary>
-        public static string[] GetExtensionsForMimeType(string mimeType)
+        public static string[] GetExtensionsForMimeType(string? mimeType)
         {
             fixed (char* mimeType_str = mimeType)
             {
-                var n_mimeType = new cef_string_t(mimeType_str, mimeType != null ? mimeType.Length : 0);
+                var n_mimeType = new cef_string_t(mimeType_str, mimeType?.Length ?? 0);
 
                 var n_list = libcef.string_list_alloc();
                 libcef.get_extensions_for_mime_type(&n_mimeType, n_list);
@@ -637,15 +626,18 @@ namespace Xilium.CefGlue
         }
 
         /// <summary>
-        /// Encodes |data| as a base64 string.
+        /// Encodes <see cref="data"/> as a base64 string.
         /// </summary>
-        public static unsafe string Base64Encode(void* data, int size)
+        public static string Base64Encode(void* data, int size)
         {
             var n_result = libcef.base64encode(data, (UIntPtr)size);
             return cef_string_userfree.ToString(n_result);
         }
 
-        public static string Base64Encode(byte[] bytes, int offset, int length)
+        /// <summary>
+        /// Encodes <see cref="bytes"/> as a base64 string
+        /// </summary>
+        public static string Base64Encode(ReadOnlySpan<byte> bytes, int offset, int length)
         {
             // TODO: check bounds
 
@@ -655,7 +647,10 @@ namespace Xilium.CefGlue
             }
         }
 
-        public static string Base64Encode(byte[] bytes)
+        /// <summary>
+        /// Encodes <see cref="bytes"/> as a base64 string
+        /// </summary>
+        public static string Base64Encode(ReadOnlySpan<byte> bytes)
         {
             return Base64Encode(bytes, 0, bytes.Length);
         }
@@ -664,11 +659,11 @@ namespace Xilium.CefGlue
         /// Decodes the base64 encoded string |data|. The returned value will be NULL if
         /// the decoding fails.
         /// </summary>
-        public static CefBinaryValue Base64Decode(string data)
+        public static CefBinaryValue Base64Decode(string? data)
         {
             fixed (char* data_str = data)
             {
-                var n_data = new cef_string_t(data_str, data != null ? data.Length : 0);
+                var n_data = new cef_string_t(data_str, data?.Length ?? 0);
                 return CefBinaryValue.FromNative(libcef.base64decode(&n_data));
             }
         }
@@ -680,11 +675,11 @@ namespace Xilium.CefGlue
         /// converted to "%XX". If |use_plus| is true spaces will change to "+". The
         /// result is basically the same as encodeURIComponent in Javacript.
         /// </summary>
-        public static string UriEncode(string text, bool usePlus)
+        public static string UriEncode(string? text, bool usePlus)
         {
             fixed (char* text_str = text)
             {
-                var n_text = new cef_string_t(text_str, text != null ? text.Length : 0);
+                var n_text = new cef_string_t(text_str, text?.Length ?? 0);
 
                 var n_result = libcef.uriencode(&n_text, usePlus ? 1 : 0);
                 return cef_string_userfree.ToString(n_result);
@@ -701,11 +696,11 @@ namespace Xilium.CefGlue
         /// initial decoded result will be returned.  The |unescape_rule| parameter
         /// supports further customization the decoding process.
         /// </summary>
-        public static string UriDecode(string text, bool convertToUtf8, CefUriUnescapeRules unescapeRule)
+        public static string UriDecode(string? text, bool convertToUtf8, CefUriUnescapeRules unescapeRule)
         {
             fixed (char* text_str = text)
             {
-                var n_text = new cef_string_t(text_str, text != null ? text.Length : 0);
+                var n_text = new cef_string_t(text_str, text?.Length ?? 0);
 
                 var n_result = libcef.uridecode(&n_text, convertToUtf8 ? 1 : 0, unescapeRule);
                 return cef_string_userfree.ToString(n_result);
@@ -716,19 +711,19 @@ namespace Xilium.CefGlue
         /// Parses the specified |json_string| and returns a dictionary or list
         /// representation. If JSON parsing fails this method returns NULL.
         /// </summary>
-        public static CefValue ParseJson(string value, CefJsonParserOptions options)
+        public static CefValue? ParseJson(string? value, CefJsonParserOptions options)
         {
             fixed (char* value_str = value)
             {
-                var n_value = new cef_string_t(value_str, value != null ? value.Length : 0);
+                var n_value = new cef_string_t(value_str, value?.Length ?? 0);
                 var n_result = libcef.parse_json(&n_value, options);
                 return CefValue.FromNativeOrNull(n_result);
             }
         }
 
-        public static CefValue ParseJson(IntPtr json, int jsonSize, CefJsonParserOptions options)
+        public static CefValue? ParseJson(IntPtr json, int jsonSize, CefJsonParserOptions options)
         {
-            var n_result = libcef.parse_json_buffer((void*)json, checked((UIntPtr)jsonSize), options);
+            var n_result = libcef.parse_json_buffer((void*)json, (UIntPtr)jsonSize, options);
             return CefValue.FromNativeOrNull(n_result);
         }
 
@@ -737,11 +732,11 @@ namespace Xilium.CefGlue
         /// representation. If JSON parsing fails this method returns NULL and populates
         /// |error_msg_out| with a formatted error message.
         /// </summary>
-        public static CefValue ParseJsonAndReturnError(string value, CefJsonParserOptions options, out string errorMessage)
+        public static CefValue? ParseJsonAndReturnError(string value, CefJsonParserOptions options, out string errorMessage)
         {
             fixed (char* value_str = value)
             {
-                var n_value = new cef_string_t(value_str, value != null ? value.Length : 0);
+                var n_value = new cef_string_t(value_str, value.Length);
 
                 cef_string_t n_error_msg;
                 var n_result = libcef.parse_jsonand_return_error(&n_value, options, &n_error_msg);
@@ -759,7 +754,9 @@ namespace Xilium.CefGlue
         /// </summary>
         public static string WriteJson(CefValue value, CefJsonWriterOptions options)
         {
-            if (value == null) throw new ArgumentNullException("value");
+            if (value == null) 
+                throw new ArgumentNullException(nameof(value));
+            
             var n_result = libcef.write_json(value.ToNative(), options);
             return cef_string_userfree.ToString(n_result);
         }
@@ -827,10 +824,13 @@ namespace Xilium.CefGlue
         ///   example.test.increment();
         /// </code>
         /// </summary>
-        public static bool RegisterExtension(string extensionName, string javascriptCode, CefV8Handler handler)
+        public static bool RegisterExtension(string extensionName, string javascriptCode, CefV8Handler? handler)
         {
-            if (string.IsNullOrEmpty(extensionName)) throw new ArgumentNullException("extensionName");
-            if (string.IsNullOrEmpty(javascriptCode)) throw new ArgumentNullException("javascriptCode");
+            if (string.IsNullOrEmpty(extensionName))
+                throw new ArgumentNullException(nameof(extensionName));
+            
+            if (string.IsNullOrEmpty(javascriptCode))
+                throw new ArgumentNullException(nameof(javascriptCode));
 
             fixed (char* extensionName_str = extensionName)
             fixed (char* javascriptCode_str = javascriptCode)
@@ -854,7 +854,8 @@ namespace Xilium.CefGlue
         /// </summary>
         public static void VisitWebPluginInfo(CefWebPluginInfoVisitor visitor)
         {
-            if (visitor == null) throw new ArgumentNullException("visitor");
+            if (visitor == null) 
+                throw new ArgumentNullException(nameof(visitor));
 
             libcef.visit_web_plugin_info(visitor.ToNative());
         }
@@ -876,7 +877,8 @@ namespace Xilium.CefGlue
         /// </summary>
         public static void UnregisterInternalWebPlugin(string path)
         {
-            if (string.IsNullOrEmpty(path)) throw new ArgumentNullException("path");
+            if (string.IsNullOrEmpty(path)) 
+                throw new ArgumentNullException(nameof(path));
 
             fixed (char* path_str = path)
             {
@@ -891,7 +893,8 @@ namespace Xilium.CefGlue
         /// </summary>
         public static void RegisterWebPluginCrash(string path)
         {
-            if (string.IsNullOrEmpty(path)) throw new ArgumentNullException("path");
+            if (string.IsNullOrEmpty(path)) 
+                throw new ArgumentNullException(nameof(path));
 
             fixed (char* path_str = path)
             {
@@ -906,8 +909,11 @@ namespace Xilium.CefGlue
         /// </summary>
         public static void IsWebPluginUnstable(string path, CefWebPluginUnstableCallback callback)
         {
-            if (string.IsNullOrEmpty(path)) throw new ArgumentNullException("path");
-            if (callback == null) throw new ArgumentNullException("callback");
+            if (string.IsNullOrEmpty(path))
+                throw new ArgumentNullException(nameof(path));
+            
+            if (callback == null) 
+                throw new ArgumentNullException(nameof(callback));
 
             fixed (char* path_str = path)
             {
@@ -932,11 +938,9 @@ namespace Xilium.CefGlue
             libcef.string_clear(&n_value);
             if (!success)
             {
-                throw new InvalidOperationException(
-                    string.Format(CultureInfo.InvariantCulture, "Failed to get path for key {0}.", pathKey)
-                    );
+                throw new InvalidOperationException($"Failed to get path for key {pathKey}");
             }
-            return value;
+            return value!;
         }
 
         #endregion
@@ -955,7 +959,8 @@ namespace Xilium.CefGlue
         /// </summary>
         public static bool LaunchProcess(CefCommandLine commandLine)
         {
-            if (commandLine == null) throw new ArgumentNullException("commandLine");
+            if (commandLine == null) 
+                throw new ArgumentNullException(nameof(commandLine));
 
             return libcef.launch_process(commandLine.ToNative()) != 0;
         }
@@ -1083,13 +1088,13 @@ namespace Xilium.CefGlue
         /// <summary>
         /// Sets or clears a specific key-value pair from the crash metadata.
         /// </summary>
-        public static void SetCrashKeyValue(string key, string value)
+        public static void SetCrashKeyValue(string key, string? value)
         {
             fixed (char* key_ptr = key)
             fixed (char* value_ptr = value)
             {
                 var n_key = new cef_string_t(key_ptr, key.Length);
-                var n_value = new cef_string_t(value_ptr, value != null ? value.Length : 0);
+                var n_value = new cef_string_t(value_ptr, value?.Length ?? 0);
                 libcef.set_crash_key_value(&n_key, &n_value);
             }
         }

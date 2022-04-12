@@ -13,6 +13,7 @@ using Xilium.CefGlue.Interop;
 namespace Xilium.CefGlue
 {
     // Role: HANDLER
+    #nullable enable
     public abstract unsafe partial class CefMediaObserver
     {
         private static Dictionary<IntPtr, CefMediaObserver> _roots = new Dictionary<IntPtr, CefMediaObserver>();

@@ -17,15 +17,15 @@
         {
             CheckSelf(self);
 
-            string mValue;
-            var result = GetLocalizedString(string_id, out mValue);
+            var result = GetLocalizedString(string_id, out var mValue);
 
             if (result)
             {
                 cef_string_t.Copy(mValue, @string);
                 return 1;
             }
-            else return 0;
+            
+            return 0;
         }
 
         /// <summary>
@@ -34,7 +34,7 @@
         /// return true. To use the default translation return false. Include
         /// cef_pack_strings.h for a listing of valid string ID values.
         /// </summary>
-        protected virtual bool GetLocalizedString(int stringId, out string value)
+        protected virtual bool GetLocalizedString(int stringId, out string? value)
         {
             value = null;
             return false;

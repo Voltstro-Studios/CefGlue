@@ -13,6 +13,7 @@ using Xilium.CefGlue.Interop;
 namespace Xilium.CefGlue
 {
     // Role: HANDLER
+    #nullable enable
     public abstract unsafe partial class CefExtensionHandler
     {
         private static Dictionary<IntPtr, CefExtensionHandler> _roots = new Dictionary<IntPtr, CefExtensionHandler>();
@@ -22,9 +23,9 @@ namespace Xilium.CefGlue
         
         protected object SyncRoot { get { return this; } }
         
-        internal static CefExtensionHandler FromNativeOrNull(cef_extension_handler_t* ptr)
+        internal static CefExtensionHandler? FromNativeOrNull(cef_extension_handler_t* ptr)
         {
-            CefExtensionHandler value = null;
+            CefExtensionHandler? value = null;
             bool found;
             lock (_roots)
             {

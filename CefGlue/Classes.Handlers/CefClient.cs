@@ -14,7 +14,7 @@ namespace Xilium.CefGlue
         /// <summary>
         /// Return the handler for audio rendering events.
         /// </summary>
-        protected virtual CefAudioHandler GetAudioHandler()
+        protected virtual CefAudioHandler? GetAudioHandler()
         {
             return null;
         }
@@ -30,7 +30,7 @@ namespace Xilium.CefGlue
         /// Return the handler for context menus. If no handler is provided the default
         /// implementation will be used.
         /// </summary>
-        protected virtual CefContextMenuHandler GetContextMenuHandler()
+        protected virtual CefContextMenuHandler? GetContextMenuHandler()
         {
             return null;
         }
@@ -46,7 +46,7 @@ namespace Xilium.CefGlue
         /// Return the handler for dialogs. If no handler is provided the default
         /// implementation will be used.
         /// </summary>
-        protected virtual CefDialogHandler GetDialogHandler()
+        protected virtual CefDialogHandler? GetDialogHandler()
         {
             return null;
         }
@@ -62,7 +62,7 @@ namespace Xilium.CefGlue
         /// <summary>
         /// Return the handler for browser display state events.
         /// </summary>
-        protected virtual CefDisplayHandler GetDisplayHandler()
+        protected virtual CefDisplayHandler? GetDisplayHandler()
         {
             return null;
         }
@@ -79,7 +79,7 @@ namespace Xilium.CefGlue
         /// Return the handler for download events. If no handler is returned downloads
         /// will not be allowed.
         /// </summary>
-        protected virtual CefDownloadHandler GetDownloadHandler()
+        protected virtual CefDownloadHandler? GetDownloadHandler()
         {
             return null;
         }
@@ -95,7 +95,7 @@ namespace Xilium.CefGlue
         /// <summary>
         /// Return the handler for drag events.
         /// </summary>
-        protected virtual CefDragHandler GetDragHandler()
+        protected virtual CefDragHandler? GetDragHandler()
         {
             return null;
         }
@@ -111,7 +111,7 @@ namespace Xilium.CefGlue
         /// <summary>
         /// Return the handler for find result events.
         /// </summary>
-        protected virtual CefFindHandler GetFindHandler()
+        protected virtual CefFindHandler? GetFindHandler()
         {
             return null;
         }
@@ -127,7 +127,7 @@ namespace Xilium.CefGlue
         /// <summary>
         /// Return the handler for focus events.
         /// </summary>
-        protected virtual CefFocusHandler GetFocusHandler()
+        protected virtual CefFocusHandler? GetFocusHandler()
         {
             return null;
         }
@@ -159,7 +159,7 @@ namespace Xilium.CefGlue
         /// Return the handler for JavaScript dialogs. If no handler is provided the
         /// default implementation will be used.
         /// </summary>
-        protected virtual CefJSDialogHandler GetJSDialogHandler()
+        protected virtual CefJSDialogHandler? GetJSDialogHandler()
         {
             return null;
         }
@@ -175,7 +175,7 @@ namespace Xilium.CefGlue
         /// <summary>
         /// Return the handler for keyboard events.
         /// </summary>
-        protected virtual CefKeyboardHandler GetKeyboardHandler()
+        protected virtual CefKeyboardHandler? GetKeyboardHandler()
         {
             return null;
         }
@@ -191,7 +191,7 @@ namespace Xilium.CefGlue
         /// <summary>
         /// Return the handler for browser life span events.
         /// </summary>
-        protected virtual CefLifeSpanHandler GetLifeSpanHandler()
+        protected virtual CefLifeSpanHandler? GetLifeSpanHandler()
         {
             return null;
         }
@@ -207,7 +207,7 @@ namespace Xilium.CefGlue
         /// <summary>
         /// Return the handler for browser load status events.
         /// </summary>
-        protected virtual CefLoadHandler GetLoadHandler()
+        protected virtual CefLoadHandler? GetLoadHandler()
         {
             return null;
         }
@@ -223,7 +223,7 @@ namespace Xilium.CefGlue
         /// Return the handler for printing on Linux. If a print handler is not
         /// provided then printing will not be supported on the Linux platform.
         /// </summary>
-        protected virtual CefPrintHandler GetPrintHandler()
+        protected virtual CefPrintHandler? GetPrintHandler()
         {
             return null;
         }
@@ -239,7 +239,7 @@ namespace Xilium.CefGlue
         /// <summary>
         /// Return the handler for off-screen rendering events.
         /// </summary>
-        protected virtual CefRenderHandler GetRenderHandler()
+        protected virtual CefRenderHandler? GetRenderHandler()
         {
             return null;
         }
@@ -255,7 +255,7 @@ namespace Xilium.CefGlue
         /// <summary>
         /// Return the handler for browser request events.
         /// </summary>
-        protected virtual CefRequestHandler GetRequestHandler()
+        protected virtual CefRequestHandler? GetRequestHandler()
         {
             return null;
         }

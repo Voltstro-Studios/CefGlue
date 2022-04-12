@@ -1,11 +1,7 @@
-﻿namespace Xilium.CefGlue
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Runtime.InteropServices;
-    using Xilium.CefGlue.Interop;
+﻿using Xilium.CefGlue.Interop;
 
+namespace Xilium.CefGlue
+{
     /// <summary>
     /// Implement this interface to handle events related to browser life span. The
     /// methods of this class will be called on the UI thread unless otherwise
@@ -31,14 +27,15 @@
 
             var o_extraInfo = m_extraInfo;
             var o_client = m_client;
-            var result = OnBeforePopup(m_browser, m_frame, m_targetUrl, m_targetFrameName, target_disposition, m_userGesture, m_popupFeatures, m_windowInfo, ref m_client, m_settings, ref m_extraInfo, ref m_noJavascriptAccess);
+            var result = OnBeforePopup(m_browser, m_frame, m_targetUrl, m_targetFrameName, target_disposition, 
+                m_userGesture, m_popupFeatures, m_windowInfo, ref m_client, m_settings, ref m_extraInfo, ref m_noJavascriptAccess);
 
-            if ((object)o_client != m_client && m_client != null)
+            if (o_client != m_client && m_client != null)
             {
                 *client = m_client.ToNative();
             }
 
-            if ((object)o_extraInfo != m_extraInfo)
+            if (o_extraInfo != m_extraInfo)
             {
                 *extra_info = m_extraInfo != null ? m_extraInfo.ToNative() : null;
             }
@@ -77,7 +74,10 @@
         /// to the created popup browser that will be passed to
         /// CefRenderProcessHandler::OnBrowserCreated() in the render process.
         /// </summary>
-        protected virtual bool OnBeforePopup(CefBrowser browser, CefFrame frame, string targetUrl, string targetFrameName, CefWindowOpenDisposition targetDisposition, bool userGesture, CefPopupFeatures popupFeatures, CefWindowInfo windowInfo, ref CefClient client, CefBrowserSettings settings, ref CefDictionaryValue extraInfo, ref bool noJavascriptAccess)
+        protected virtual bool OnBeforePopup(CefBrowser browser, CefFrame frame, string? targetUrl, string? targetFrameName, 
+            CefWindowOpenDisposition targetDisposition, bool userGesture, CefPopupFeatures popupFeatures, 
+            CefWindowInfo windowInfo, ref CefClient? client, CefBrowserSettings settings, 
+            ref CefDictionaryValue? extraInfo, ref bool noJavascriptAccess)
         {
             return false;
         }

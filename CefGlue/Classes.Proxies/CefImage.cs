@@ -167,7 +167,7 @@
         /// Returns a CefBinaryValue containing the pixel data on success or NULL on
         /// failure.
         /// </summary>
-        public CefBinaryValue GetAsBitmap(float scaleFactor, CefColorType colorType, CefAlphaType alphaType, out int pixelWidth, out int pixelHeight)
+        public CefBinaryValue? GetAsBitmap(float scaleFactor, CefColorType colorType, CefAlphaType alphaType, out int pixelWidth, out int pixelHeight)
         {
             int n_pixelWidth;
             int n_pixelHeight;
@@ -193,7 +193,7 @@
         /// the output representation size in pixel coordinates. Returns a
         /// CefBinaryValue containing the PNG image data on success or NULL on failure.
         /// </summary>
-        public CefBinaryValue GetAsPng(float scaleFactor, bool withTransparency, out int pixelWidth, out int pixelHeight)
+        public CefBinaryValue? GetAsPng(float scaleFactor, bool withTransparency, out int pixelWidth, out int pixelHeight)
         {
             int n_pixelWidth;
             int n_pixelHeight;
@@ -221,7 +221,7 @@
         /// CefBinaryValue containing the JPEG image data on success or NULL on
         /// failure.
         /// </summary>
-        public CefBinaryValue GetAsJpeg(float scaleFactor, int quality, out int pixelWidth, out int pixelHeight)
+        public CefBinaryValue? GetAsJpeg(float scaleFactor, int quality, out int pixelWidth, out int pixelHeight)
         {
             int n_pixelWidth;
             int n_pixelHeight;

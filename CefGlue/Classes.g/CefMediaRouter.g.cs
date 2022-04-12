@@ -13,6 +13,7 @@ using Xilium.CefGlue.Interop;
 namespace Xilium.CefGlue
 {
     // Role: PROXY
+    #nullable enable
     public sealed unsafe partial class CefMediaRouter : IDisposable
     {
         internal static CefMediaRouter FromNative(cef_media_router_t* ptr)
@@ -20,7 +21,7 @@ namespace Xilium.CefGlue
             return new CefMediaRouter(ptr);
         }
         
-        internal static CefMediaRouter FromNativeOrNull(cef_media_router_t* ptr)
+        internal static CefMediaRouter? FromNativeOrNull(cef_media_router_t* ptr)
         {
             if (ptr == null) return null;
             return new CefMediaRouter(ptr);

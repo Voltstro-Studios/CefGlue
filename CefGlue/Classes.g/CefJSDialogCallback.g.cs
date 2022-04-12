@@ -13,6 +13,7 @@ using Xilium.CefGlue.Interop;
 namespace Xilium.CefGlue
 {
     // Role: PROXY
+    #nullable enable
     public sealed unsafe partial class CefJSDialogCallback : IDisposable
     {
         internal static CefJSDialogCallback FromNative(cef_jsdialog_callback_t* ptr)
@@ -20,7 +21,7 @@ namespace Xilium.CefGlue
             return new CefJSDialogCallback(ptr);
         }
         
-        internal static CefJSDialogCallback FromNativeOrNull(cef_jsdialog_callback_t* ptr)
+        internal static CefJSDialogCallback? FromNativeOrNull(cef_jsdialog_callback_t* ptr)
         {
             if (ptr == null) return null;
             return new CefJSDialogCallback(ptr);

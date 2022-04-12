@@ -25,6 +25,6 @@
         /// true if the plugin has reached the crash count threshold of 3 times in 120
         /// seconds.
         /// </summary>
-        protected abstract void IsUnstable(string path, bool unstable);
+        protected abstract void IsUnstable(string? path, bool unstable);
     }
 }

@@ -1,10 +1,7 @@
-﻿namespace Xilium.CefGlue
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using Xilium.CefGlue.Interop;
+﻿using Xilium.CefGlue.Interop;
 
+namespace Xilium.CefGlue
+{
     public abstract unsafe partial class CefApp
     {
         private void on_before_command_line_processing(cef_app_t* self, cef_string_t* process_type, cef_command_line_t* command_line)
@@ -30,10 +27,9 @@
         /// command-line arguments for non-browser processes as this may result in
         /// undefined behavior including crashes.
         /// </summary>
-        protected virtual void OnBeforeCommandLineProcessing(string processType, CefCommandLine commandLine)
+        protected virtual void OnBeforeCommandLineProcessing(string? processType, CefCommandLine commandLine)
         {
         }
-
 
         private void on_register_custom_schemes(cef_app_t* self, cef_scheme_registrar_t* registrar)
         {
@@ -56,7 +52,6 @@
         {
         }
 
-
         private cef_resource_bundle_handler_t* get_resource_bundle_handler(cef_app_t* self)
         {
             CheckSelf(self);
@@ -72,11 +67,10 @@
         /// handler is returned resources will be loaded from pack files. This method
         /// is called by the browser and renderer processes on multiple threads.
         /// </summary>
-        protected virtual CefResourceBundleHandler GetResourceBundleHandler()
+        protected virtual CefResourceBundleHandler? GetResourceBundleHandler()
         {
             return null;
         }
-
 
         private cef_browser_process_handler_t* get_browser_process_handler(cef_app_t* self)
         {
@@ -91,11 +85,10 @@
         /// Return the handler for functionality specific to the browser process. This
         /// method is called on multiple threads in the browser process.
         /// </summary>
-        protected virtual CefBrowserProcessHandler GetBrowserProcessHandler()
+        protected virtual CefBrowserProcessHandler? GetBrowserProcessHandler()
         {
             return null;
         }
-
 
         private cef_render_process_handler_t* get_render_process_handler(cef_app_t* self)
         {
@@ -111,7 +104,7 @@
         /// render process main thread.
         /// </summary>
         /// <returns></returns>
-        protected virtual CefRenderProcessHandler GetRenderProcessHandler()
+        protected virtual CefRenderProcessHandler? GetRenderProcessHandler()
         {
             return null;
         }

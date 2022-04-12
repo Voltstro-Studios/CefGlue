@@ -13,6 +13,7 @@ using Xilium.CefGlue.Interop;
 namespace Xilium.CefGlue
 {
     // Role: PROXY
+    #nullable enable
     public sealed unsafe partial class CefV8Value : IDisposable
     {
         internal static CefV8Value FromNative(cef_v8value_t* ptr)
@@ -20,7 +21,7 @@ namespace Xilium.CefGlue
             return new CefV8Value(ptr);
         }
         
-        internal static CefV8Value FromNativeOrNull(cef_v8value_t* ptr)
+        internal static CefV8Value? FromNativeOrNull(cef_v8value_t* ptr)
         {
             if (ptr == null) return null;
             return new CefV8Value(ptr);

@@ -14,10 +14,13 @@ namespace Xilium.CefGlue
 
         public static unsafe bool SendDevToolsMessage(this CefBrowserHost browserHost, ArraySegment<byte> message)
         {
-            fixed (byte* messagePtr = &message.Array[message.Offset])
-            {
-                return browserHost.SendDevToolsMessage((IntPtr)messagePtr, message.Count);
-            }
+            if (message.Array != null)
+                fixed (byte* messagePtr = &message.Array[message.Offset])
+                {
+                    return browserHost.SendDevToolsMessage((IntPtr) messagePtr, message.Count);
+                }
+
+            return false;
         }
     }
 }

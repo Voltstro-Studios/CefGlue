@@ -1,7 +1,6 @@
 ﻿using System;
 using Xilium.CefGlue.Interop;
 
-#nullable enable
 namespace Xilium.CefGlue
 {
     /// <summary>
@@ -17,10 +16,10 @@ namespace Xilium.CefGlue
         /// manager's storage has been initialized. Using this method is equivalent to
         /// calling CefRequestContext::GetGlobalContext()->GetDefaultCookieManager().
         /// </summary>
-        public static CefCookieManager GetGlobal(CefCompletionCallback? callback)
+        public static CefCookieManager? GetGlobal(CefCompletionCallback? callback)
         {
             var n_callback = callback != null ? callback.ToNative() : null;
-            return CefCookieManager.FromNativeOrNull(
+            return FromNativeOrNull(
                 cef_cookie_manager_t.get_global_manager(n_callback));
         }
 

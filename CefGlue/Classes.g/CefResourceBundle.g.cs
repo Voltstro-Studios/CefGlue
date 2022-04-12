@@ -13,6 +13,7 @@ using Xilium.CefGlue.Interop;
 namespace Xilium.CefGlue
 {
     // Role: PROXY
+    #nullable enable
     public sealed unsafe partial class CefResourceBundle : IDisposable
     {
         internal static CefResourceBundle FromNative(cef_resource_bundle_t* ptr)
@@ -20,7 +21,7 @@ namespace Xilium.CefGlue
             return new CefResourceBundle(ptr);
         }
         
-        internal static CefResourceBundle FromNativeOrNull(cef_resource_bundle_t* ptr)
+        internal static CefResourceBundle? FromNativeOrNull(cef_resource_bundle_t* ptr)
         {
             if (ptr == null) return null;
             return new CefResourceBundle(ptr);

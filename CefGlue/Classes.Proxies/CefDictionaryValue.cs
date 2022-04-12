@@ -137,7 +137,7 @@ namespace Xilium.CefGlue
         /// returned value will reference existing data and modifications to the value
         /// will modify this object.
         /// </summary>
-        public CefValue GetValue(string? key)
+        public CefValue? GetValue(string? key)
         {
             fixed (char* key_str = key)
             {

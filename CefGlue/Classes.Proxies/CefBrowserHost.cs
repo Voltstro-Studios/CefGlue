@@ -20,7 +20,8 @@ namespace Xilium.CefGlue
         /// that will be passed to CefRenderProcessHandler::OnBrowserCreated() in the
         /// render process.
         /// </summary>
-        public static void CreateBrowser(CefWindowInfo windowInfo, CefClient client, CefBrowserSettings settings, string url, CefDictionaryValue extraInfo = null, CefRequestContext requestContext = null)
+        public static void CreateBrowser(CefWindowInfo windowInfo, CefClient client, CefBrowserSettings settings, string? url, 
+            CefDictionaryValue? extraInfo = null, CefRequestContext? requestContext = null)
         {
             if (windowInfo == null) 
                 throw new ArgumentNullException(nameof(windowInfo));
@@ -55,7 +56,8 @@ namespace Xilium.CefGlue
         /// specific to the created browser that will be passed to
         /// CefRenderProcessHandler::OnBrowserCreated() in the render process.
         /// </summary>
-        public static CefBrowser CreateBrowserSync(CefWindowInfo windowInfo, CefClient client, CefBrowserSettings settings, string url, CefDictionaryValue extraInfo = null, CefRequestContext requestContext = null)
+        public static CefBrowser CreateBrowserSync(CefWindowInfo windowInfo, CefClient client, CefBrowserSettings settings, string? url, 
+            CefDictionaryValue? extraInfo = null, CefRequestContext? requestContext = null)
         {
             if (windowInfo == null)
                 throw new ArgumentNullException(nameof(windowInfo));
@@ -161,8 +163,7 @@ namespace Xilium.CefGlue
             return CefClient.FromNative(
                 cef_browser_host_t.get_client(_self));
         }
-
-
+        
         /// <summary>
         /// Returns the request context for this browser.
         /// </summary>
@@ -171,8 +172,7 @@ namespace Xilium.CefGlue
             return CefRequestContext.FromNative(
                 cef_browser_host_t.get_request_context(_self));
         }
-
-
+        
         /// <summary>
         /// Get the current zoom level. The default zoom level is 0.0. This method can
         /// only be called on the UI thread.
@@ -209,7 +209,8 @@ namespace Xilium.CefGlue
         /// dismissed or immediately if another dialog is already pending. The dialog
         /// will be initiated asynchronously on the UI thread.
         /// </summary>
-        public void RunFileDialog(CefFileDialogMode mode, string title, string defaultFilePath, string[] acceptFilters, int selectedAcceptFilter, CefRunFileDialogCallback callback)
+        public void RunFileDialog(CefFileDialogMode mode, string? title, string? defaultFilePath, string[] acceptFilters, int selectedAcceptFilter, 
+            CefRunFileDialogCallback callback)
         {
             if (callback == null) 
                 throw new ArgumentNullException(nameof(callback));
@@ -338,6 +339,15 @@ namespace Xilium.CefGlue
         /// </summary>
         public void ShowDevTools(CefWindowInfo windowInfo, CefClient client, CefBrowserSettings browserSettings, CefPoint inspectElementAt)
         {
+            if (windowInfo == null)
+                throw new ArgumentNullException(nameof(windowInfo));
+
+            if (client == null)
+                throw new ArgumentNullException(nameof(client));
+
+            if (browserSettings == null)
+                throw new ArgumentNullException(nameof(browserSettings));
+
             var n_inspectElementAt = new cef_point_t(inspectElementAt.X, inspectElementAt.Y);
             cef_browser_host_t.show_dev_tools(_self, windowInfo.ToNative(), client.ToNative(), browserSettings.ToNative(),
                 &n_inspectElementAt);
@@ -389,7 +399,7 @@ namespace Xilium.CefGlue
         public bool SendDevToolsMessage(IntPtr message, int messageSize)
         {
             return cef_browser_host_t.send_dev_tools_message(
-                _self, (void*)message, checked((UIntPtr)messageSize)) != 0;
+                _self, (void*)message, (UIntPtr)messageSize) != 0;
         }
 
         /// <summary>
@@ -404,8 +414,11 @@ namespace Xilium.CefGlue
         /// successfully submitted for validation, otherwise 0. See the
         /// SendDevToolsMessage documentation for additional usage information.
         /// </summary>
-        public int ExecuteDevToolsMethod(int messageId, string method, CefDictionaryValue parameters)
+        public int ExecuteDevToolsMethod(int messageId, string? method, CefDictionaryValue parameters)
         {
+            if (parameters == null)
+                throw new ArgumentNullException(nameof(parameters));
+            
             fixed (char* method_str = method)
             {
                 var n_method = new cef_string_t(method_str, method?.Length ?? 0);
@@ -421,7 +434,7 @@ namespace Xilium.CefGlue
         /// is destroyed. See the SendDevToolsMessage documentation for additional
         /// usage information.
         /// </summary>
-        public CefRegistration AddDevToolsMessageObserver(CefDevToolsMessageObserver observer)
+        public CefRegistration? AddDevToolsMessageObserver(CefDevToolsMessageObserver observer)
         {
             if (observer == null) 
                 throw new ArgumentNullException(nameof(observer));
@@ -445,7 +458,7 @@ namespace Xilium.CefGlue
         /// If a misspelled word is currently selected in an editable node calling
         /// this method will replace it with the specified |word|.
         /// </summary>
-        public void ReplaceMisspelling(string word)
+        public void ReplaceMisspelling(string? word)
         {
             fixed (char* word_str = word)
             {
@@ -457,7 +470,7 @@ namespace Xilium.CefGlue
         /// <summary>
         /// Add the specified |word| to the spelling dictionary.
         /// </summary>
-        public void AddWordToDictionary(string word)
+        public void AddWordToDictionary(string? word)
         {
             fixed (char* word_str = word)
             {
@@ -640,7 +653,7 @@ namespace Xilium.CefGlue
         /// C. insertText of NSTextInput is called (on Mac).
         /// This method is only used when window rendering is disabled.
         /// </summary>
-        public void ImeSetComposition(string text,
+        public void ImeSetComposition(string? text,
             int underlinesCount,
             CefCompositionUnderline underlines,
             CefRange replacementRange,
@@ -649,7 +662,7 @@ namespace Xilium.CefGlue
             fixed (char* text_ptr = text)
             {
                 cef_string_t n_text = new cef_string_t(text_ptr, text?.Length ?? 0);
-                UIntPtr n_underlinesCount = checked((UIntPtr)underlinesCount);
+                UIntPtr n_underlinesCount = (UIntPtr)underlinesCount;
                 var n_underlines = underlines.ToNative();
                 cef_range_t n_replacementRange = new cef_range_t(replacementRange.From, replacementRange.To);
                 cef_range_t n_selectionRange = new cef_range_t(selectionRange.From, selectionRange.To);
@@ -667,7 +680,7 @@ namespace Xilium.CefGlue
         /// |relative_cursor_pos| values are only used on OS X.
         /// This method is only used when window rendering is disabled.
         /// </summary>
-        public void ImeCommitText(string text, CefRange replacementRange, int relativeCursorPos)
+        public void ImeCommitText(string? text, CefRange replacementRange, int relativeCursorPos)
         {
             fixed (char* text_ptr = text)
             {
@@ -784,10 +797,9 @@ namespace Xilium.CefGlue
         /// Returns the current visible navigation entry for this browser. This method
         /// can only be called on the UI thread.
         /// </summary>
-        public CefNavigationEntry GetVisibleNavigationEntry()
+        public CefNavigationEntry? GetVisibleNavigationEntry()
         {
-            return CefNavigationEntry.FromNativeOrNull(
-                cef_browser_host_t.get_visible_navigation_entry(_self));
+            return CefNavigationEntry.FromNativeOrNull(cef_browser_host_t.get_visible_navigation_entry(_self));
         }
 
         /// <summary>
@@ -835,7 +847,7 @@ namespace Xilium.CefGlue
         /// Returns the extension hosted in this browser or NULL if no extension is
         /// hosted. See CefRequestContext::LoadExtension for details.
         /// </summary>
-        public CefExtension GetExtension()
+        public CefExtension? GetExtension()
         {
             var nExtension = cef_browser_host_t.get_extension(_self);
             return CefExtension.FromNativeOrNull(nExtension);

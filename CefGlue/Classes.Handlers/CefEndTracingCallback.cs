@@ -24,6 +24,6 @@
         /// the path at which tracing data was written. The client is responsible for
         /// deleting |tracing_file|.
         /// </summary>
-        protected abstract void OnEndTracingComplete(string tracingFile);
+        protected abstract void OnEndTracingComplete(string? tracingFile);
     }
 }

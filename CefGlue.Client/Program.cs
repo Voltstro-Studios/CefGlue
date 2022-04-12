@@ -52,7 +52,7 @@
                     LogFile = "CefGlue.log",
                 };
 
-            CefRuntime.Initialize(mainArgs, settings, app);
+            CefRuntime.Initialize(mainArgs, settings, app, IntPtr.Zero);
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

@@ -1,11 +1,9 @@
-﻿namespace Xilium.CefGlue
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Runtime.InteropServices;
-    using Xilium.CefGlue.Interop;
+﻿using System;
+using Xilium.CefGlue.Interop;
+using System.Diagnostics.CodeAnalysis;
 
+namespace Xilium.CefGlue
+{
     /// <summary>
     /// Class representing a V8 value handle. V8 handles can only be accessed from
     /// the thread on which they are created. Valid threads for creating a V8 handle
@@ -20,7 +18,7 @@
         /// </summary>
         public static CefV8Value CreateUndefined()
         {
-            return CefV8Value.FromNative(
+            return FromNative(
                 cef_v8value_t.create_undefined()
                 );
         }
@@ -30,7 +28,7 @@
         /// </summary>
         public static CefV8Value CreateNull()
         {
-            return CefV8Value.FromNative(
+            return FromNative(
                 cef_v8value_t.create_null()
                 );
         }
@@ -40,7 +38,7 @@
         /// </summary>
         public static CefV8Value CreateBool(bool value)
         {
-            return CefV8Value.FromNative(
+            return FromNative(
                 cef_v8value_t.create_bool(value ? 1 : 0)
                 );
         }
@@ -50,7 +48,7 @@
         /// </summary>
         public static CefV8Value CreateInt(int value)
         {
-            return CefV8Value.FromNative(
+            return FromNative(
                 cef_v8value_t.create_int(value)
                 );
         }
@@ -60,9 +58,8 @@
         /// </summary>
         public static CefV8Value CreateUInt(uint value)
         {
-            return CefV8Value.FromNative(
-                cef_v8value_t.create_uint(value)
-                );
+            return FromNative(
+                cef_v8value_t.create_uint(value));
         }
 
         /// <summary>
@@ -70,9 +67,8 @@
         /// </summary>
         public static CefV8Value CreateDouble(double value)
         {
-            return CefV8Value.FromNative(
-                cef_v8value_t.create_double(value)
-                );
+            return FromNative(
+                cef_v8value_t.create_double(value));
         }
 
         /// <summary>
@@ -84,22 +80,20 @@
         public static CefV8Value CreateDate(DateTime value)
         {
             var n_value = new cef_time_t(value);
-            return CefV8Value.FromNative(
-                cef_v8value_t.create_date(&n_value)
-                );
+            return FromNative(
+                cef_v8value_t.create_date(&n_value));
         }
 
         /// <summary>
         /// Create a new CefV8Value object of type string.
         /// </summary>
-        public static CefV8Value CreateString(string value)
+        public static CefV8Value CreateString(string? value)
         {
             fixed (char* value_str = value)
             {
-                var n_value = new cef_string_t(value_str, value != null ? value.Length : 0);
+                var n_value = new cef_string_t(value_str, value?.Length ?? 0);
                 return CefV8Value.FromNative(
-                    cef_v8value_t.create_string(&n_value)
-                    );
+                    cef_v8value_t.create_string(&n_value));
             }
         }
 
@@ -110,14 +104,12 @@
         /// combination with calling Enter() and Exit() on a stored CefV8Context
         /// reference.
         /// </summary>
-        public static CefV8Value CreateObject(CefV8Accessor accessor = null, CefV8Interceptor interceptor = null)
+        public static CefV8Value CreateObject(CefV8Accessor? accessor = null, CefV8Interceptor? interceptor = null)
         {
             return CefV8Value.FromNative(
                 cef_v8value_t.create_object(
                     accessor != null ? accessor.ToNative() : null,
-                    interceptor != null ? interceptor.ToNative() : null
-                    )
-                );
+                    interceptor != null ? interceptor.ToNative() : null));
         }
 
         /// <summary>
@@ -129,9 +121,8 @@
         /// </summary>
         public static CefV8Value CreateArray(int length)
         {
-            return CefV8Value.FromNative(
-                cef_v8value_t.create_array(length)
-                );
+            return FromNative(
+                cef_v8value_t.create_array(length));
         }
 
         /// <summary>
@@ -150,11 +141,10 @@
 
             var n_value = cef_v8value_t.create_array_buffer(
                 (void*)buffer,
-                checked((UIntPtr)length),
-                releaseCallback.ToNative()
-                );
+                (UIntPtr)length,
+                releaseCallback.ToNative());
 
-            return CefV8Value.FromNative(n_value);
+            return FromNative(n_value);
         }
 
         /// <summary>
@@ -163,15 +153,14 @@
         /// CefV8Accessor callback, or in combination with calling Enter() and Exit()
         /// on a stored CefV8Context reference.
         /// </summary>
-        public static CefV8Value CreateFunction(string name, CefV8Handler handler)
+        public static CefV8Value CreateFunction(string? name, CefV8Handler handler)
         {
             fixed (char* name_str = name)
             {
-                var n_name = new cef_string_t(name_str, name != null ? name.Length : 0);
+                var n_name = new cef_string_t(name_str, name?.Length ?? 0);
 
                 return CefV8Value.FromNative(
-                    cef_v8value_t.create_function(&n_name, handler.ToNative())
-                    );
+                    cef_v8value_t.create_function(&n_name, handler.ToNative()));
             }
         }
 
@@ -180,112 +169,73 @@
         /// the current thread. Do not call any other methods if this method returns
         /// false.
         /// </summary>
-        public bool IsValid
-        {
-            get { return cef_v8value_t.is_valid(_self) != 0; }
-        }
+        public bool IsValid => cef_v8value_t.is_valid(_self) != 0;
 
         /// <summary>
         /// True if the value type is undefined.
         /// </summary>
-        public bool IsUndefined
-        {
-            get { return cef_v8value_t.is_undefined(_self) != 0; }
-        }
+        public bool IsUndefined => cef_v8value_t.is_undefined(_self) != 0;
 
         /// <summary>
         /// True if the value type is null.
         /// </summary>
-        public bool IsNull
-        {
-            get { return cef_v8value_t.is_null(_self) != 0; }
-        }
+        public bool IsNull => cef_v8value_t.is_null(_self) != 0;
 
         /// <summary>
         /// True if the value type is bool.
         /// </summary>
-        public bool IsBool
-        {
-            get { return cef_v8value_t.is_bool(_self) != 0; }
-        }
+        public bool IsBool => cef_v8value_t.is_bool(_self) != 0;
 
         /// <summary>
         /// True if the value type is int.
         /// </summary>
-        public bool IsInt
-        {
-            get { return cef_v8value_t.is_int(_self) != 0; }
-        }
+        public bool IsInt => cef_v8value_t.is_int(_self) != 0;
 
         /// <summary>
         /// True if the value type is unsigned int.
         /// </summary>
-        public bool IsUInt
-        {
-            get { return cef_v8value_t.is_uint(_self) != 0; }
-        }
+        public bool IsUInt => cef_v8value_t.is_uint(_self) != 0;
 
         /// <summary>
         /// True if the value type is double.
         /// </summary>
-        public bool IsDouble
-        {
-            get { return cef_v8value_t.is_double(_self) != 0; }
-        }
+        public bool IsDouble => cef_v8value_t.is_double(_self) != 0;
 
         /// <summary>
         /// True if the value type is Date.
         /// </summary>
-        public bool IsDate
-        {
-            get { return cef_v8value_t.is_date(_self) != 0; }
-        }
+        public bool IsDate => cef_v8value_t.is_date(_self) != 0;
 
         /// <summary>
         /// True if the value type is string.
         /// </summary>
-        public bool IsString
-        {
-            get { return cef_v8value_t.is_string(_self) != 0; }
-        }
+        public bool IsString => cef_v8value_t.is_string(_self) != 0;
 
         /// <summary>
         /// True if the value type is object.
         /// </summary>
-        public bool IsObject
-        {
-            get { return cef_v8value_t.is_object(_self) != 0; }
-        }
+        public bool IsObject => cef_v8value_t.is_object(_self) != 0;
 
         /// <summary>
         /// True if the value type is array.
         /// </summary>
-        public bool IsArray
-        {
-            get { return cef_v8value_t.is_array(_self) != 0; }
-        }
+        public bool IsArray => cef_v8value_t.is_array(_self) != 0;
 
         /// <summary>
         /// True if the value type is an ArrayBuffer.
         /// </summary>
-        public bool IsArrayBuffer
-        {
-            get { return cef_v8value_t.is_array_buffer(_self) != 0; }
-        }
+        public bool IsArrayBuffer => cef_v8value_t.is_array_buffer(_self) != 0;
 
         /// <summary>
         /// True if the value type is function.
         /// </summary>
-        public bool IsFunction
-        {
-            get { return cef_v8value_t.is_function(_self) != 0; }
-        }
+        public bool IsFunction => cef_v8value_t.is_function(_self) != 0;
 
         /// <summary>
         /// Returns true if this object is pointing to the same handle as |that|
         /// object.
         /// </summary>
-        public bool IsSame(CefV8Value that)
+        public bool IsSame(CefV8Value? that)
         {
             if (that == null) return false;
 
@@ -348,29 +298,22 @@
         /// interchangably with the framework converting between them as necessary.
         /// Returns true if this is a user created object.
         /// </summary>
-        public bool IsUserCreated
-        {
-            get { return cef_v8value_t.is_user_created(_self) != 0; }
-        }
+        public bool IsUserCreated => cef_v8value_t.is_user_created(_self) != 0;
 
         /// <summary>
         /// Returns true if the last method call resulted in an exception. This
         /// attribute exists only in the scope of the current CEF value object.
         /// </summary>
-        public bool HasException
-        {
-            get { return cef_v8value_t.has_exception(_self) != 0; }
-        }
+        public bool HasException => cef_v8value_t.has_exception(_self) != 0;
 
         /// <summary>
         /// Returns the exception resulting from the last method call. This attribute
         /// exists only in the scope of the current CEF value object.
         /// </summary>
-        public CefV8Exception GetException()
+        public CefV8Exception? GetException()
         {
             return CefV8Exception.FromNativeOrNull(
-                cef_v8value_t.get_exception(_self)
-                );
+                cef_v8value_t.get_exception(_self));
         }
 
         /// <summary>
@@ -405,11 +348,11 @@
         /// <summary>
         /// Returns true if the object has a value with the specified identifier.
         /// </summary>
-        public bool HasValue(string key)
+        public bool HasValue(string? key)
         {
             fixed (char* key_str = key)
             {
-                var n_key = new cef_string_t(key_str, key != null ? key.Length : 0);
+                var n_key = new cef_string_t(key_str, key?.Length ?? 0);
                 return cef_v8value_t.has_value_bykey(_self, &n_key) != 0;
             }
         }
@@ -428,11 +371,11 @@
         /// is thrown. For read-only and don't-delete values this method will return
         /// true even though deletion failed.
         /// </summary>
-        public bool DeleteValue(string key)
+        public bool DeleteValue(string? key)
         {
             fixed (char* key_str = key)
             {
-                var n_key = new cef_string_t(key_str, key != null ? key.Length : 0);
+                var n_key = new cef_string_t(key_str, key?.Length ?? 0);
                 return cef_v8value_t.delete_value_bykey(_self, &n_key) != 0;
             }
         }
@@ -452,14 +395,13 @@
         /// Returns the value with the specified identifier on success. Returns NULL
         /// if this method is called incorrectly or an exception is thrown.
         /// </summary>
-        public CefV8Value GetValue(string key)
+        public CefV8Value? GetValue(string? key)
         {
             fixed (char* key_str = key)
             {
-                var n_key = new cef_string_t(key_str, key != null ? key.Length : 0);
-                return CefV8Value.FromNativeOrNull(
-                    cef_v8value_t.get_value_bykey(_self, &n_key)
-                    );
+                var n_key = new cef_string_t(key_str, key?.Length ?? 0);
+                return FromNativeOrNull(
+                    cef_v8value_t.get_value_bykey(_self, &n_key));
             }
         }
 
@@ -467,11 +409,10 @@
         /// Returns the value with the specified identifier on success. Returns NULL
         /// if this method is called incorrectly or an exception is thrown.
         /// </summary>
-        public CefV8Value GetValue(int index)
+        public CefV8Value? GetValue(int index)
         {
-            return CefV8Value.FromNativeOrNull(
-                    cef_v8value_t.get_value_byindex(_self, index)
-                    );
+            return FromNativeOrNull(
+                    cef_v8value_t.get_value_byindex(_self, index));
         }
 
         /// <summary>
@@ -480,11 +421,14 @@
         /// is thrown. For read-only values this method will return true even though
         /// assignment failed.
         /// </summary>
-        public bool SetValue(string key, CefV8Value value, CefV8PropertyAttribute attribute = CefV8PropertyAttribute.None)
+        public bool SetValue(string? key, CefV8Value value, CefV8PropertyAttribute attribute = CefV8PropertyAttribute.None)
         {
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+            
             fixed (char* key_str = key)
             {
-                var n_key = new cef_string_t(key_str, key != null ? key.Length : 0);
+                var n_key = new cef_string_t(key_str, key?.Length ?? 0);
                 return cef_v8value_t.set_value_bykey(_self, &n_key, value.ToNative(), attribute) != 0;
             }
         }
@@ -497,6 +441,9 @@
         /// </summary>
         public bool SetValue(int index, CefV8Value value)
         {
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+            
             return cef_v8value_t.set_value_byindex(_self, index, value.ToNative()) != 0;
         }
 
@@ -507,11 +454,11 @@
         /// incorrectly or an exception is thrown. For read-only values this method
         /// will return true even though assignment failed.
         /// </summary>
-        public bool SetValue(string key, CefV8AccessControl settings, CefV8PropertyAttribute attribute = CefV8PropertyAttribute.None)
+        public bool SetValue(string? key, CefV8AccessControl settings, CefV8PropertyAttribute attribute = CefV8PropertyAttribute.None)
         {
             fixed (char* key_str = key)
             {
-                var n_key = new cef_string_t(key_str, key != null ? key.Length : 0);
+                var n_key = new cef_string_t(key_str, key?.Length ?? 0);
                 return cef_v8value_t.set_value_byaccessor(_self, &n_key, settings, attribute) != 0;
             }
         }
@@ -520,12 +467,11 @@
         /// Read the keys for the object's values into the specified vector. Integer-
         /// based keys will also be returned as strings.
         /// </summary>
-        public bool TryGetKeys(out string[] keys)
+        public bool TryGetKeys([NotNullWhen(true)] out string[]? keys)
         {
             var list = libcef.string_list_alloc();
             var result = cef_v8value_t.get_keys(_self, list) != 0;
-            if (result) keys = cef_string_list.ToArray(list);
-            else keys = null;
+            keys = result ? cef_string_list.ToArray(list) : null;
             libcef.string_list_free(list);
             return result;
         }
@@ -536,9 +482,10 @@
         /// </summary>
         public string[] GetKeys()
         {
-            string[] keys;
-            if (TryGetKeys(out keys)) return keys;
-            else throw new InvalidOperationException();
+            if (TryGetKeys(out var keys))
+                return keys;
+            
+            throw new InvalidOperationException();
         }
 
         /// <summary>
@@ -546,7 +493,7 @@
         /// false if this method is called incorrectly. This method can only be called
         /// on user created objects.
         /// </summary>
-        public bool SetUserData(CefUserData userData)
+        public bool SetUserData(CefUserData? userData)
         {
             return cef_v8value_t.set_user_data(_self, userData != null ? (cef_base_ref_counted_t*)userData.ToNative() : null) != 0;
         }
@@ -554,11 +501,10 @@
         /// <summary>
         /// Returns the user data, if any, assigned to this object.
         /// </summary>
-        public CefUserData GetUserData()
+        public CefUserData? GetUserData()
         {
             return CefUserData.FromNativeOrNull(
-                (cef_user_data_t*)cef_v8value_t.get_user_data(_self)
-                );
+                (cef_user_data_t*)cef_v8value_t.get_user_data(_self));
         }
 
         /// <summary>
@@ -600,7 +546,7 @@
         /// Returns the ReleaseCallback object associated with the ArrayBuffer or NULL
         /// if the ArrayBuffer was not created with CreateArrayBuffer.
         /// </summary>
-        public CefV8ArrayBufferReleaseCallback GetArrayBufferReleaseCallback()
+        public CefV8ArrayBufferReleaseCallback? GetArrayBufferReleaseCallback()
         {
             var n_releaseCallback = cef_v8value_t.get_array_buffer_release_callback(_self);
             return CefV8ArrayBufferReleaseCallback.FromNativeOrNull(n_releaseCallback);
@@ -630,11 +576,10 @@
         /// <summary>
         /// Returns the function handler or NULL if not a CEF-created function.
         /// </summary>
-        public CefV8Handler GetFunctionHandler()
+        public CefV8Handler? GetFunctionHandler()
         {
             return CefV8Handler.FromNativeOrNull(
-                cef_v8value_t.get_function_handler(_self)
-                );
+                cef_v8value_t.get_function_handler(_self));
         }
 
         /// <summary>
@@ -647,7 +592,7 @@
         /// function. Returns the function return value on success. Returns NULL if
         /// this method is called incorrectly or an exception is thrown.
         /// </summary>
-        public CefV8Value ExecuteFunction(CefV8Value obj, CefV8Value[] arguments)
+        public CefV8Value? ExecuteFunction(CefV8Value? obj, CefV8Value[]? arguments)
         {
             var n_arguments = CreateArguments(arguments);
             cef_v8value_t* n_retval;
@@ -662,7 +607,7 @@
                     );
             }
 
-            return CefV8Value.FromNativeOrNull(n_retval);
+            return FromNativeOrNull(n_retval);
         }
 
         /// <summary>
@@ -673,8 +618,11 @@
         /// value on success. Returns NULL if this method is called incorrectly or an
         /// exception is thrown.
         /// </summary>
-        public CefV8Value ExecuteFunctionWithContext(CefV8Context context, CefV8Value obj, CefV8Value[] arguments)
+        public CefV8Value? ExecuteFunctionWithContext(CefV8Context context, CefV8Value? obj, CefV8Value[]? arguments)
         {
+            if (context == null)
+                throw new ArgumentNullException(nameof(context));
+            
             var n_arguments = CreateArguments(arguments);
             cef_v8value_t* n_retval;
 
@@ -689,10 +637,10 @@
                     );
             }
 
-            return CefV8Value.FromNativeOrNull(n_retval);
+            return FromNativeOrNull(n_retval);
         }
 
-        private static cef_v8value_t*[] CreateArguments(CefV8Value[] arguments)
+        private static cef_v8value_t*[]? CreateArguments(CefV8Value[]? arguments)
         {
             if (arguments == null) return null;
 

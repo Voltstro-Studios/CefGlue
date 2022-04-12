@@ -13,6 +13,7 @@ using Xilium.CefGlue.Interop;
 namespace Xilium.CefGlue
 {
     // Role: HANDLER
+    #nullable enable
     public abstract unsafe partial class CefRequestContextHandler
     {
         private static Dictionary<IntPtr, CefRequestContextHandler> _roots = new Dictionary<IntPtr, CefRequestContextHandler>();
@@ -22,9 +23,9 @@ namespace Xilium.CefGlue
         
         protected object SyncRoot { get { return this; } }
         
-        internal static CefRequestContextHandler FromNativeOrNull(cef_request_context_handler_t* ptr)
+        internal static CefRequestContextHandler? FromNativeOrNull(cef_request_context_handler_t* ptr)
         {
-            CefRequestContextHandler value = null;
+            CefRequestContextHandler? value = null;
             bool found;
             lock (_roots)
             {

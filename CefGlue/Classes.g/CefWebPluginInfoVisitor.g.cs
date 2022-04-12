@@ -13,6 +13,7 @@ using Xilium.CefGlue.Interop;
 namespace Xilium.CefGlue
 {
     // Role: HANDLER
+    #nullable enable
     public abstract unsafe partial class CefWebPluginInfoVisitor
     {
         private static Dictionary<IntPtr, CefWebPluginInfoVisitor> _roots = new Dictionary<IntPtr, CefWebPluginInfoVisitor>();

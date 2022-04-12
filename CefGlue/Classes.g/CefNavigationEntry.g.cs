@@ -13,6 +13,7 @@ using Xilium.CefGlue.Interop;
 namespace Xilium.CefGlue
 {
     // Role: PROXY
+    #nullable enable
     public sealed unsafe partial class CefNavigationEntry : IDisposable
     {
         internal static CefNavigationEntry FromNative(cef_navigation_entry_t* ptr)
@@ -20,7 +21,7 @@ namespace Xilium.CefGlue
             return new CefNavigationEntry(ptr);
         }
         
-        internal static CefNavigationEntry FromNativeOrNull(cef_navigation_entry_t* ptr)
+        internal static CefNavigationEntry? FromNativeOrNull(cef_navigation_entry_t* ptr)
         {
             if (ptr == null) return null;
             return new CefNavigationEntry(ptr);

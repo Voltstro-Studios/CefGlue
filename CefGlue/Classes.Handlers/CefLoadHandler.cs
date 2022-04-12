@@ -105,7 +105,7 @@
         /// error text and |failedUrl| is the URL that failed to load.
         /// See net\base\net_error_list.h for complete descriptions of the error codes.
         /// </summary>
-        protected virtual void OnLoadError(CefBrowser browser, CefFrame frame, CefErrorCode errorCode, string errorText, string failedUrl)
+        protected virtual void OnLoadError(CefBrowser browser, CefFrame frame, CefErrorCode errorCode, string? errorText, string? failedUrl)
         {
         }
     }

@@ -20,9 +20,7 @@
         /// </summary>
         public static CefV8Context GetCurrentContext()
         {
-            return CefV8Context.FromNative(
-                cef_v8context_t.get_current_context()
-                );
+            return FromNative(cef_v8context_t.get_current_context());
         }
 
         /// <summary>
@@ -30,18 +28,13 @@
         /// </summary>
         public static CefV8Context GetEnteredContext()
         {
-            return CefV8Context.FromNative(
-                cef_v8context_t.get_entered_context()
-                );
+            return FromNative(cef_v8context_t.get_entered_context());
         }
 
         /// <summary>
         /// Returns true if V8 is currently inside a context.
         /// </summary>
-        public static bool InContext
-        {
-            get { return cef_v8context_t.in_context() != 0; }
-        }
+        public static bool InContext => cef_v8context_t.in_context() != 0;
 
         /// <summary>
         /// Returns the task runner associated with this context. V8 handles can only
@@ -50,9 +43,7 @@
         /// </summary>
         public CefTaskRunner GetTaskRunner()
         {
-            return CefTaskRunner.FromNative(
-                cef_v8context_t.get_task_runner(_self)
-                );
+            return CefTaskRunner.FromNative(cef_v8context_t.get_task_runner(_self));
         }
 
         /// <summary>
@@ -69,22 +60,18 @@
         /// Returns the browser for this context. This method will return an empty
         /// reference for WebWorker contexts.
         /// </summary>
-        public CefBrowser GetBrowser()
+        public CefBrowser? GetBrowser()
         {
-            return CefBrowser.FromNativeOrNull(
-                cef_v8context_t.get_browser(_self)
-                );
+            return CefBrowser.FromNativeOrNull(cef_v8context_t.get_browser(_self));
         }
 
         /// <summary>
         /// Returns the frame for this context. This method will return an empty
         /// reference for WebWorker contexts.
         /// </summary>
-        public CefFrame GetFrame()
+        public CefFrame? GetFrame()
         {
-            return CefFrame.FromNativeOrNull(
-                cef_v8context_t.get_frame(_self)
-                );
+            return CefFrame.FromNativeOrNull(cef_v8context_t.get_frame(_self));
         }
 
         /// <summary>
@@ -123,9 +110,11 @@
         /// Returns true if this object is pointing to the same handle as |that|
         /// object.
         /// </summary>
-        public bool IsSame(CefV8Context that)
+        public bool IsSame(CefV8Context? that)
         {
-            if (that == null) return false;
+            if (that == null) 
+                return false;
+            
             return cef_v8context_t.is_same(_self, that.ToNative()) != 0;
         }
 
@@ -137,7 +126,7 @@
         /// the function will return true. On failure |exception| will be set to the
         /// exception, if any, and the function will return false.
         /// </summary>
-        public bool TryEval(string code, string scriptUrl, int startLine, out CefV8Value returnValue, out CefV8Exception exception)
+        public bool TryEval(string? code, string? scriptUrl, int startLine, out CefV8Value? returnValue, out CefV8Exception? exception)
         {
             bool result;
             cef_v8value_t* n_retval = null;
@@ -146,8 +135,8 @@
             fixed (char* code_str = code)
             fixed (char* scriptUrl_str = scriptUrl)
             {
-                var n_code = new cef_string_t(code_str, code != null ? code.Length : 0);
-                var n_scriptUrl = new cef_string_t(scriptUrl_str, scriptUrl != null ? scriptUrl.Length : 0);
+                var n_code = new cef_string_t(code_str, code?.Length ?? 0);
+                var n_scriptUrl = new cef_string_t(scriptUrl_str, scriptUrl?.Length ?? 0);
                 result = cef_v8context_t.eval(_self, &n_code, &n_scriptUrl, startLine, &n_retval, &n_exception) != 0;
             }
 

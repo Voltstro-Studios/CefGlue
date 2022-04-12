@@ -13,6 +13,7 @@ using Xilium.CefGlue.Interop;
 namespace Xilium.CefGlue
 {
     // Role: PROXY
+    #nullable enable
     public sealed unsafe partial class CefCookieManager : IDisposable
     {
         internal static CefCookieManager FromNative(cef_cookie_manager_t* ptr)
@@ -20,7 +21,7 @@ namespace Xilium.CefGlue
             return new CefCookieManager(ptr);
         }
         
-        internal static CefCookieManager FromNativeOrNull(cef_cookie_manager_t* ptr)
+        internal static CefCookieManager? FromNativeOrNull(cef_cookie_manager_t* ptr)
         {
             if (ptr == null) return null;
             return new CefCookieManager(ptr);

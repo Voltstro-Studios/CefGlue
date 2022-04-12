@@ -1,4 +1,6 @@
-﻿namespace Xilium.CefGlue.Interop
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Xilium.CefGlue.Interop
 {
     using System;
     using System.Collections.Generic;
@@ -14,16 +16,16 @@
     /// </remarks>
     internal unsafe struct cef_string_userfree
     {
-        public static string ToString(cef_string_userfree* str)
+        [return: NotNullIfNotNull("str")]
+        public static string? ToString(cef_string_userfree* str)
         {
-            if (str != null)
-            {
-                var result = cef_string_t.ToString((cef_string_t*)str);
-                libcef.string_userfree_free(str);
-                return result;
-            }
-
-            return null;
+            
+            if (str == null) 
+                return null;
+            
+            var result = cef_string_t.ToString((cef_string_t*)str);
+            libcef.string_userfree_free(str);
+            return result;
         }
 
         /*

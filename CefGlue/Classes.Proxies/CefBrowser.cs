@@ -92,9 +92,11 @@ namespace Xilium.CefGlue
         /// Returns true if this object is pointing to the same handle as |that|
         /// object.
         /// </summary>
-        public bool IsSame(CefBrowser that)
+        public bool IsSame(CefBrowser? that)
         {
-            if (that == null) return false;
+            if (that == null)
+                return false;
+            
             return cef_browser_t.is_same(_self, that.ToNative()) != 0;
         }
 
@@ -117,41 +119,37 @@ namespace Xilium.CefGlue
         /// change during cross-origin navigation or re-navigation after renderer
         /// process termination (due to crashes, etc).
         /// </summary>
-        public CefFrame GetMainFrame()
+        public CefFrame? GetMainFrame()
         {
-            return CefFrame.FromNativeOrNull(
-                cef_browser_t.get_main_frame(_self));
+            return CefFrame.FromNativeOrNull(cef_browser_t.get_main_frame(_self));
         }
 
         /// <summary>
         /// Returns the focused frame for the browser window.
         /// </summary>
-        public CefFrame GetFocusedFrame()
+        public CefFrame? GetFocusedFrame()
         {
-            return CefFrame.FromNativeOrNull(
-                cef_browser_t.get_focused_frame(_self));
+            return CefFrame.FromNativeOrNull(cef_browser_t.get_focused_frame(_self));
         }
 
         /// <summary>
         /// Returns the frame with the specified identifier, or NULL if not found.
         /// </summary>
-        public CefFrame GetFrame(long identifier)
+        public CefFrame? GetFrame(long identifier)
         {
-            return CefFrame.FromNativeOrNull(
-                cef_browser_t.get_frame_byident(_self, identifier));
+            return CefFrame.FromNativeOrNull(cef_browser_t.get_frame_byident(_self, identifier));
         }
 
         /// <summary>
         /// Returns the frame with the specified name, or NULL if not found.
         /// </summary>
-        public CefFrame GetFrame(string name)
+        public CefFrame? GetFrame(string name)
         {
             fixed (char* name_str = name)
             {
                 var n_name = new cef_string_t(name_str, name.Length);
 
-                return CefFrame.FromNativeOrNull(
-                    cef_browser_t.get_frame(_self, &n_name));
+                return CefFrame.FromNativeOrNull(cef_browser_t.get_frame(_self, &n_name));
             }
         }
 

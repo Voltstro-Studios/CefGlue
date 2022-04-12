@@ -310,21 +310,17 @@
         /// <summary>
         /// Returns the submenu for the specified |commandId| or empty if invalid.
         /// </summary>
-        public CefMenuModel GetSubMenu(int commandId)
+        public CefMenuModel? GetSubMenu(int commandId)
         {
-            return CefMenuModel.FromNativeOrNull(
-                cef_menu_model_t.get_sub_menu(_self, commandId)
-                );
+            return FromNativeOrNull(cef_menu_model_t.get_sub_menu(_self, commandId));
         }
 
         /// <summary>
         /// Returns the submenu at the specified |index| or empty if invalid.
         /// </summary>
-        public CefMenuModel GetSubMenuAt(int index)
+        public CefMenuModel? GetSubMenuAt(int index)
         {
-            return CefMenuModel.FromNativeOrNull(
-                cef_menu_model_t.get_sub_menu_at(_self, index)
-                );
+            return FromNativeOrNull(cef_menu_model_t.get_sub_menu_at(_self, index));
         }
 
         /// <summary>
@@ -601,11 +597,11 @@
         /// - "Arial, Helvetica, Bold Italic 14px"
         /// - "Arial, 14px"
         /// </summary>
-        public bool SetFontList(int commandId, string fontList)
+        public bool SetFontList(int commandId, string? fontList)
         {
             fixed (char* fontList_str = fontList)
             {
-                var n_fontList = new cef_string_t(fontList_str, fontList != null ? fontList.Length : 0);
+                var n_fontList = new cef_string_t(fontList_str, fontList?.Length ?? 0);
                 return cef_menu_model_t.set_font_list(_self, commandId, &n_fontList) != 0;
             }
         }
@@ -623,11 +619,11 @@
         /// - "Arial, Helvetica, Bold Italic 14px"
         /// - "Arial, 14px"
         /// </summary>
-        public bool SetFontListAt(int index, string fontList)
+        public bool SetFontListAt(int index, string? fontList)
         {
             fixed (char* fontList_str = fontList)
             {
-                var n_fontList = new cef_string_t(fontList_str, fontList != null ? fontList.Length : 0);
+                var n_fontList = new cef_string_t(fontList_str, fontList?.Length ?? 0);
                 return cef_menu_model_t.set_font_list_at(_self, index, &n_fontList) != 0;
             }
         }

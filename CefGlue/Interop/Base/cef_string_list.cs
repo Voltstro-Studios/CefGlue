@@ -1,4 +1,6 @@
-﻿namespace Xilium.CefGlue.Interop
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Xilium.CefGlue.Interop
 {
     using System;
     using System.Collections.Generic;
@@ -9,11 +11,13 @@
     [StructLayout(LayoutKind.Sequential, Pack = libcef.ALIGN)]
     internal unsafe struct cef_string_list
     {
-        private static readonly string[] Empty = new string[0];
+        private static readonly string[] Empty = Array.Empty<string>();
 
-        public static string[] ToArray(cef_string_list* list)
+        [return: NotNullIfNotNull("list")]
+        public static string[]? ToArray(cef_string_list* list)
         {
-            if (list == null) return null;
+            if (list == null) 
+                return null;
 
             var count = libcef.string_list_size(list);
             if (count == 0) return Empty;
@@ -31,9 +35,11 @@
             return result;
         }
 
-        public static List<string> ToList(cef_string_list* list)
+        [return: NotNullIfNotNull("list")]
+        public static List<string>? ToList(cef_string_list* list)
         {
-            if (list == null) return null;
+            if (list == null) 
+                return null;
 
             var count = libcef.string_list_size(list);
             if (count == 0) return new List<string>();

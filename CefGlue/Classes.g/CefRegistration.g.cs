@@ -13,6 +13,7 @@ using Xilium.CefGlue.Interop;
 namespace Xilium.CefGlue
 {
     // Role: PROXY
+    #nullable enable
     public sealed unsafe partial class CefRegistration : IDisposable
     {
         internal static CefRegistration FromNative(cef_registration_t* ptr)
@@ -20,7 +21,7 @@ namespace Xilium.CefGlue
             return new CefRegistration(ptr);
         }
         
-        internal static CefRegistration FromNativeOrNull(cef_registration_t* ptr)
+        internal static CefRegistration? FromNativeOrNull(cef_registration_t* ptr)
         {
             if (ptr == null) return null;
             return new CefRegistration(ptr);

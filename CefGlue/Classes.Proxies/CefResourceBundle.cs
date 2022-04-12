@@ -20,7 +20,7 @@
         /// </summary>
         public static CefResourceBundle GetGlobal()
         {
-            return CefResourceBundle.FromNative(cef_resource_bundle_t.get_global());
+            return FromNative(cef_resource_bundle_t.get_global());
         }
 
         /// <summary>
@@ -39,11 +39,9 @@
         /// specified scale independent |resource_id| or NULL if not found. Include
         /// cef_pack_resources.h for a listing of valid resource ID values.
         /// </summary>
-        public CefBinaryValue GetDataResource(int resource_id)
+        public CefBinaryValue? GetDataResource(int resourceId)
         {
-            return CefBinaryValue.FromNativeOrNull(
-                cef_resource_bundle_t.get_data_resource(_self, resource_id)
-                );
+            return CefBinaryValue.FromNativeOrNull(cef_resource_bundle_t.get_data_resource(_self, resourceId));
         }
 
         /// <summary>
@@ -53,11 +51,9 @@
         /// independent resources or call GetDataResource instead.Include
         /// cef_pack_resources.h for a listing of valid resource ID values.
         /// </summary>
-        public CefBinaryValue GetDataResourceForScale(int resource_id, CefScaleFactor scale_factor)
+        public CefBinaryValue? GetDataResourceForScale(int resourceId, CefScaleFactor scaleFactor)
         {
-            return CefBinaryValue.FromNativeOrNull(
-                cef_resource_bundle_t.get_data_resource_for_scale(_self, resource_id, scale_factor)
-                );
+            return CefBinaryValue.FromNativeOrNull(cef_resource_bundle_t.get_data_resource_for_scale(_self, resourceId, scaleFactor));
         }
     }
 }

@@ -13,6 +13,7 @@ using Xilium.CefGlue.Interop;
 namespace Xilium.CefGlue
 {
     // Role: PROXY
+    #nullable enable
     public sealed unsafe partial class CefX509CertPrincipal : IDisposable
     {
         internal static CefX509CertPrincipal FromNative(cef_x509cert_principal_t* ptr)
@@ -20,7 +21,7 @@ namespace Xilium.CefGlue
             return new CefX509CertPrincipal(ptr);
         }
         
-        internal static CefX509CertPrincipal FromNativeOrNull(cef_x509cert_principal_t* ptr)
+        internal static CefX509CertPrincipal? FromNativeOrNull(cef_x509cert_principal_t* ptr)
         {
             if (ptr == null) return null;
             return new CefX509CertPrincipal(ptr);

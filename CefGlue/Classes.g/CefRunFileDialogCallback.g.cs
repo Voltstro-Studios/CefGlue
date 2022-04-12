@@ -13,6 +13,7 @@ using Xilium.CefGlue.Interop;
 namespace Xilium.CefGlue
 {
     // Role: HANDLER
+    #nullable enable
     public abstract unsafe partial class CefRunFileDialogCallback
     {
         private static Dictionary<IntPtr, CefRunFileDialogCallback> _roots = new Dictionary<IntPtr, CefRunFileDialogCallback>();

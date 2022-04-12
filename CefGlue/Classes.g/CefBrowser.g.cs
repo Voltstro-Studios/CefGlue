@@ -13,6 +13,7 @@ using Xilium.CefGlue.Interop;
 namespace Xilium.CefGlue
 {
     // Role: PROXY
+    #nullable enable
     public sealed unsafe partial class CefBrowser : IDisposable
     {
         internal static CefBrowser FromNative(cef_browser_t* ptr)
@@ -20,7 +21,7 @@ namespace Xilium.CefGlue
             return new CefBrowser(ptr);
         }
         
-        internal static CefBrowser FromNativeOrNull(cef_browser_t* ptr)
+        internal static CefBrowser? FromNativeOrNull(cef_browser_t* ptr)
         {
             if (ptr == null) return null;
             return new CefBrowser(ptr);

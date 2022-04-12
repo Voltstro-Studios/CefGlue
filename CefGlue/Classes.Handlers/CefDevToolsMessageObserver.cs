@@ -87,7 +87,7 @@
         /// should be copied if necessary. See the OnDevToolsMessage documentation for
         /// additional details on |params| contents.
         /// </summary>
-        protected abstract void OnDevToolsEvent(CefBrowser browser, string method, IntPtr parameters, int parametersSize);
+        protected abstract void OnDevToolsEvent(CefBrowser browser, string? method, IntPtr parameters, int parametersSize);
 
 
         private void on_dev_tools_agent_attached(cef_dev_tools_message_observer_t* self, cef_browser_t* browser)
