@@ -6,6 +6,7 @@
         <AssemblyName>Xilium.CefGlue</AssemblyName>
         <RootNamespace>Xilium.CefGlue</RootNamespace>
 
+        <Nullable>enable</Nullable>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <LangVersion>latest</LangVersion>
         <AnalysisMode>Default</AnalysisMode>
