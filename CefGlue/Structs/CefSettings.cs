@@ -234,10 +234,11 @@ public sealed unsafe class CefSettings
 
     /// <summary>
     ///     Set to a value between 1024 and 65535 to enable remote debugging on the
-    ///     specified port. For example, if 8080 is specified the remote debugging URL
-    ///     will be http://localhost:8080. CEF can be remotely debugged from any CEF or
-    ///     Chrome browser window. Also configurable using the "remote-debugging-port"
-    ///     command-line switch.
+    ///     specified port. Also configurable using the "remote-debugging-port"
+    ///     command-line switch. Remote debugging can be accessed by loading the
+    ///     chrome://inspect page in Google Chrome. Port numbers 9222 and 9229 are
+    ///     discoverable by default. Other port numbers may need to be configured via
+    ///     "Discover network targets" on the Devices tab.
     /// </summary>
     public int RemoteDebuggingPort { get; set; }
 
@@ -249,17 +250,6 @@ public sealed unsafe class CefSettings
     ///     "uncaught-exception-stack-size" command-line switch.
     /// </summary>
     public int UncaughtExceptionStackSize { get; set; }
-
-    /// <summary>
-    ///     Set to true (1) to ignore errors related to invalid SSL certificates.
-    ///     Enabling this setting can lead to potential security vulnerabilities like
-    ///     "man in the middle" attacks. Applications that load content from the
-    ///     internet should not enable this setting. Also configurable using the
-    ///     "ignore-certificate-errors" command-line switch. Can be overridden for
-    ///     individual CefRequestContext instances via the
-    ///     CefRequestContextSettings.ignore_certificate_errors value.
-    /// </summary>
-    public bool IgnoreCertificateErrors { get; set; }
 
     /// <summary>
     ///     Background color used for the browser before a document is loaded and when
@@ -334,7 +324,6 @@ public sealed unsafe class CefSettings
         ptr->pack_loading_disabled = PackLoadingDisabled ? 1 : 0;
         ptr->remote_debugging_port = RemoteDebuggingPort;
         ptr->uncaught_exception_stack_size = UncaughtExceptionStackSize;
-        ptr->ignore_certificate_errors = IgnoreCertificateErrors ? 1 : 0;
         ptr->background_color = BackgroundColor.ToArgb();
         cef_string_t.Copy(AcceptLanguageList, &ptr->accept_language_list);
         cef_string_t.Copy(CookieableSchemesList, &ptr->cookieable_schemes_list);

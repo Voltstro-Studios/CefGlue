@@ -42,7 +42,6 @@ internal unsafe struct cef_settings_t
     public int pack_loading_disabled;
     public int remote_debugging_port;
     public int uncaught_exception_stack_size;
-    public int ignore_certificate_errors;
     public uint background_color;
     public cef_string_t accept_language_list;
     public cef_string_t cookieable_schemes_list;
