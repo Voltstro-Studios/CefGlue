@@ -2,34 +2,32 @@
 // This file manually written from cef/include/internal/cef_types.h.
 // C API name: cef_cross_axis_alignment_t.
 //
-namespace Xilium.CefGlue
+
+namespace Xilium.CefGlue;
+
+/// <summary>
+///     Specifies where along the cross axis the CefBoxLayout child views should be
+///     laid out.
+/// </summary>
+public enum CefCrossAxisAlignment
 {
-    using System;
+    /// <summary>
+    ///     Child views will be stretched to fit.
+    /// </summary>
+    Stretch,
 
     /// <summary>
-    /// Specifies where along the cross axis the CefBoxLayout child views should be
-    /// laid out.
+    ///     Child views will be left-aligned.
     /// </summary>
-    public enum CefCrossAxisAlignment
-    {
-        /// <summary>
-        /// Child views will be stretched to fit.
-        /// </summary>
-        Stretch,
+    Start,
 
-        /// <summary>
-        /// Child views will be left-aligned.
-        /// </summary>
-        Start,
+    /// <summary>
+    ///     Child views will be center-aligned.
+    /// </summary>
+    Center,
 
-        /// <summary>
-        /// Child views will be center-aligned.
-        /// </summary>
-        Center,
-
-        /// <summary>
-        /// Child views will be right-aligned.
-        /// </summary>
-        End,
-    }
+    /// <summary>
+    ///     Child views will be right-aligned.
+    /// </summary>
+    End
 }

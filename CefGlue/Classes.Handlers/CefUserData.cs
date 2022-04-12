@@ -1,11 +1,5 @@
-﻿namespace Xilium.CefGlue
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using Xilium.CefGlue.Interop;
+﻿namespace Xilium.CefGlue;
 
-    public abstract unsafe partial class CefUserData
-    {
-    }
+public abstract partial class CefUserData
+{
 }

@@ -1,31 +1,26 @@
-﻿namespace Xilium.CefGlue
+﻿using Xilium.CefGlue.Interop;
+
+namespace Xilium.CefGlue;
+
+/// <summary>
+///     Callback interface used for continuation of custom context menu display.
+/// </summary>
+public sealed unsafe partial class CefRunContextMenuCallback
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Runtime.InteropServices;
-    using Xilium.CefGlue.Interop;
+    /// <summary>
+    ///     Complete context menu display by selecting the specified |command_id| and
+    ///     |event_flags|.
+    /// </summary>
+    public void Continue(int commandId, CefEventFlags eventFlags)
+    {
+        cef_run_context_menu_callback_t.cont(_self, commandId, eventFlags);
+    }
 
     /// <summary>
-    /// Callback interface used for continuation of custom context menu display.
+    ///     Cancel context menu display.
     /// </summary>
-    public sealed unsafe partial class CefRunContextMenuCallback
+    public void Cancel()
     {
-        /// <summary>
-        /// Complete context menu display by selecting the specified |command_id| and
-        /// |event_flags|.
-        /// </summary>
-        public void Continue(int commandId, CefEventFlags eventFlags)
-        {
-            cef_run_context_menu_callback_t.cont(_self, commandId, eventFlags);
-        }
-
-        /// <summary>
-        /// Cancel context menu display.
-        /// </summary>
-        public void Cancel()
-        {
-            cef_run_context_menu_callback_t.cancel(_self);
-        }
+        cef_run_context_menu_callback_t.cancel(_self);
     }
 }

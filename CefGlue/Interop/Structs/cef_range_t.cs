@@ -1,21 +1,20 @@
 ﻿//
 // This file manually written from cef/include/internal/cef_types.h.
 //
-namespace Xilium.CefGlue.Interop
+
+using System.Runtime.InteropServices;
+
+namespace Xilium.CefGlue.Interop;
+
+[StructLayout(LayoutKind.Sequential, Pack = libcef.ALIGN)]
+internal struct cef_range_t
 {
-	using System;
-	using System.Runtime.InteropServices;
+    public int from;
+    public int to;
 
-	[StructLayout(LayoutKind.Sequential, Pack = libcef.ALIGN)]
-	internal unsafe struct cef_range_t
-	{
-		public int from;
-		public int to;
-
-		public cef_range_t(int from, int to)
-		{
-			this.from = from;
-			this.to = to;
-		}
-	}
+    public cef_range_t(int from, int to)
+    {
+        this.from = from;
+        this.to = to;
+    }
 }

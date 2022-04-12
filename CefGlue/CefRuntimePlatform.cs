@@ -1,11 +1,8 @@
-﻿namespace Xilium.CefGlue
-{
-    using System;
+﻿namespace Xilium.CefGlue;
 
-    public enum CefRuntimePlatform
-    {
-        Windows,
-        Linux,
-        MacOS,
-    }
+public enum CefRuntimePlatform
+{
+    Windows,
+    Linux,
+    MacOS
 }

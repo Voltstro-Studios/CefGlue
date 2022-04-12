@@ -1,26 +1,25 @@
 ﻿using Xilium.CefGlue.Interop;
 
-namespace Xilium.CefGlue
+namespace Xilium.CefGlue;
+
+/// <summary>
+///     Generic callback interface used for asynchronous continuation.
+/// </summary>
+public sealed unsafe partial class CefCallback
 {
     /// <summary>
-    /// Generic callback interface used for asynchronous continuation.
+    ///     Continue processing.
     /// </summary>
-    public sealed unsafe partial class CefCallback
+    public void Continue()
     {
-        /// <summary>
-        /// Continue processing.
-        /// </summary>
-        public void Continue()
-        {
-            cef_callback_t.cont(_self);
-        }
+        cef_callback_t.cont(_self);
+    }
 
-        /// <summary>
-        /// Cancel processing.
-        /// </summary>
-        public void Cancel()
-        {
-            cef_callback_t.cancel(_self);
-        }
+    /// <summary>
+    ///     Cancel processing.
+    /// </summary>
+    public void Cancel()
+    {
+        cef_callback_t.cancel(_self);
     }
 }

@@ -1,124 +1,224 @@
-﻿namespace Xilium.CefGlue.Platform
+﻿using System;
+using Xilium.CefGlue.Interop;
+using Xilium.CefGlue.Platform.Windows;
+
+namespace Xilium.CefGlue.Platform;
+
+internal sealed unsafe class CefWindowInfoWindowsImpl : CefWindowInfo
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using Xilium.CefGlue;
-    using Xilium.CefGlue.Interop;
-    using Xilium.CefGlue.Platform.Windows;
+    private cef_window_info_t_windows* _self;
 
-    internal sealed unsafe class CefWindowInfoWindowsImpl : CefWindowInfo
+    public CefWindowInfoWindowsImpl()
+        : base(true)
     {
-        private cef_window_info_t_windows* _self;
+        _self = cef_window_info_t_windows.Alloc();
+    }
 
-        public CefWindowInfoWindowsImpl()
-            : base(true)
+    public CefWindowInfoWindowsImpl(cef_window_info_t* ptr)
+        : base(false)
+    {
+        if (CefRuntime.Platform != CefRuntimePlatform.Windows)
+            throw new InvalidOperationException();
+
+        _self = (cef_window_info_t_windows*) ptr;
+    }
+
+    public override IntPtr ParentHandle
+    {
+        get
         {
-            _self = cef_window_info_t_windows.Alloc();
+            ThrowIfDisposed();
+            return _self->parent_window;
         }
-
-        public CefWindowInfoWindowsImpl(cef_window_info_t* ptr)
-            : base(false)
+        set
         {
-            if (CefRuntime.Platform != CefRuntimePlatform.Windows)
-                throw new InvalidOperationException();
-
-            _self = (cef_window_info_t_windows*)ptr;
+            ThrowIfDisposed();
+            _self->parent_window = value;
         }
+    }
 
-        internal override cef_window_info_t* GetNativePointer()
+    public override IntPtr Handle
+    {
+        get
         {
-            return (cef_window_info_t*)_self;
+            ThrowIfDisposed();
+            return _self->window;
         }
-
-        protected override void DisposeNativePointer()
+        set
         {
-            cef_window_info_t_windows.Free(_self);
-            _self = null;
+            ThrowIfDisposed();
+            _self->window = value;
         }
+    }
 
-        public override IntPtr ParentHandle
+    public override string? Name
+    {
+        get
         {
-            get { ThrowIfDisposed(); return _self->parent_window; }
-            set { ThrowIfDisposed(); _self->parent_window = value; }
+            ThrowIfDisposed();
+            return cef_string_t.ToString(&_self->window_name);
         }
+        set
+        {
+            ThrowIfDisposed();
+            cef_string_t.Copy(value, &_self->window_name);
+        }
+    }
 
-        public override IntPtr Handle
+    public override int X
+    {
+        get
         {
-            get { ThrowIfDisposed(); return _self->window; }
-            set { ThrowIfDisposed(); _self->window = value; }
+            ThrowIfDisposed();
+            return _self->x;
         }
+        set
+        {
+            ThrowIfDisposed();
+            _self->x = value;
+        }
+    }
 
-        public override string? Name
+    public override int Y
+    {
+        get
         {
-            get { ThrowIfDisposed(); return cef_string_t.ToString(&_self->window_name); }
-            set { ThrowIfDisposed(); cef_string_t.Copy(value, &_self->window_name); }
+            ThrowIfDisposed();
+            return _self->y;
         }
+        set
+        {
+            ThrowIfDisposed();
+            _self->y = value;
+        }
+    }
 
-        public override int X
+    public override int Width
+    {
+        get
         {
-            get { ThrowIfDisposed(); return _self->x; }
-            set { ThrowIfDisposed(); _self->x = value; }
+            ThrowIfDisposed();
+            return _self->width;
         }
+        set
+        {
+            ThrowIfDisposed();
+            _self->width = value;
+        }
+    }
 
-        public override int Y
+    public override int Height
+    {
+        get
         {
-            get { ThrowIfDisposed(); return _self->y; }
-            set { ThrowIfDisposed(); _self->y = value; }
+            ThrowIfDisposed();
+            return _self->height;
         }
+        set
+        {
+            ThrowIfDisposed();
+            _self->height = value;
+        }
+    }
 
-        public override int Width
+    public override WindowStyle Style
+    {
+        get
         {
-            get { ThrowIfDisposed(); return _self->width; }
-            set { ThrowIfDisposed(); _self->width = value; }
+            ThrowIfDisposed();
+            return (WindowStyle) _self->style;
         }
+        set
+        {
+            ThrowIfDisposed();
+            _self->style = (uint) value;
+        }
+    }
 
-        public override int Height
+    public override WindowStyleEx StyleEx
+    {
+        get
         {
-            get { ThrowIfDisposed(); return _self->height; }
-            set { ThrowIfDisposed(); _self->height = value; }
+            ThrowIfDisposed();
+            return (WindowStyleEx) _self->ex_style;
         }
+        set
+        {
+            ThrowIfDisposed();
+            _self->ex_style = (uint) value;
+        }
+    }
 
-        public override WindowStyle Style
+    public override IntPtr MenuHandle
+    {
+        get
         {
-            get { ThrowIfDisposed(); return (WindowStyle)_self->style; }
-            set { ThrowIfDisposed(); _self->style = (uint)value; }
+            ThrowIfDisposed();
+            return _self->menu;
         }
+        set
+        {
+            ThrowIfDisposed();
+            _self->menu = value;
+        }
+    }
 
-        public override WindowStyleEx StyleEx
-        {
-            get { ThrowIfDisposed(); return (WindowStyleEx)_self->ex_style; }
-            set { ThrowIfDisposed(); _self->ex_style = (uint)value; }
-        }
+    public override bool Hidden
+    {
+        get => default;
+        set { }
+    }
 
-        public override IntPtr MenuHandle
+    public override bool WindowlessRenderingEnabled
+    {
+        get
         {
-            get { ThrowIfDisposed(); return _self->menu; }
-            set { ThrowIfDisposed(); _self->menu = value; }
+            ThrowIfDisposed();
+            return _self->windowless_rendering_enabled != 0;
         }
+        set
+        {
+            ThrowIfDisposed();
+            _self->windowless_rendering_enabled = value ? 1 : 0;
+        }
+    }
 
-        public override bool Hidden
+    public override bool SharedTextureEnabled
+    {
+        get
         {
-            get { return default(bool); }
-            set { }
+            ThrowIfDisposed();
+            return _self->shared_texture_enabled != 0;
         }
+        set
+        {
+            ThrowIfDisposed();
+            _self->shared_texture_enabled = value ? 1 : 0;
+        }
+    }
 
-        public override bool WindowlessRenderingEnabled
+    public override bool ExternalBeginFrameEnabled
+    {
+        get
         {
-            get { ThrowIfDisposed(); return _self->windowless_rendering_enabled != 0; }
-            set { ThrowIfDisposed(); _self->windowless_rendering_enabled = value ? 1 : 0; }
+            ThrowIfDisposed();
+            return _self->external_begin_frame_enabled != 0;
         }
+        set
+        {
+            ThrowIfDisposed();
+            _self->external_begin_frame_enabled = value ? 1 : 0;
+        }
+    }
 
-        public override bool SharedTextureEnabled
-        {
-            get { ThrowIfDisposed(); return _self->shared_texture_enabled != 0; }
-            set { ThrowIfDisposed(); _self->shared_texture_enabled = value ? 1 : 0; }
-        }
+    internal override cef_window_info_t* GetNativePointer()
+    {
+        return (cef_window_info_t*) _self;
+    }
 
-        public override bool ExternalBeginFrameEnabled
-        {
-            get { ThrowIfDisposed(); return _self->external_begin_frame_enabled != 0; }
-            set { ThrowIfDisposed(); _self->external_begin_frame_enabled = value ? 1 : 0; }
-        }
+    protected override void DisposeNativePointer()
+    {
+        cef_window_info_t_windows.Free(_self);
+        _self = null;
     }
 }

@@ -1,20 +1,18 @@
-﻿namespace Xilium.CefGlue.Interop
+﻿using System.Runtime.InteropServices;
+
+namespace Xilium.CefGlue.Interop;
+
+[StructLayout(LayoutKind.Sequential, Pack = libcef.ALIGN)]
+internal struct cef_mouse_event_t
 {
-    using System;
-    using System.Runtime.InteropServices;
+    public int x;
+    public int y;
+    public CefEventFlags modifiers;
 
-    [StructLayout(LayoutKind.Sequential, Pack = libcef.ALIGN)]
-    internal unsafe struct cef_mouse_event_t
+    public cef_mouse_event_t(int x, int y, CefEventFlags modifiers)
     {
-        public int x;
-        public int y;
-        public CefEventFlags modifiers;
-
-        public cef_mouse_event_t(int x, int y, CefEventFlags modifiers)
-        {
-            this.x = x;
-            this.y = y;
-            this.modifiers = modifiers;
-        }
+        this.x = x;
+        this.y = y;
+        this.modifiers = modifiers;
     }
 }

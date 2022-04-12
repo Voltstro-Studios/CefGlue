@@ -1,20 +1,17 @@
-﻿namespace Xilium.CefGlue
+﻿namespace Xilium.CefGlue;
+
+/// <summary>
+///     Focus sources.
+/// </summary>
+public enum CefFocusSource
 {
-    using System;
+    /// <summary>
+    ///     The source is explicit navigation via the API (LoadURL(), etc).
+    /// </summary>
+    Navigation = 0,
 
     /// <summary>
-    /// Focus sources.
+    ///     The source is a system-generated focus event.
     /// </summary>
-    public enum CefFocusSource
-    {
-        /// <summary>
-        /// The source is explicit navigation via the API (LoadURL(), etc).
-        /// </summary>
-        Navigation = 0,
-
-        /// <summary>
-        /// The source is a system-generated focus event.
-        /// </summary>
-        System,
-    }
+    System
 }

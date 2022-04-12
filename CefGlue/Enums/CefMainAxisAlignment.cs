@@ -2,29 +2,27 @@
 // This file manually written from cef/include/internal/cef_types.h.
 // C API name: cef_main_axis_alignment_t.
 //
-namespace Xilium.CefGlue
+
+namespace Xilium.CefGlue;
+
+/// <summary>
+///     Specifies where along the main axis the CefBoxLayout child views should be
+///     laid out.
+/// </summary>
+public enum CefMainAxisAlignment
 {
-    using System;
+    /// <summary>
+    ///     Child views will be left-aligned.
+    /// </summary>
+    Start,
 
     /// <summary>
-    /// Specifies where along the main axis the CefBoxLayout child views should be
-    /// laid out.
+    ///     Child views will be center-aligned.
     /// </summary>
-    public enum CefMainAxisAlignment
-    {
-        /// <summary>
-        /// Child views will be left-aligned.
-        /// </summary>
-        Start,
+    Center,
 
-        /// <summary>
-        /// Child views will be center-aligned.
-        /// </summary>
-        Center,
-
-        /// <summary>
-        /// Child views will be right-aligned.
-        /// </summary>
-        End,
-    }
+    /// <summary>
+    ///     Child views will be right-aligned.
+    /// </summary>
+    End
 }

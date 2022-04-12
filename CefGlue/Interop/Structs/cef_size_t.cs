@@ -1,21 +1,20 @@
 ﻿//
 // This file manually written from cef/include/internal/cef_types.h.
 //
-namespace Xilium.CefGlue.Interop
+
+using System.Runtime.InteropServices;
+
+namespace Xilium.CefGlue.Interop;
+
+[StructLayout(LayoutKind.Sequential, Pack = libcef.ALIGN)]
+internal struct cef_size_t
 {
-    using System;
-    using System.Runtime.InteropServices;
+    public int width;
+    public int height;
 
-    [StructLayout(LayoutKind.Sequential, Pack = libcef.ALIGN)]
-    internal unsafe struct cef_size_t
+    public cef_size_t(int width, int height)
     {
-        public int width;
-        public int height;
-
-        public cef_size_t(int width, int height)
-        {
-            this.width = width;
-            this.height = height;
-        }
+        this.width = width;
+        this.height = height;
     }
 }

@@ -2,28 +2,26 @@
 // This file manually written from cef/include/internal/cef_types.h.
 // C API name: cef_alpha_type_t.
 //
-namespace Xilium.CefGlue
+
+namespace Xilium.CefGlue;
+
+/// <summary>
+///     Describes how to interpret the alpha component of a pixel.
+/// </summary>
+public enum CefAlphaType
 {
-    using System;
+    /// <summary>
+    ///     No transparency. The alpha component is ignored.
+    /// </summary>
+    Opaque,
 
     /// <summary>
-    /// Describes how to interpret the alpha component of a pixel.
+    ///     Transparency with pre-multiplied alpha component.
     /// </summary>
-    public enum CefAlphaType
-    {
-        /// <summary>
-        /// No transparency. The alpha component is ignored.
-        /// </summary>
-        Opaque,
+    Premultiplied,
 
-        /// <summary>
-        /// Transparency with pre-multiplied alpha component.
-        /// </summary>
-        Premultiplied,
-
-        /// <summary>
-        /// Transparency with post-multiplied alpha component.
-        /// </summary>
-        Postmultiplied,
-    }
+    /// <summary>
+    ///     Transparency with post-multiplied alpha component.
+    /// </summary>
+    Postmultiplied
 }

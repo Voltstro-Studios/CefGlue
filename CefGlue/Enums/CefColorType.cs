@@ -2,23 +2,21 @@
 // This file manually written from cef/include/internal/cef_types.h.
 // C API name: cef_color_type_t.
 //
-namespace Xilium.CefGlue
+
+namespace Xilium.CefGlue;
+
+/// <summary>
+///     Describes how to interpret the components of a pixel.
+/// </summary>
+public enum CefColorType
 {
-    using System;
+    /// <summary>
+    ///     RGBA with 8 bits per pixel (32bits total).
+    /// </summary>
+    Rgba8888,
 
     /// <summary>
-    /// Describes how to interpret the components of a pixel.
+    ///     BGRA with 8 bits per pixel (32bits total).
     /// </summary>
-    public enum CefColorType
-    {
-        /// <summary>
-        /// RGBA with 8 bits per pixel (32bits total).
-        /// </summary>
-        Rgba8888,
-
-        /// <summary>
-        /// BGRA with 8 bits per pixel (32bits total).
-        /// </summary>
-        Bgra8888,
-    }
+    Bgra8888
 }

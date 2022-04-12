@@ -1,21 +1,20 @@
 ﻿//
 // This file manually written from cef/include/internal/cef_types.h.
 //
-namespace Xilium.CefGlue.Interop
+
+using System.Runtime.InteropServices;
+
+namespace Xilium.CefGlue.Interop;
+
+[StructLayout(LayoutKind.Sequential, Pack = libcef.ALIGN)]
+internal struct cef_point_t
 {
-    using System;
-    using System.Runtime.InteropServices;
+    public int x;
+    public int y;
 
-    [StructLayout(LayoutKind.Sequential, Pack = libcef.ALIGN)]
-    internal unsafe struct cef_point_t
+    public cef_point_t(int x, int y)
     {
-        public int x;
-        public int y;
-
-        public cef_point_t(int x, int y)
-        {
-            this.x = x;
-            this.y = y;
-        }
+        this.x = x;
+        this.y = y;
     }
 }

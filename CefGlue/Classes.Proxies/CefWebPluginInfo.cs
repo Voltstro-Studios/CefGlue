@@ -1,62 +1,57 @@
-﻿namespace Xilium.CefGlue
+﻿using Xilium.CefGlue.Interop;
+
+namespace Xilium.CefGlue;
+
+/// <summary>
+///     Information about a specific web plugin.
+/// </summary>
+public sealed unsafe partial class CefWebPluginInfo
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Runtime.InteropServices;
-    using Xilium.CefGlue.Interop;
+    /// <summary>
+    ///     Returns the plugin name.
+    /// </summary>
+    public string Name
+    {
+        get
+        {
+            var n_result = cef_web_plugin_info_t.get_name(_self);
+            return cef_string_userfree.ToString(n_result);
+        }
+    }
 
     /// <summary>
-    /// Information about a specific web plugin.
+    ///     Returns the plugin file path (DLL/bundle/library).
     /// </summary>
-    public sealed unsafe partial class CefWebPluginInfo
+    public string Path
     {
-        /// <summary>
-        /// Returns the plugin name.
-        /// </summary>
-        public string Name
+        get
         {
-            get
-            {
-                var n_result = cef_web_plugin_info_t.get_name(_self);
-                return cef_string_userfree.ToString(n_result);
-            }
+            var n_result = cef_web_plugin_info_t.get_path(_self);
+            return cef_string_userfree.ToString(n_result);
         }
+    }
 
-        /// <summary>
-        /// Returns the plugin file path (DLL/bundle/library).
-        /// </summary>
-        public string Path
+    /// <summary>
+    ///     Returns the version of the plugin (may be OS-specific).
+    /// </summary>
+    public string Version
+    {
+        get
         {
-            get
-            {
-                var n_result = cef_web_plugin_info_t.get_path(_self);
-                return cef_string_userfree.ToString(n_result);
-            }
+            var n_result = cef_web_plugin_info_t.get_version(_self);
+            return cef_string_userfree.ToString(n_result);
         }
+    }
 
-        /// <summary>
-        /// Returns the version of the plugin (may be OS-specific).
-        /// </summary>
-        public string Version
+    /// <summary>
+    ///     Returns a description of the plugin from the version information.
+    /// </summary>
+    public string Description
+    {
+        get
         {
-            get
-            {
-                var n_result = cef_web_plugin_info_t.get_version(_self);
-                return cef_string_userfree.ToString(n_result);
-            }
-        }
-
-        /// <summary>
-        /// Returns a description of the plugin from the version information.
-        /// </summary>
-        public string Description
-        {
-            get
-            {
-                var n_result = cef_web_plugin_info_t.get_description(_self);
-                return cef_string_userfree.ToString(n_result);
-            }
+            var n_result = cef_web_plugin_info_t.get_description(_self);
+            return cef_string_userfree.ToString(n_result);
         }
     }
 }
