@@ -5,17 +5,28 @@ VisualStudioVersion = 16.0.29102.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CefGlue", "CefGlue\CefGlue.csproj", "{703FF300-34B9-48D4-A5D6-E741F48D5F95}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CefGlue.Client", "CefGlue.Client\CefGlue.Client.csproj", "{311984DF-EB92-4B01-B4AD-C7E73A13E271}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CefGlue.WindowsForms", "Frameworks\CefGlue.WindowsForms\CefGlue.WindowsForms.csproj", "{679AF14D-8FF5-4608-BFF8-EC1A7DED04A4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CefGlue.WindowsForms", "CefGlue.WindowsForms\CefGlue.WindowsForms.csproj", "{679AF14D-8FF5-4608-BFF8-EC1A7DED04A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CefGlue.Demo", "Demos\CefGlue.Demo\CefGlue.Demo.csproj", "{B928A030-E818-4634-9C6B-F9224E996BD6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CefGlue.Demo", "CefGlue.Demo\CefGlue.Demo.csproj", "{B928A030-E818-4634-9C6B-F9224E996BD6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CefGlue.Demo.WinForms", "Demos\CefGlue.Demo.WinForms\CefGlue.Demo.WinForms.csproj", "{F9025CE1-2DF4-409B-8961-A51DFAEAABDD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CefGlue.Demo.WinForms", "CefGlue.Demo.WinForms\CefGlue.Demo.WinForms.csproj", "{F9025CE1-2DF4-409B-8961-A51DFAEAABDD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CefGlue.Samples.WPF", "Samples\CefGlue.Samples.WPF\CefGlue.Samples.WPF.csproj", "{8E758128-CA79-4533-963E-91A1BF0558FB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CefGlue.Samples.WpfOsr", "CefGlue.Samples.WpfOsr\CefGlue.Samples.WpfOsr.csproj", "{8E758128-CA79-4533-963E-91A1BF0558FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CefGlue.WPF", "Frameworks\CefGlue.WPF\CefGlue.WPF.csproj", "{447C6790-E36E-4A54-BFAC-06C92FFF4AA3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CefGlue.WPF", "CefGlue.WPF\CefGlue.WPF.csproj", "{447C6790-E36E-4A54-BFAC-06C92FFF4AA3}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frameworks", "Frameworks", "{F7E04CB2-405F-4EB7-B4B0-F7C587CEC7B6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{38D138D8-F082-4B5C-BFAC-4865B28E5D1F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demos", "Demos", "{097C9236-0302-488F-8CE6-07DCBBCC1170}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Properties", "Properties", "{A394E64D-BA24-42B6-9634-8F3A01616330}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+		Directory.Build.rsp = Directory.Build.rsp
+		Directory.Build.targets = Directory.Build.targets
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,14 +44,6 @@ Global
 		{703FF300-34B9-48D4-A5D6-E741F48D5F95}.Release|Any CPU.Build.0 = Release|Any CPU
 		{703FF300-34B9-48D4-A5D6-E741F48D5F95}.Release|x86.ActiveCfg = Release|Any CPU
 		{703FF300-34B9-48D4-A5D6-E741F48D5F95}.Release|x86.Build.0 = Release|Any CPU
-		{311984DF-EB92-4B01-B4AD-C7E73A13E271}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{311984DF-EB92-4B01-B4AD-C7E73A13E271}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{311984DF-EB92-4B01-B4AD-C7E73A13E271}.Debug|x86.ActiveCfg = Debug|x86
-		{311984DF-EB92-4B01-B4AD-C7E73A13E271}.Debug|x86.Build.0 = Debug|x86
-		{311984DF-EB92-4B01-B4AD-C7E73A13E271}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{311984DF-EB92-4B01-B4AD-C7E73A13E271}.Release|Any CPU.Build.0 = Release|Any CPU
-		{311984DF-EB92-4B01-B4AD-C7E73A13E271}.Release|x86.ActiveCfg = Release|x86
-		{311984DF-EB92-4B01-B4AD-C7E73A13E271}.Release|x86.Build.0 = Release|x86
 		{679AF14D-8FF5-4608-BFF8-EC1A7DED04A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{679AF14D-8FF5-4608-BFF8-EC1A7DED04A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{679AF14D-8FF5-4608-BFF8-EC1A7DED04A4}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -87,5 +90,12 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5752E3D1-93E5-406C-BE1C-D2CB665F4398}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{679AF14D-8FF5-4608-BFF8-EC1A7DED04A4} = {F7E04CB2-405F-4EB7-B4B0-F7C587CEC7B6}
+		{447C6790-E36E-4A54-BFAC-06C92FFF4AA3} = {F7E04CB2-405F-4EB7-B4B0-F7C587CEC7B6}
+		{8E758128-CA79-4533-963E-91A1BF0558FB} = {38D138D8-F082-4B5C-BFAC-4865B28E5D1F}
+		{B928A030-E818-4634-9C6B-F9224E996BD6} = {097C9236-0302-488F-8CE6-07DCBBCC1170}
+		{F9025CE1-2DF4-409B-8961-A51DFAEAABDD} = {097C9236-0302-488F-8CE6-07DCBBCC1170}
 	EndGlobalSection
 EndGlobal
