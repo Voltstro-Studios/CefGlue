@@ -8,6 +8,31 @@ namespace Xilium.CefGlue;
 /// </summary>
 public abstract unsafe partial class CefDownloadHandler
 {
+    private int can_download(cef_download_handler_t* self, cef_browser_t* browser, cef_string_t* url,
+        cef_string_t* request_method)
+    {
+        CheckSelf(self);
+
+        CefBrowser m_browser = CefBrowser.FromNative(browser);
+        string m_url = cef_string_t.ToString(url);
+        string m_request_method = cef_string_t.ToString(request_method);
+
+        var m_result = CanDownload(m_browser, m_url, m_request_method);
+        return m_result ? 1 : 0;
+    }
+
+    /// <summary>
+    ///     Called before a download begins in response to a user-initiated action
+    ///     (e.g. alt + link click or link click that returns a `Content-Disposition:
+    ///     attachment` response from the server). |url| is the target download URL and
+    ///     |request_method| is the target method (GET, POST, etc). Return true to
+    ///     proceed with the download or false to cancel the download.
+    /// </summary>
+    protected virtual bool CanDownload(CefBrowser browser, string url, string requestMethod)
+    {
+        return true;
+    }
+    
     private void on_before_download(cef_download_handler_t* self, cef_browser_t* browser,
         cef_download_item_t* download_item, cef_string_t* suggested_name, cef_before_download_callback_t* callback)
     {
@@ -30,7 +55,7 @@ public abstract unsafe partial class CefDownloadHandler
     ///     if desired. Do not keep a reference to |download_item| outside of this
     ///     method.
     /// </summary>
-    protected virtual void OnBeforeDownload(CefBrowser browser, CefDownloadItem downloadItem, string? suggestedName,
+    protected virtual void OnBeforeDownload(CefBrowser browser, CefDownloadItem downloadItem, string suggestedName,
         CefBeforeDownloadCallback callback)
     {
     }

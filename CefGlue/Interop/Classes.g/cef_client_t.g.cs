@@ -17,6 +17,7 @@ namespace Xilium.CefGlue.Interop
     {
         internal cef_base_ref_counted_t _base;
         internal IntPtr _get_audio_handler;
+        internal IntPtr _get_command_handler;
         internal IntPtr _get_context_menu_handler;
         internal IntPtr _get_dialog_handler;
         internal IntPtr _get_display_handler;
@@ -63,6 +64,12 @@ namespace Xilium.CefGlue.Interop
         [SuppressUnmanagedCodeSecurity]
         #endif
         internal delegate cef_audio_handler_t* get_audio_handler_delegate(cef_client_t* self);
+        
+        [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
+        #if !DEBUG
+        [SuppressUnmanagedCodeSecurity]
+        #endif
+        internal delegate cef_command_handler_t* get_command_handler_delegate(cef_client_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG

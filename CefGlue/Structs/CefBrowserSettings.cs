@@ -203,6 +203,17 @@ public sealed unsafe class CefBrowserSettings
         set => cef_string_t.Copy(value, &_self->accept_language_list);
     }
 
+    /// <summary>
+    ///     Controls whether the Chrome status bubble will be used. Only supported with
+    ///     the Chrome runtime. For details about the status bubble see
+    ///     https://www.chromium.org/user-experience/status-bubble/
+    /// </summary>
+    public CefState ChromeStatusBubble
+    {
+        get => _self->chrome_status_bubble;
+        set => _self->chrome_status_bubble = value;
+    }
+
     internal void Dispose()
     {
         _self = null;

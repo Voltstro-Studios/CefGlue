@@ -44,6 +44,8 @@ internal unsafe struct cef_browser_settings_t
 
     public cef_string_t accept_language_list;
 
+    public CefState chrome_status_bubble;
+
     #region Alloc & Free
 
     private static readonly int _sizeof;
