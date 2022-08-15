@@ -221,4 +221,25 @@ public abstract unsafe partial class CefDisplayHandler
     {
         return false;
     }
+
+    private void on_media_access_change(cef_display_handler_t* self, cef_browser_t* browser, int has_video_access,
+        int has_audio_access)
+    {
+        CheckSelf(self);
+
+        var m_browser = CefBrowser.FromNative(browser);
+
+        OnMediaAccessChange(m_browser, has_video_access != 0, has_audio_access != 0);
+    }
+    
+    /// <summary>
+    ///     // Called when the browser's access to an audio and/or video source has
+    ///     changed.
+    /// </summary>
+    /// <param name="browser"></param>
+    /// <param name="hasVideoAccess"></param>
+    /// <param name="hasAudioAccess"></param>
+    protected virtual void OnMediaAccessChange(CefBrowser browser, bool hasVideoAccess, bool hasAudioAccess)
+    {
+    }
 }

@@ -166,6 +166,23 @@ public abstract unsafe partial class CefClient
         return null;
     }
 
+    private cef_permission_handler_t* get_permission_handler(cef_client_t* self)
+    {
+        CheckSelf(self);
+        
+        var result = GetPermissionHandler();
+        return result != null ? result.ToNative() : null;
+    }
+
+    /// <summary>
+    ///     Return the handler for permission requests.
+    /// </summary>
+    protected virtual CefPermissionHandler? GetPermissionHandler()
+    {
+        return null;
+    }
+        
+
     private cef_jsdialog_handler_t* get_jsdialog_handler(cef_client_t* self)
     {
         CheckSelf(self);

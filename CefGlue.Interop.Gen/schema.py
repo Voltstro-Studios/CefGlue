@@ -168,6 +168,9 @@ c2cs_enumtypes = {
     'cef_media_route_connection_state_t': 'CefMediaRouteConnectionState',
     'cef_media_route_create_result_t': 'CefMediaRouteCreateResult',
     'cef_media_sink_icon_type_t': 'CefMediaSinkIconType',
+    'cef_quick_menu_edit_state_flags_t': 'CefQuickMenuEditStateFlags',
+    'cef_permission_request_result_t': 'CefPermissionRequestResult',
+    'cef_horizontal_alignment_t': 'CefHorizontalAlignment'
     }
 
 c2cs_structtypes = { }

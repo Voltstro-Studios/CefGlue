@@ -253,6 +253,50 @@ public abstract unsafe partial class CefRenderHandler
         IntPtr sharedHandle);
 
 
+    private void get_touch_handle_size(cef_render_handler_t* self, cef_browser_t* browser,
+        CefHorizontalAlignment orientation, cef_size_t* size)
+    {
+        CheckSelf(self);
+
+        var mBrowser = CefBrowser.FromNative(browser);
+        var mSize = new CefSize(size->width, size->height);
+        
+        GetTouchHandleSize(mBrowser, orientation, mSize);
+    }
+
+    /// <summary>
+    ///     Called to retrieve the size of the touch handle for the specified
+    ///     |orientation|.
+    /// </summary>
+    /// <param name="browser"></param>
+    /// <param name="orientation"></param>
+    /// <param name="size"></param>
+    protected virtual void GetTouchHandleSize(CefBrowser browser, CefHorizontalAlignment orientation, CefSize size)
+    {
+    }
+
+
+    private void on_touch_handle_state_changed(cef_render_handler_t* self, cef_browser_t* browser,
+        cef_touch_handle_state_t* state)
+    {
+        CheckSelf(self);
+
+        var mBrowser = CefBrowser.FromNative(browser);
+        var mState = CefTouchHandleState.FromNative(state);
+        
+        OnTouchHandleStateChanged(mBrowser, mState);
+    }
+
+    /// <summary>
+    ///     Called when touch handle state is updated. The client is responsible for
+    ///     rendering the touch handles.
+    /// </summary>
+    /// <param name="browser"></param>
+    /// <param name="cefTouchHandleState"></param>
+    protected virtual void OnTouchHandleStateChanged(CefBrowser browser, CefTouchHandleState cefTouchHandleState)
+    {
+    }
+
     private int start_dragging(cef_render_handler_t* self, cef_browser_t* browser, cef_drag_data_t* drag_data,
         CefDragOperationsMask allowed_ops, int x, int y)
     {

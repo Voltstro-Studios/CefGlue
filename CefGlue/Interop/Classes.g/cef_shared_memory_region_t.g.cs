@@ -13,85 +13,60 @@ namespace Xilium.CefGlue.Interop
 {
     [StructLayout(LayoutKind.Sequential, Pack = libcef.ALIGN)]
     [SuppressMessage("Microsoft.Design", "CA1049:TypesThatOwnNativeResourcesShouldBeDisposable")]
-    internal unsafe struct cef_process_message_t
+    internal unsafe struct cef_shared_memory_region_t
     {
         internal cef_base_ref_counted_t _base;
         internal IntPtr _is_valid;
-        internal IntPtr _is_read_only;
-        internal IntPtr _copy;
-        internal IntPtr _get_name;
-        internal IntPtr _get_argument_list;
-        internal IntPtr _get_shared_memory_region;
-        
-        // Create
-        [DllImport(libcef.DllName, EntryPoint = "cef_process_message_create", CallingConvention = libcef.CEF_CALL)]
-        public static extern cef_process_message_t* create(cef_string_t* name);
+        internal IntPtr _size;
+        internal IntPtr _memory;
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate void add_ref_delegate(cef_process_message_t* self);
+        private delegate void add_ref_delegate(cef_shared_memory_region_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate int release_delegate(cef_process_message_t* self);
+        private delegate int release_delegate(cef_shared_memory_region_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate int has_one_ref_delegate(cef_process_message_t* self);
+        private delegate int has_one_ref_delegate(cef_shared_memory_region_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate int has_at_least_one_ref_delegate(cef_process_message_t* self);
+        private delegate int has_at_least_one_ref_delegate(cef_shared_memory_region_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate int is_valid_delegate(cef_process_message_t* self);
+        private delegate int is_valid_delegate(cef_shared_memory_region_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate int is_read_only_delegate(cef_process_message_t* self);
+        private delegate UIntPtr size_delegate(cef_shared_memory_region_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate cef_process_message_t* copy_delegate(cef_process_message_t* self);
-        
-        [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
-        #if !DEBUG
-        [SuppressUnmanagedCodeSecurity]
-        #endif
-        private delegate cef_string_userfree* get_name_delegate(cef_process_message_t* self);
-        
-        [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
-        #if !DEBUG
-        [SuppressUnmanagedCodeSecurity]
-        #endif
-        private delegate cef_list_value_t* get_argument_list_delegate(cef_process_message_t* self);
-        
-        [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
-        #if !DEBUG
-        [SuppressUnmanagedCodeSecurity]
-        #endif
-        private delegate cef_shared_memory_region_t* get_shared_memory_region_delegate(cef_process_message_t* self);
+        private delegate void* memory_delegate(cef_shared_memory_region_t* self);
         
         // AddRef
         private static IntPtr _p0;
         private static add_ref_delegate _d0;
         
-        public static void add_ref(cef_process_message_t* self)
+        public static void add_ref(cef_shared_memory_region_t* self)
         {
             add_ref_delegate d;
             var p = self->_base._add_ref;
@@ -108,7 +83,7 @@ namespace Xilium.CefGlue.Interop
         private static IntPtr _p1;
         private static release_delegate _d1;
         
-        public static int release(cef_process_message_t* self)
+        public static int release(cef_shared_memory_region_t* self)
         {
             release_delegate d;
             var p = self->_base._release;
@@ -125,7 +100,7 @@ namespace Xilium.CefGlue.Interop
         private static IntPtr _p2;
         private static has_one_ref_delegate _d2;
         
-        public static int has_one_ref(cef_process_message_t* self)
+        public static int has_one_ref(cef_shared_memory_region_t* self)
         {
             has_one_ref_delegate d;
             var p = self->_base._has_one_ref;
@@ -142,7 +117,7 @@ namespace Xilium.CefGlue.Interop
         private static IntPtr _p3;
         private static has_at_least_one_ref_delegate _d3;
         
-        public static int has_at_least_one_ref(cef_process_message_t* self)
+        public static int has_at_least_one_ref(cef_shared_memory_region_t* self)
         {
             has_at_least_one_ref_delegate d;
             var p = self->_base._has_at_least_one_ref;
@@ -159,7 +134,7 @@ namespace Xilium.CefGlue.Interop
         private static IntPtr _p4;
         private static is_valid_delegate _d4;
         
-        public static int is_valid(cef_process_message_t* self)
+        public static int is_valid(cef_shared_memory_region_t* self)
         {
             is_valid_delegate d;
             var p = self->_is_valid;
@@ -172,87 +147,36 @@ namespace Xilium.CefGlue.Interop
             return d(self);
         }
         
-        // IsReadOnly
+        // Size
         private static IntPtr _p5;
-        private static is_read_only_delegate _d5;
+        private static size_delegate _d5;
         
-        public static int is_read_only(cef_process_message_t* self)
+        public static UIntPtr size(cef_shared_memory_region_t* self)
         {
-            is_read_only_delegate d;
-            var p = self->_is_read_only;
+            size_delegate d;
+            var p = self->_size;
             if (p == _p5) { d = _d5; }
             else
             {
-                d = (is_read_only_delegate)Marshal.GetDelegateForFunctionPointer(p, typeof(is_read_only_delegate));
+                d = (size_delegate)Marshal.GetDelegateForFunctionPointer(p, typeof(size_delegate));
                 if (_p5 == IntPtr.Zero) { _d5 = d; _p5 = p; }
             }
             return d(self);
         }
         
-        // Copy
+        // Memory
         private static IntPtr _p6;
-        private static copy_delegate _d6;
+        private static memory_delegate _d6;
         
-        public static cef_process_message_t* copy(cef_process_message_t* self)
+        public static void* memory(cef_shared_memory_region_t* self)
         {
-            copy_delegate d;
-            var p = self->_copy;
+            memory_delegate d;
+            var p = self->_memory;
             if (p == _p6) { d = _d6; }
             else
             {
-                d = (copy_delegate)Marshal.GetDelegateForFunctionPointer(p, typeof(copy_delegate));
+                d = (memory_delegate)Marshal.GetDelegateForFunctionPointer(p, typeof(memory_delegate));
                 if (_p6 == IntPtr.Zero) { _d6 = d; _p6 = p; }
-            }
-            return d(self);
-        }
-        
-        // GetName
-        private static IntPtr _p7;
-        private static get_name_delegate _d7;
-        
-        public static cef_string_userfree* get_name(cef_process_message_t* self)
-        {
-            get_name_delegate d;
-            var p = self->_get_name;
-            if (p == _p7) { d = _d7; }
-            else
-            {
-                d = (get_name_delegate)Marshal.GetDelegateForFunctionPointer(p, typeof(get_name_delegate));
-                if (_p7 == IntPtr.Zero) { _d7 = d; _p7 = p; }
-            }
-            return d(self);
-        }
-        
-        // GetArgumentList
-        private static IntPtr _p8;
-        private static get_argument_list_delegate _d8;
-        
-        public static cef_list_value_t* get_argument_list(cef_process_message_t* self)
-        {
-            get_argument_list_delegate d;
-            var p = self->_get_argument_list;
-            if (p == _p8) { d = _d8; }
-            else
-            {
-                d = (get_argument_list_delegate)Marshal.GetDelegateForFunctionPointer(p, typeof(get_argument_list_delegate));
-                if (_p8 == IntPtr.Zero) { _d8 = d; _p8 = p; }
-            }
-            return d(self);
-        }
-        
-        // GetSharedMemoryRegion
-        private static IntPtr _p9;
-        private static get_shared_memory_region_delegate _d9;
-        
-        public static cef_shared_memory_region_t* get_shared_memory_region(cef_process_message_t* self)
-        {
-            get_shared_memory_region_delegate d;
-            var p = self->_get_shared_memory_region;
-            if (p == _p9) { d = _d9; }
-            else
-            {
-                d = (get_shared_memory_region_delegate)Marshal.GetDelegateForFunctionPointer(p, typeof(get_shared_memory_region_delegate));
-                if (_p9 == IntPtr.Zero) { _d9 = d; _p9 = p; }
             }
             return d(self);
         }

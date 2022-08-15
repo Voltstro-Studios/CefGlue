@@ -118,4 +118,91 @@ public abstract unsafe partial class CefContextMenuHandler
     protected virtual void OnContextMenuDismissed(CefBrowser browser, CefFrame frame)
     {
     }
+
+    
+    private int run_quick_menu(cef_context_menu_handler_t* self, cef_browser_t* browser, cef_frame_t* frame,
+        cef_point_t* location, cef_size_t* size, CefQuickMenuEditStateFlags edit_state_flags,
+        cef_run_quick_menu_callback_t* callback)
+    {
+        CheckSelf(self);
+
+        var mBrowser = CefBrowser.FromNative(browser);
+        var mFrame = CefFrame.FromNative(frame);
+        var mLocation = new CefPoint(location->x, location->y);
+        var mSize = new CefSize(size->width, size->height);
+        var mCallback = CefRunQuickMenuCallback.FromNative(callback);
+
+        var result = RunQuickMenu(mBrowser, mFrame, mLocation, mSize, mCallback);
+        
+        return result ? 1 : 0;
+    }
+
+    /// <summary>
+    ///      Called to allow custom display of the quick menu for a windowless browser.
+    ///     |location| is the top left corner of the selected region. |size| is the
+    ///     size of the selected region. |edit_state_flags| is a combination of flags
+    ///     that represent the state of the quick menu. Return true if the menu will be
+    ///     handled and execute |callback| either synchronously or asynchronously with
+    ///     the selected command ID. Return false to cancel the menu.
+    /// </summary>
+    /// <param name="browser"></param>
+    /// <param name="frame"></param>
+    /// <param name="location"></param>
+    /// <param name="size"></param>
+    /// <param name="callback"></param>
+    /// <returns></returns>
+    protected virtual bool RunQuickMenu(CefBrowser browser, CefFrame frame, CefPoint location, CefSize size,
+        CefRunQuickMenuCallback callback)
+    {
+        return false;
+    }
+
+    private int on_quick_menu_command(cef_context_menu_handler_t* self, cef_browser_t* browser, cef_frame_t* frame,
+        int command_id, CefEventFlags event_flags)
+    {
+        CheckSelf(self);
+
+        var mBrowser = CefBrowser.FromNative(browser);
+        var mFrame = CefFrame.FromNative(frame);
+
+        var result = OnQuickMenuCommand(mBrowser, mFrame, command_id, event_flags);
+        
+        return result ? 1 : 0;
+    }
+
+    /// <summary>
+    ///     Called to execute a command selected from the quick menu for a windowless
+    ///     browser. Return true if the command was handled or false for the default
+    ///     implementation. See cef_menu_id_t for command IDs that have default
+    ///     implementations.
+    /// </summary>
+    /// <param name="browser"></param>
+    /// <param name="frame"></param>
+    /// <param name="commandId"></param>
+    /// <param name="eventFlags"></param>
+    /// <returns></returns>
+    protected virtual bool OnQuickMenuCommand(CefBrowser browser, CefFrame frame, int commandId, CefEventFlags eventFlags)
+    {
+        return false;
+    }
+
+    private void on_quick_menu_dismissed(cef_context_menu_handler_t* self, cef_browser_t* browser, cef_frame_t* frame)
+    {
+        CheckSelf(self);
+        
+        var mBrowser = CefBrowser.FromNative(browser);
+        var mFrame = CefFrame.FromNative(frame);
+
+        OnQuickMenuDismissed(mBrowser, mFrame);
+    }
+
+    /// <summary>
+    ///     Called when the quick menu for a windowless browser is dismissed
+    ///     irregardless of whether the menu was canceled or a command was selected.
+    /// </summary>
+    /// <param name="browser"></param>
+    /// <param name="frame"></param>
+    protected virtual void OnQuickMenuDismissed(CefBrowser browser, CefFrame frame)
+    {
+    } 
 }
