@@ -1,51 +1,49 @@
-﻿using Xilium.CefGlue.Interop;
-
-namespace Xilium.CefGlue;
-
-public struct CefTouchHandleState
+﻿namespace Xilium.CefGlue
 {
-    public int TouchHandleId { get; set; }
-    
-    public uint Flags { get; set; }
-    
-    public bool Enabled { get; set; }
-    
-    public CefHorizontalAlignment Orientation { get; set; }
-    public int MirrorVertical { get; set; }
-    public int MirrorHorizontal { get; set; }
+    using System;
+    using System.Runtime.InteropServices;
+    using Xilium.CefGlue.Interop;
 
-    public CefPoint Origin { get; set; }
-
-    public float Alpha { get; set; }
-
-    internal static unsafe CefTouchHandleState FromNative(cef_touch_handle_state_t* touchHandleState)
+    public readonly struct CefTouchHandleState
     {
-        return new CefTouchHandleState
-        {
-            TouchHandleId = touchHandleState->touch_handle_id,
-            Flags = touchHandleState->flags,
-            Enabled = touchHandleState->enabled != 0,
-            Orientation = touchHandleState->orientation,
-            MirrorVertical = touchHandleState->mirror_vertical,
-            MirrorHorizontal = touchHandleState->mirror_horizontal,
-            Origin = new CefPoint(touchHandleState->origin.x, touchHandleState->origin.y),
-            Alpha = touchHandleState->alpha
-        };
-    }
+        private readonly cef_touch_handle_state_t _value;
 
-    internal cef_touch_handle_state_t ToNative()
-    {
-        var result = new cef_touch_handle_state_t
+        internal unsafe CefTouchHandleState(cef_touch_handle_state_t* value)
         {
-            touch_handle_id = TouchHandleId,
-            flags = Flags,
-            enabled = Enabled ? 0 : 1,
-            orientation = Orientation,
-            mirror_horizontal = MirrorHorizontal,
-            mirror_vertical = MirrorVertical,
-            origin = new cef_point_t(Origin.X, Origin.Y),
-            alpha = Alpha
-        };
-        return result;
+            _value = *value;
+        }
+
+        /// <summary>
+        /// Touch handle id. Increments for each new touch handle.
+        /// </summary>
+        public int TouchHandleId => _value.touch_handle_id;
+
+        /// <summary>
+        /// Combination of cef_touch_handle_state_flags_t values indicating what state
+        /// is set.
+        /// </summary>
+        public CefTouchHandleStateFlags Flags => _value.flags;
+
+        /// <summary>
+        /// Enabled state. Only set if |flags| contains CEF_THS_FLAG_ENABLED.
+        /// </summary>
+        public bool Enabled => _value.enabled != 0;
+
+        /// <summary>
+        /// Orientation state. Only set if |flags| contains CEF_THS_FLAG_ORIENTATION.
+        /// </summary>
+        public CefHorizontalAlignment Orientation => _value.orientation;
+        public bool MirrorVertical => _value.mirror_vertical != 0;
+        public bool MirrorHorizontal => _value.mirror_horizontal != 0;
+
+        /// <summary>
+        /// Origin state. Only set if |flags| contains CEF_THS_FLAG_ORIGIN.
+        /// </summary>
+        public CefPoint Origin => new CefPoint(_value.origin.x, _value.origin.y);
+
+        /// <summary>
+        /// Alpha state. Only set if |flags| contains CEF_THS_FLAG_ALPHA.
+        /// </summary>
+        public float Alpha => _value.alpha;
     }
 }

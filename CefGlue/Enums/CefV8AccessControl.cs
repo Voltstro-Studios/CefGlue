@@ -2,19 +2,19 @@
 // This file manually written from cef/include/internal/cef_types.h.
 // C API name: cef_v8_accesscontrol_t.
 //
-
-using System;
-
-namespace Xilium.CefGlue;
-
-/// <summary>
-///     V8 access control values.
-/// </summary>
-[Flags]
-public enum CefV8AccessControl
+namespace Xilium.CefGlue
 {
-    Default = 0,
-    AllCanRead = 1,
-    AllCanWrite = 1 << 1,
-    ProhibitsOverwriting = 1 << 2
+    using System;
+
+    /// <summary>
+    /// V8 access control values.
+    /// </summary>
+    [Flags]
+    public enum CefV8AccessControl
+    {
+        Default = 0,
+        AllCanRead = 1,
+        AllCanWrite = 1 << 1,
+        ProhibitsOverwriting = 1 << 2,
+    }
 }

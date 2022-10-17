@@ -2,26 +2,30 @@
 // This file manually written from cef/include/internal/cef_types.h.
 // C API name: cef_state_t.
 //
-
-namespace Xilium.CefGlue;
-
-/// <summary>
-///     Represents the state of a setting.
-/// </summary>
-public enum CefState
+namespace Xilium.CefGlue
 {
-    /// <summary>
-    ///     Use the default state for the setting.
-    /// </summary>
-    Default = 0,
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
 
     /// <summary>
-    ///     Enable or allow the setting.
+    /// Represents the state of a setting.
     /// </summary>
-    Enabled,
+    public enum CefState : int
+    {
+        /// <summary>
+        /// Use the default state for the setting.
+        /// </summary>
+        Default = 0,
 
-    /// <summary>
-    ///     Disable or disallow the setting.
-    /// </summary>
-    Disabled
+        /// <summary>
+        /// Enable or allow the setting.
+        /// </summary>
+        Enabled,
+
+        /// <summary>
+        /// Disable or disallow the setting.
+        /// </summary>
+        Disabled,
+    }
 }

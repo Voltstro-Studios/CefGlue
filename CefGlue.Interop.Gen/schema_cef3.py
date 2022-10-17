@@ -15,7 +15,6 @@ classdef = {
     'CefClient': { 'role': ROLE_HANDLER, 'reversible': True },
     'CefDisplayHandler': { 'role': ROLE_HANDLER },
     'CefFrame': { 'role': ROLE_PROXY },
-    'CefFrameHandler': { 'role': ROLE_HANDLER },
     'CefGeolocationCallback': { 'role': ROLE_PROXY },
     'CefGeolocationHandler': { 'role': ROLE_HANDLER },
     'CefLifeSpanHandler': { 'role': ROLE_HANDLER },
@@ -177,10 +176,10 @@ classdef = {
     # 101
     'CefCommandHandler': { 'role': ROLE_HANDLER },
     # 104
-    'CefSharedProcessMessageBuilder': { 'role': ROLE_PROXY },
-    'CefSharedMemoryRegion': { 'role': ROLE_PROXY },
-    'CefPermissionPromptCallback': { 'role': ROLE_PROXY },
+    'CefRunQuickMenuCallback': { 'role': ROLE_PROXY },
     'CefMediaAccessCallback': { 'role': ROLE_PROXY },
-    'CefRunQuickMenuCallback' : { 'role': ROLE_PROXY },
+    'CefPermissionPromptCallback': { 'role': ROLE_PROXY },
     'CefPermissionHandler': { 'role': ROLE_HANDLER },
+    'CefSharedMemoryRegion': { 'role': ROLE_PROXY },
+    'CefSharedProcessMessageBuilder': { 'role': ROLE_PROXY },
     }

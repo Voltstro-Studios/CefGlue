@@ -1,20 +1,47 @@
-﻿namespace Xilium.CefGlue;
-
-public struct CefInsets
+﻿namespace Xilium.CefGlue
 {
-    public CefInsets(int top, int left, int bottom, int right)
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+    using Xilium.CefGlue.Interop;
+
+    public struct CefInsets
     {
-        Top = top;
-        Left = left;
-        Bottom = bottom;
-        Right = right;
+        private int _top;
+        private int _left;
+        private int _bottom;
+        private int _right;
+
+        public CefInsets(int top, int left, int bottom, int right)
+        {
+            _top = top;
+            _left = left;
+            _bottom = bottom;
+            _right = right;
+        }
+
+        public int Top
+        {
+            get { return _top; }
+            set { _top = value; }
+        }
+
+        public int Left
+        {
+            get { return _left; }
+            set { _left = value; }
+        }
+
+        public int Bottom
+        {
+            get { return _bottom; }
+            set { _bottom = value; }
+        }
+
+        public int Right
+        {
+            get { return _right; }
+            set { _right = value; }
+        }
     }
-
-    public int Top { get; set; }
-
-    public int Left { get; set; }
-
-    public int Bottom { get; set; }
-
-    public int Right { get; set; }
 }

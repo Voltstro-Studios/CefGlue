@@ -1,91 +1,89 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Runtime.InteropServices;
-
-namespace Xilium.CefGlue.Interop;
-
-#pragma warning disable CS8825
-
-[StructLayout(LayoutKind.Sequential, Pack = libcef.ALIGN)]
-internal unsafe struct cef_string_list
+﻿namespace Xilium.CefGlue.Interop
 {
-    private static readonly string[] Empty = Array.Empty<string>();
+    using System;
+    using System.Collections.Generic;
+    using System.Runtime.InteropServices;
+    using System.Security;
+    using System.Text;
 
-    [return: NotNullIfNotNull("list")]
-    public static string[]? ToArray(cef_string_list* list)
+    [StructLayout(LayoutKind.Sequential, Pack = libcef.ALIGN)]
+    internal unsafe struct cef_string_list
     {
-        if (list == null)
-            return null;
+        private static readonly string[] Empty = new string[0];
 
-        var count = libcef.string_list_size(list);
-        if (count == 0) return Empty;
-
-        var result = new string[count];
-
-        var n_value = new cef_string_t();
-        for (var i = 0; i < count; i++)
+        public static string[] ToArray(cef_string_list* list)
         {
-            libcef.string_list_value(list, i,
-                &n_value); // FIXME: do not ignore return value of libcef.string_list_value
-            result[i] = cef_string_t.ToString(&n_value);
-        }
+            if (list == null) return null;
 
-        libcef.string_clear(&n_value);
-        return result;
-    }
+            var count = libcef.string_list_size(list);
+            if (count == 0) return Empty;
 
-    [return: NotNullIfNotNull("list")]
-    public static List<string>? ToList(cef_string_list* list)
-    {
-        if (list == null)
-            return null;
+            var result = new string[count];
 
-        var count = libcef.string_list_size(list);
-        if (count == 0) return new List<string>();
-
-        var result = new List<string>(count);
-
-        var n_value = new cef_string_t();
-        for (var i = 0; i < count; i++)
-        {
-            libcef.string_list_value(list, i,
-                &n_value); // FIXME: do not ignore return value of libcef.string_list_value
-            result.Add(cef_string_t.ToString(&n_value));
-        }
-
-        libcef.string_clear(&n_value);
-        return result;
-    }
-
-    public static cef_string_list* From(string[]? list)
-    {
-        var result = libcef.string_list_alloc();
-
-        if (list is {Length: > 0})
-            for (var i = 0; i < list.Length; i++)
+            cef_string_t n_value = new cef_string_t();
+            for (var i = 0; i < count; i++)
             {
-                var item = list[i];
-                fixed (char* item_str = item)
+                libcef.string_list_value(list, i, &n_value); // FIXME: do not ignore return value of libcef.string_list_value
+                result[i] = cef_string_t.ToString(&n_value);
+            }
+
+            libcef.string_clear(&n_value);
+            return result;
+        }
+
+        public static List<string> ToList(cef_string_list* list)
+        {
+            if (list == null) return null;
+
+            var count = libcef.string_list_size(list);
+            if (count == 0) return new List<string>();
+
+            var result = new List<string>(count);
+
+            cef_string_t n_value = new cef_string_t();
+            for (var i = 0; i < count; i++)
+            {
+                libcef.string_list_value(list, i, &n_value); // FIXME: do not ignore return value of libcef.string_list_value
+                result.Add(cef_string_t.ToString(&n_value));
+            }
+
+            libcef.string_clear(&n_value);
+            return result;
+        }
+
+        public static cef_string_list* From(string[] list)
+        {
+            var result = libcef.string_list_alloc();
+
+            if (list != null && list.Length > 0)
+            {
+                for (var i = 0; i < list.Length; i++)
                 {
-                    var n_item = new cef_string_t(item_str, item.Length);
-                    libcef.string_list_append(result, &n_item);
+                    var item = list[i];
+                    fixed (char* item_str = item)
+                    {
+                        var n_item = new cef_string_t(item_str, item != null ? item.Length : 0);
+                        libcef.string_list_append(result, &n_item);
+                    }
                 }
             }
 
-        return result;
-    }
+            return result;
+        }
 
-    public static void AppendTo(cef_string_list* target, IEnumerable<string>? values)
-    {
-        if (values != null)
-            foreach (var item in values)
-                fixed (char* item_str = item)
+        public static void AppendTo(cef_string_list* target, IEnumerable<string> values)
+        {
+            if (values != null)
+            {
+                foreach (var item in values)
                 {
-                    var n_item = new cef_string_t(item_str, item?.Length ?? 0);
-                    libcef.string_list_append(target, &n_item);
+                    fixed (char* item_str = item)
+                    {
+                        var n_item = new cef_string_t(item_str, item != null ? item.Length : 0);
+                        libcef.string_list_append(target, &n_item);
+                    }
                 }
+            }
+        }
     }
 }
-
-#pragma warning restore CS8825

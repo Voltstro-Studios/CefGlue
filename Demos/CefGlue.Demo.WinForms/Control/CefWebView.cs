@@ -25,8 +25,10 @@
             windowInfo.Name = url;
             if (transparent)
             {
-                windowInfo.Width = 500;
-                windowInfo.Height = 500;
+                CefRectangle size = windowInfo.Bounds;
+                size.Width = 500;
+                size.Height = 500;
+                windowInfo.Bounds = size;
                 //windowInfo.Style = WindowStyle.WS_POPUP | WindowStyle.WS_SIZEFRAME | WindowStyle.WS_VISIBLE;
                 windowInfo.StyleEx = WindowStyleEx.WS_EX_COMPOSITED;
             }

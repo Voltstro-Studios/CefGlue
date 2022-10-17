@@ -110,13 +110,13 @@ namespace Xilium.CefGlue.Interop
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate cef_time_t get_start_time_delegate(cef_download_item_t* self);
+        private delegate CefBaseTime get_start_time_delegate(cef_download_item_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate cef_time_t get_end_time_delegate(cef_download_item_t* self);
+        private delegate CefBaseTime get_end_time_delegate(cef_download_item_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
@@ -368,7 +368,7 @@ namespace Xilium.CefGlue.Interop
         private static IntPtr _pc;
         private static get_start_time_delegate _dc;
         
-        public static cef_time_t get_start_time(cef_download_item_t* self)
+        public static CefBaseTime get_start_time(cef_download_item_t* self)
         {
             get_start_time_delegate d;
             var p = self->_get_start_time;
@@ -385,7 +385,7 @@ namespace Xilium.CefGlue.Interop
         private static IntPtr _pd;
         private static get_end_time_delegate _dd;
         
-        public static cef_time_t get_end_time(cef_download_item_t* self)
+        public static CefBaseTime get_end_time(cef_download_item_t* self)
         {
             get_end_time_delegate d;
             var p = self->_get_end_time;

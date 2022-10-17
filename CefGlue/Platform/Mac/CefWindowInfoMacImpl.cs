@@ -1,208 +1,114 @@
-﻿using System;
-using Xilium.CefGlue.Interop;
-using Xilium.CefGlue.Platform.Windows;
-
-namespace Xilium.CefGlue.Platform;
-
-internal sealed unsafe class CefWindowInfoMacImpl : CefWindowInfo
+﻿namespace Xilium.CefGlue.Platform
 {
-    private cef_window_info_t_mac* _self;
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+    using Xilium.CefGlue;
+    using Xilium.CefGlue.Interop;
+    using Xilium.CefGlue.Platform.Windows;
 
-    public CefWindowInfoMacImpl()
-        : base(true)
+    internal unsafe sealed class CefWindowInfoMacImpl : CefWindowInfo
     {
-        _self = cef_window_info_t_mac.Alloc();
-    }
+        private cef_window_info_t_mac* _self;
 
-    public CefWindowInfoMacImpl(cef_window_info_t* ptr)
-        : base(false)
-    {
-        if (CefRuntime.Platform != CefRuntimePlatform.MacOS)
-            throw new InvalidOperationException();
+        public CefWindowInfoMacImpl()
+            : base(true)
+        {
+            _self = cef_window_info_t_mac.Alloc();
+        }
 
-        _self = (cef_window_info_t_mac*) ptr;
-    }
+        public CefWindowInfoMacImpl(cef_window_info_t* ptr)
+            : base(false)
+        {
+            if (CefRuntime.Platform != CefRuntimePlatform.MacOS)
+                throw new InvalidOperationException();
 
-    public override IntPtr ParentHandle
-    {
-        get
-        {
-            ThrowIfDisposed();
-            return _self->parent_view;
+            _self = (cef_window_info_t_mac*)ptr;
         }
-        set
-        {
-            ThrowIfDisposed();
-            _self->parent_view = value;
-        }
-    }
 
-    public override IntPtr Handle
-    {
-        get
+        internal override cef_window_info_t* GetNativePointer()
         {
-            ThrowIfDisposed();
-            return _self->view;
+            return (cef_window_info_t*)_self;
         }
-        set
-        {
-            ThrowIfDisposed();
-            _self->view = value;
-        }
-    }
 
-    public override string? Name
-    {
-        get
+        protected internal override void DisposeNativePointer()
         {
-            ThrowIfDisposed();
-            return cef_string_t.ToString(&_self->window_name);
+            cef_window_info_t_mac.Free(_self);
+            _self = null;
         }
-        set
-        {
-            ThrowIfDisposed();
-            cef_string_t.Copy(value, &_self->window_name);
-        }
-    }
 
-    public override int X
-    {
-        get
+        public override IntPtr ParentHandle
         {
-            ThrowIfDisposed();
-            return _self->x;
+            get { ThrowIfDisposed(); return _self->parent_view; }
+            set { ThrowIfDisposed(); _self->parent_view = value; }
         }
-        set
-        {
-            ThrowIfDisposed();
-            _self->x = value;
-        }
-    }
 
-    public override int Y
-    {
-        get
+        public override IntPtr Handle
         {
-            ThrowIfDisposed();
-            return _self->y;
+            get { ThrowIfDisposed(); return _self->view; }
+            set { ThrowIfDisposed(); _self->view = value; }
         }
-        set
-        {
-            ThrowIfDisposed();
-            _self->y = value;
-        }
-    }
 
-    public override int Width
-    {
-        get
+        public override string Name
         {
-            ThrowIfDisposed();
-            return _self->width;
+            get { ThrowIfDisposed(); return cef_string_t.ToString(&_self->window_name); }
+            set { ThrowIfDisposed(); cef_string_t.Copy(value, &_self->window_name); }
         }
-        set
-        {
-            ThrowIfDisposed();
-            _self->width = value;
-        }
-    }
 
-    public override int Height
-    {
-        get
+        public override CefRectangle Bounds
         {
-            ThrowIfDisposed();
-            return _self->height;
+            get
+            {
+                ThrowIfDisposed();
+                return new CefRectangle(_self->bounds);
+            }
+            set
+            {
+                ThrowIfDisposed();
+                _self->bounds = value.AsNative();
+            }
         }
-        set
-        {
-            ThrowIfDisposed();
-            _self->height = value;
-        }
-    }
 
-    public override WindowStyle Style
-    {
-        get => default;
-        set { }
-    }
-
-    public override WindowStyleEx StyleEx
-    {
-        get => default;
-        set { }
-    }
-
-    public override IntPtr MenuHandle
-    {
-        get => default;
-        set { }
-    }
-
-    public override bool Hidden
-    {
-        get
+        public override WindowStyle Style
         {
-            ThrowIfDisposed();
-            return _self->hidden != 0;
+            get { return default(WindowStyle); }
+            set { }
         }
-        set
-        {
-            ThrowIfDisposed();
-            _self->hidden = value ? 1 : 0;
-        }
-    }
 
-    public override bool WindowlessRenderingEnabled
-    {
-        get
+        public override WindowStyleEx StyleEx
         {
-            ThrowIfDisposed();
-            return _self->windowless_rendering_enabled != 0;
+            get { return default(WindowStyleEx); }
+            set { }
         }
-        set
-        {
-            ThrowIfDisposed();
-            _self->windowless_rendering_enabled = value ? 1 : 0;
-        }
-    }
 
-    public override bool SharedTextureEnabled
-    {
-        get
+        public override IntPtr MenuHandle
         {
-            ThrowIfDisposed();
-            return _self->shared_texture_enabled != 0;
+            get { return default(IntPtr); }
+            set { }
         }
-        set
-        {
-            ThrowIfDisposed();
-            _self->shared_texture_enabled = value ? 1 : 0;
-        }
-    }
 
-    public override bool ExternalBeginFrameEnabled
-    {
-        get
+        public override bool Hidden
         {
-            ThrowIfDisposed();
-            return _self->external_begin_frame_enabled != 0;
+            get { ThrowIfDisposed(); return _self->hidden != 0; }
+            set { ThrowIfDisposed(); _self->hidden = value ? 1 : 0; }
         }
-        set
+
+        public override bool WindowlessRenderingEnabled
         {
-            ThrowIfDisposed();
-            _self->external_begin_frame_enabled = value ? 1 : 0;
+            get { ThrowIfDisposed(); return _self->windowless_rendering_enabled != 0; }
+            set { ThrowIfDisposed(); _self->windowless_rendering_enabled = value ? 1 : 0; }
         }
-    }
 
-    internal override cef_window_info_t* GetNativePointer()
-    {
-        return (cef_window_info_t*) _self;
-    }
+        public override bool SharedTextureEnabled
+        {
+            get { ThrowIfDisposed(); return _self->shared_texture_enabled != 0; }
+            set { ThrowIfDisposed(); _self->shared_texture_enabled = value ? 1 : 0; }
+        }
 
-    protected override void DisposeNativePointer()
-    {
-        cef_window_info_t_mac.Free(_self);
-        _self = null;
+        public override bool ExternalBeginFrameEnabled
+        {
+            get { ThrowIfDisposed(); return _self->external_begin_frame_enabled != 0; }
+            set { ThrowIfDisposed(); _self->external_begin_frame_enabled = value ? 1 : 0; }
+        }
     }
 }

@@ -4,38 +4,51 @@
 // See also:
 //   /Interop/Structs/cef_time_t.cs
 //
-
-namespace Xilium.CefGlue.Interop;
-
-internal static partial class libcef
+namespace Xilium.CefGlue.Interop
 {
-    /*
-    ///
-    // Converts cef_time_t to/from time_t. Returns true (1) on success and false (0)
-    // on failure.
-    ///
-    CEF_EXPORT int cef_time_to_timet(const cef_time_t* cef_time, time_t* time);
-    CEF_EXPORT int cef_time_from_timet(time_t time, cef_time_t* cef_time);
+    using System;
+    using System.Runtime.InteropServices;
+    using System.Security;
 
-    ///
-    // Converts cef_time_t to/from a double which is the number of seconds since
-    // epoch (Jan 1, 1970). Webkit uses this format to represent time. A value of 0
-    // means "not initialized". Returns true (1) on success and false (0) on
-    // failure.
-    ///
-    CEF_EXPORT int cef_time_to_doublet(const cef_time_t* cef_time, double* time);
-    CEF_EXPORT int cef_time_from_doublet(double time, cef_time_t* cef_time);
+    internal static unsafe partial class libcef
+    {
+        [DllImport(DllName, EntryPoint = "cef_basetime_now", CallingConvention = CEF_CALL)]
+        public static extern CefBaseTime basetime_now();
 
-    ///
-    // Retrieve the current system time.
-    //
-    CEF_EXPORT int cef_time_now(cef_time_t* cef_time);
+        [DllImport(DllName, EntryPoint = "cef_time_to_basetime", CallingConvention = CEF_CALL)]
+        public static extern int time_to_basetime(in CefTime from, out CefBaseTime to);
 
-    ///
-    // Retrieve the delta in milliseconds between two time values.
-    //
-    CEF_EXPORT int cef_time_delta(const cef_time_t* cef_time1,
-                                  const cef_time_t* cef_time2,
-                                  long long* delta);
-    */
+        [DllImport(DllName, EntryPoint = "cef_time_from_basetime", CallingConvention = CEF_CALL)]
+        public static extern int time_from_basetime(CefBaseTime from, out CefTime to);
+
+        /*
+        ///
+        // Converts cef_time_t to/from time_t. Returns true (1) on success and false (0)
+        // on failure.
+        ///
+        CEF_EXPORT int cef_time_to_timet(const cef_time_t* cef_time, time_t* time);
+        CEF_EXPORT int cef_time_from_timet(time_t time, cef_time_t* cef_time);
+
+        ///
+        // Converts cef_time_t to/from a double which is the number of seconds since
+        // epoch (Jan 1, 1970). Webkit uses this format to represent time. A value of 0
+        // means "not initialized". Returns true (1) on success and false (0) on
+        // failure.
+        ///
+        CEF_EXPORT int cef_time_to_doublet(const cef_time_t* cef_time, double* time);
+        CEF_EXPORT int cef_time_from_doublet(double time, cef_time_t* cef_time);
+
+        ///
+        // Retrieve the current system time.
+        //
+        CEF_EXPORT int cef_time_now(cef_time_t* cef_time);
+
+        ///
+        // Retrieve the delta in milliseconds between two time values.
+        //
+        CEF_EXPORT int cef_time_delta(const cef_time_t* cef_time1,
+                                      const cef_time_t* cef_time2,
+                                      long long* delta);
+        */
+    }
 }

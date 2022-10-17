@@ -1,57 +1,61 @@
-﻿using System;
-using System.Collections.Specialized;
-using System.Runtime.InteropServices;
-
-namespace Xilium.CefGlue.Interop;
-
-[StructLayout(LayoutKind.Sequential, Pack = libcef.ALIGN)]
-internal unsafe struct cef_string_multimap
+﻿namespace Xilium.CefGlue.Interop
 {
-    public static NameValueCollection ToNameValueCollection(cef_string_multimap* multimap)
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.Specialized;
+    using System.Runtime.InteropServices;
+    using System.Security;
+    using System.Text;
+
+    [StructLayout(LayoutKind.Sequential, Pack = libcef.ALIGN)]
+    internal unsafe struct cef_string_multimap
     {
-        var result = new NameValueCollection(StringComparer.InvariantCultureIgnoreCase);
-        if (multimap == null) return result;
-
-        var size = libcef.string_multimap_size(multimap);
-
-        var n_key = new cef_string_t();
-        var n_value = new cef_string_t();
-        for (var i = 0; i < size; i++)
+        public static NameValueCollection ToNameValueCollection(cef_string_multimap* multimap)
         {
-            libcef.string_multimap_key(multimap, i, &n_key);
-            libcef.string_multimap_value(multimap, i, &n_value);
+            var result = new NameValueCollection(StringComparer.InvariantCultureIgnoreCase);
+            if (multimap == null) return result;
 
-            result.Add(cef_string_t.ToString(&n_key), cef_string_t.ToString(&n_value));
-        }
+            var size = libcef.string_multimap_size(multimap);
 
-        libcef.string_clear(&n_key);
-        libcef.string_clear(&n_value);
-
-        return result;
-    }
-
-    public static cef_string_multimap* From(NameValueCollection collection)
-    {
-        var result = libcef.string_multimap_alloc();
-
-        foreach (string key in collection)
-            fixed (char* key_ptr = key)
+            var n_key = new cef_string_t();
+            var n_value = new cef_string_t();
+            for (var i = 0; i < size; i++)
             {
-                var n_key = new cef_string_t(key_ptr, key.Length);
+                libcef.string_multimap_key(multimap, i, &n_key);
+                libcef.string_multimap_value(multimap, i, &n_value);
 
-                var values = collection.GetValues(key);
-                if (values == null)
-                    continue;
-
-                foreach (var value in values)
-                    fixed (char* value_ptr = value)
-                    {
-                        var n_value = new cef_string_t(value_ptr, value.Length);
-
-                        libcef.string_multimap_append(result, &n_key, &n_value);
-                    }
+                result.Add(cef_string_t.ToString(&n_key), cef_string_t.ToString(&n_value));
             }
 
-        return result;
+            libcef.string_clear(&n_key);
+            libcef.string_clear(&n_value);
+
+            return result;
+        }
+
+        public static cef_string_multimap* From(NameValueCollection collection)
+        {
+            var result = libcef.string_multimap_alloc();
+
+            foreach (string key in collection)
+            {
+                fixed (char* key_ptr = key)
+                {
+                    var n_key = new cef_string_t(key_ptr, key.Length);
+
+                    foreach (var value in collection.GetValues(key))
+                    {
+                        fixed (char* value_ptr = value)
+                        {
+                            var n_value = new cef_string_t(value_ptr, value.Length);
+
+                            libcef.string_multimap_append(result, &n_key, &n_value);
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
     }
 }

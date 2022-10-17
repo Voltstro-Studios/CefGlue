@@ -1,20 +1,25 @@
-﻿namespace Xilium.CefGlue;
-
-/// <summary>
-///     Device information for a MediaSink object.
-/// </summary>
-public readonly struct CefMediaSinkDeviceInfo
+﻿namespace Xilium.CefGlue
 {
-    public CefMediaSinkDeviceInfo(string? ipAddress, int port, string? modelName)
+    /// <summary>
+    /// Device information for a MediaSink object.
+    /// </summary>
+    public readonly struct CefMediaSinkDeviceInfo
     {
-        IPAddress = ipAddress;
-        Port = port;
-        ModelName = modelName;
+        private readonly string _ipAddress;
+        private readonly int _port;
+        private readonly string _modelName;
+
+        public CefMediaSinkDeviceInfo(string ipAddress, int port, string modelName)
+        {
+            _ipAddress = ipAddress;
+            _port = port;
+            _modelName = modelName;
+        }
+
+        public readonly string IPAddress => _ipAddress;
+
+        public readonly int Port => _port;
+
+        public readonly string ModelName => _modelName;
     }
-
-    public string? IPAddress { get; }
-
-    public int Port { get; }
-
-    public string? ModelName { get; }
 }

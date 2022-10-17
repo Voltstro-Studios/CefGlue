@@ -1,24 +1,24 @@
 ﻿//
 // This file manually written from cef/include/internal/cef_types.h.
 //
-
-using System.Runtime.InteropServices;
-
-namespace Xilium.CefGlue.Interop;
-
-[StructLayout(LayoutKind.Sequential, Pack = libcef.ALIGN)]
-internal struct cef_touch_event_t
+namespace Xilium.CefGlue.Interop
 {
-    public int id;
-    public float x;
-    public float y;
-    public float radius_x;
-    public float radius_y;
-    public float rotation_angle;
-    public float pressure;
-    public CefTouchEventType type;
-    public CefEventFlags modifiers;
-    public CefPointerType pointer_type;
+    using System;
+    using System.Runtime.InteropServices;
+
+    [StructLayout(LayoutKind.Sequential, Pack = libcef.ALIGN)]
+    internal unsafe struct cef_touch_event_t
+    {
+        public int id;
+        public float x;
+        public float y;
+        public float radius_x;
+        public float radius_y;
+        public float rotation_angle;
+        public float pressure;
+        public CefTouchEventType type;
+        public CefEventFlags modifiers;
+        public CefPointerType pointer_type;
 
 #if __DISABLED__
         #region Alloc & Free
@@ -43,4 +43,5 @@ internal struct cef_touch_event_t
         }
         #endregion
 #endif
+    }
 }

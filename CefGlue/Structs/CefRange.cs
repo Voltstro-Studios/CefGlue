@@ -1,14 +1,31 @@
-﻿namespace Xilium.CefGlue;
-
-public struct CefRange
+﻿namespace Xilium.CefGlue
 {
-    public CefRange(int from, int to)
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+    using Xilium.CefGlue.Interop;
+
+    public struct CefRange
     {
-        From = from;
-        To = to;
+        private int _from;
+        private int _to;
+
+        public CefRange(int from, int to)
+        {
+            _from = from;
+            _to = to;
+        }
+
+        public int From
+        {
+            get { return _from; }
+            set { _from = value; }
+        }
+
+        public int To
+        {
+            get { return _to; }
+            set { _to = value; }
+        }
     }
-
-    public int From { get; set; }
-
-    public int To { get; set; }
 }

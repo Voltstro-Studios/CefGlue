@@ -1,24 +1,25 @@
 ﻿//
-// This file manually written from cef/include/internal/cef_types.h.
+// This file manually written from cef/include/internal/cef_types_geometry.h.
 //
-
-using System.Runtime.InteropServices;
-
-namespace Xilium.CefGlue.Interop;
-
-[StructLayout(LayoutKind.Sequential, Pack = libcef.ALIGN)]
-internal struct cef_rect_t
+namespace Xilium.CefGlue.Interop
 {
-    public int x;
-    public int y;
-    public int width;
-    public int height;
+    using System;
+    using System.Runtime.InteropServices;
 
-    public cef_rect_t(int x, int y, int width, int height)
+    [StructLayout(LayoutKind.Sequential, Pack = libcef.ALIGN)]
+    internal unsafe struct cef_rect_t
     {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
+        public int x;
+        public int y;
+        public int width;
+        public int height;
+
+        public cef_rect_t(int x, int y, int width, int height)
+        {
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+        }
     }
 }

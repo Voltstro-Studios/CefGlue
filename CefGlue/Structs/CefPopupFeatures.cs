@@ -1,95 +1,99 @@
-﻿using Xilium.CefGlue.Interop;
-
-namespace Xilium.CefGlue;
-
-public sealed unsafe class CefPopupFeatures
+﻿namespace Xilium.CefGlue
 {
-    private cef_popup_features_t* _self;
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+    using Xilium.CefGlue.Interop;
 
-    internal CefPopupFeatures(cef_popup_features_t* ptr)
+    public sealed unsafe class CefPopupFeatures
     {
-        _self = ptr;
-    }
+        private cef_popup_features_t* _self;
 
-    public int? X
-    {
-        get
+        internal CefPopupFeatures(cef_popup_features_t* ptr)
         {
-            ThrowIfObjectDisposed();
-            return _self->xSet != 0 ? _self->x : null;
+            _self = ptr;
         }
-    }
 
-    public int? Y
-    {
-        get
+        internal void Dispose()
         {
-            ThrowIfObjectDisposed();
-            return _self->ySet != 0 ? _self->y : null;
+            _self = null;
         }
-    }
 
-    public int? Width
-    {
-        get
+        public int? X
         {
-            ThrowIfObjectDisposed();
-            return _self->widthSet != 0 ? _self->width : null;
+            get
+            {
+                ThrowIfObjectDisposed();
+                return _self->xSet != 0 ? (int?)_self->x : null;
+            }
         }
-    }
 
-    public int? Height
-    {
-        get
+        public int? Y
         {
-            ThrowIfObjectDisposed();
-            return _self->heightSet != 0 ? _self->height : null;
+            get
+            {
+                ThrowIfObjectDisposed();
+                return _self->ySet != 0 ? (int?)_self->y : null;
+            }
         }
-    }
 
-    public bool MenuBarVisible
-    {
-        get
+        public int? Width
         {
-            ThrowIfObjectDisposed();
-            return _self->menuBarVisible != 0;
+            get
+            {
+                ThrowIfObjectDisposed();
+                return _self->widthSet != 0 ? (int?)_self->width : null;
+            }
         }
-    }
 
-    public bool StatusBarVisible
-    {
-        get
+        public int? Height
         {
-            ThrowIfObjectDisposed();
-            return _self->statusBarVisible != 0;
+            get
+            {
+                ThrowIfObjectDisposed();
+                return _self->heightSet != 0 ? (int?)_self->height : null;
+            }
         }
-    }
 
-    public bool ToolBarVisible
-    {
-        get
+        public bool MenuBarVisible
         {
-            ThrowIfObjectDisposed();
-            return _self->toolBarVisible != 0;
+            get
+            {
+                ThrowIfObjectDisposed();
+                return _self->menuBarVisible != 0;
+            }
         }
-    }
 
-    public bool ScrollbarsVisible
-    {
-        get
+        public bool StatusBarVisible
         {
-            ThrowIfObjectDisposed();
-            return _self->scrollbarsVisible != 0;
+            get
+            {
+                ThrowIfObjectDisposed();
+                return _self->statusBarVisible != 0;
+            }
         }
-    }
 
-    internal void Dispose()
-    {
-        _self = null;
-    }
+        public bool ToolBarVisible
+        {
+            get
+            {
+                ThrowIfObjectDisposed();
+                return _self->toolBarVisible != 0;
+            }
+        }
 
-    private void ThrowIfObjectDisposed()
-    {
-        if (_self == null) throw ExceptionBuilder.ObjectDisposed();
+        public bool ScrollbarsVisible
+        {
+            get
+            {
+                ThrowIfObjectDisposed();
+                return _self->scrollbarsVisible != 0;
+            }
+        }
+
+        private void ThrowIfObjectDisposed()
+        {
+            if (_self == null) throw ExceptionBuilder.ObjectDisposed();
+        }
     }
 }

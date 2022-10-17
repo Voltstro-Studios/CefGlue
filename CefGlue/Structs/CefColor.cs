@@ -1,29 +1,32 @@
-﻿namespace Xilium.CefGlue;
-
-public struct CefColor
+﻿namespace Xilium.CefGlue
 {
-    private readonly uint _value;
+    using System;
 
-    public CefColor(uint argb)
+    public struct CefColor
     {
-        _value = argb;
-    }
+        private uint _value;
 
-    public CefColor(byte alpha, byte red, byte green, byte blue)
-    {
-        _value = unchecked((uint) ((alpha << 24) | (red << 16) | (green << 8) | blue));
-    }
+        public CefColor(uint argb)
+        {
+            _value = argb;
+        }
 
-    public byte A => unchecked((byte) (_value >> 24));
+        public CefColor(byte alpha, byte red, byte green, byte blue)
+        {
+            _value = unchecked((uint)((alpha << 24) | (red << 16) | (green << 8) | blue));
+        }
 
-    public byte R => unchecked((byte) (_value >> 16));
+        public byte A { get { return unchecked((byte)(_value >> 24)); } }
 
-    public byte G => unchecked((byte) (_value >> 8));
+        public byte R { get { return unchecked((byte)(_value >> 16)); } }
 
-    public byte B => unchecked((byte) _value);
+        public byte G { get { return unchecked((byte)(_value >> 8)); } }
 
-    public uint ToArgb()
-    {
-        return _value;
+        public byte B { get { return unchecked((byte)(_value)); } }
+
+        public uint ToArgb()
+        {
+            return _value;
+        }
     }
 }
