@@ -11,7 +11,7 @@
         <LangVersion>latest</LangVersion>
         <AnalysisMode>Default</AnalysisMode>
 
-        <Version>106.1.0</Version>
+        <Version>106.1.1</Version>
         <IsPackable>true</IsPackable>
     </PropertyGroup>
 
