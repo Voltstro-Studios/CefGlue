@@ -4,14 +4,15 @@
 //      DO NOT MODIFY!
 // </auto-generated>
 //------------------------------------------------------------------------------
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using Xilium.CefGlue.Interop;
-
 namespace Xilium.CefGlue
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Runtime.InteropServices;
+    using System.Threading;
+    using Xilium.CefGlue.Interop;
+    
     // Role: PROXY
     #nullable enable
     public sealed unsafe partial class CefPostDataElement : IDisposable
@@ -28,16 +29,18 @@ namespace Xilium.CefGlue
         }
         
         private cef_post_data_element_t* _self;
+        private int _disposed = 0;
         
         private CefPostDataElement(cef_post_data_element_t* ptr)
         {
             if (ptr == null) throw new ArgumentNullException("ptr");
             _self = ptr;
+            CefObjectTracker.Track(this);
         }
         
         ~CefPostDataElement()
         {
-            if (_self != null)
+            if (Interlocked.CompareExchange(ref _disposed, 1, 0) == 0)
             {
                 Release();
                 _self = null;
@@ -46,11 +49,12 @@ namespace Xilium.CefGlue
         
         public void Dispose()
         {
-            if (_self != null)
+            if (Interlocked.CompareExchange(ref _disposed, 1, 0) == 0)
             {
                 Release();
                 _self = null;
             }
+            CefObjectTracker.Untrack(this);
             GC.SuppressFinalize(this);
         }
         

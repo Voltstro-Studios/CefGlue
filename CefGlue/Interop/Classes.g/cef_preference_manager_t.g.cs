@@ -13,67 +13,78 @@ namespace Xilium.CefGlue.Interop
 {
     [StructLayout(LayoutKind.Sequential, Pack = libcef.ALIGN)]
     [SuppressMessage("Microsoft.Design", "CA1049:TypesThatOwnNativeResourcesShouldBeDisposable")]
-    internal unsafe struct cef_web_plugin_info_t
+    internal unsafe struct cef_preference_manager_t
     {
         internal cef_base_ref_counted_t _base;
-        internal IntPtr _get_name;
-        internal IntPtr _get_path;
-        internal IntPtr _get_version;
-        internal IntPtr _get_description;
+        internal IntPtr _has_preference;
+        internal IntPtr _get_preference;
+        internal IntPtr _get_all_preferences;
+        internal IntPtr _can_set_preference;
+        internal IntPtr _set_preference;
+        
+        // GetGlobalPreferenceManager
+        [DllImport(libcef.DllName, EntryPoint = "cef_preference_manager_get_global", CallingConvention = libcef.CEF_CALL)]
+        public static extern cef_preference_manager_t* get_global();
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate void add_ref_delegate(cef_web_plugin_info_t* self);
+        private delegate void add_ref_delegate(cef_preference_manager_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate int release_delegate(cef_web_plugin_info_t* self);
+        private delegate int release_delegate(cef_preference_manager_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate int has_one_ref_delegate(cef_web_plugin_info_t* self);
+        private delegate int has_one_ref_delegate(cef_preference_manager_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate int has_at_least_one_ref_delegate(cef_web_plugin_info_t* self);
+        private delegate int has_at_least_one_ref_delegate(cef_preference_manager_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate cef_string_userfree* get_name_delegate(cef_web_plugin_info_t* self);
+        private delegate int has_preference_delegate(cef_preference_manager_t* self, cef_string_t* name);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate cef_string_userfree* get_path_delegate(cef_web_plugin_info_t* self);
+        private delegate cef_value_t* get_preference_delegate(cef_preference_manager_t* self, cef_string_t* name);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate cef_string_userfree* get_version_delegate(cef_web_plugin_info_t* self);
+        private delegate cef_dictionary_value_t* get_all_preferences_delegate(cef_preference_manager_t* self, int include_defaults);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate cef_string_userfree* get_description_delegate(cef_web_plugin_info_t* self);
+        private delegate int can_set_preference_delegate(cef_preference_manager_t* self, cef_string_t* name);
+        
+        [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
+        #if !DEBUG
+        [SuppressUnmanagedCodeSecurity]
+        #endif
+        private delegate int set_preference_delegate(cef_preference_manager_t* self, cef_string_t* name, cef_value_t* value, cef_string_t* error);
         
         // AddRef
         private static IntPtr _p0;
         private static add_ref_delegate _d0;
         
-        public static void add_ref(cef_web_plugin_info_t* self)
+        public static void add_ref(cef_preference_manager_t* self)
         {
             add_ref_delegate d;
             var p = self->_base._add_ref;
@@ -90,7 +101,7 @@ namespace Xilium.CefGlue.Interop
         private static IntPtr _p1;
         private static release_delegate _d1;
         
-        public static int release(cef_web_plugin_info_t* self)
+        public static int release(cef_preference_manager_t* self)
         {
             release_delegate d;
             var p = self->_base._release;
@@ -107,7 +118,7 @@ namespace Xilium.CefGlue.Interop
         private static IntPtr _p2;
         private static has_one_ref_delegate _d2;
         
-        public static int has_one_ref(cef_web_plugin_info_t* self)
+        public static int has_one_ref(cef_preference_manager_t* self)
         {
             has_one_ref_delegate d;
             var p = self->_base._has_one_ref;
@@ -124,7 +135,7 @@ namespace Xilium.CefGlue.Interop
         private static IntPtr _p3;
         private static has_at_least_one_ref_delegate _d3;
         
-        public static int has_at_least_one_ref(cef_web_plugin_info_t* self)
+        public static int has_at_least_one_ref(cef_preference_manager_t* self)
         {
             has_at_least_one_ref_delegate d;
             var p = self->_base._has_at_least_one_ref;
@@ -137,72 +148,89 @@ namespace Xilium.CefGlue.Interop
             return d(self);
         }
         
-        // GetName
+        // HasPreference
         private static IntPtr _p4;
-        private static get_name_delegate _d4;
+        private static has_preference_delegate _d4;
         
-        public static cef_string_userfree* get_name(cef_web_plugin_info_t* self)
+        public static int has_preference(cef_preference_manager_t* self, cef_string_t* name)
         {
-            get_name_delegate d;
-            var p = self->_get_name;
+            has_preference_delegate d;
+            var p = self->_has_preference;
             if (p == _p4) { d = _d4; }
             else
             {
-                d = (get_name_delegate)Marshal.GetDelegateForFunctionPointer(p, typeof(get_name_delegate));
+                d = (has_preference_delegate)Marshal.GetDelegateForFunctionPointer(p, typeof(has_preference_delegate));
                 if (_p4 == IntPtr.Zero) { _d4 = d; _p4 = p; }
             }
-            return d(self);
+            return d(self, name);
         }
         
-        // GetPath
+        // GetPreference
         private static IntPtr _p5;
-        private static get_path_delegate _d5;
+        private static get_preference_delegate _d5;
         
-        public static cef_string_userfree* get_path(cef_web_plugin_info_t* self)
+        public static cef_value_t* get_preference(cef_preference_manager_t* self, cef_string_t* name)
         {
-            get_path_delegate d;
-            var p = self->_get_path;
+            get_preference_delegate d;
+            var p = self->_get_preference;
             if (p == _p5) { d = _d5; }
             else
             {
-                d = (get_path_delegate)Marshal.GetDelegateForFunctionPointer(p, typeof(get_path_delegate));
+                d = (get_preference_delegate)Marshal.GetDelegateForFunctionPointer(p, typeof(get_preference_delegate));
                 if (_p5 == IntPtr.Zero) { _d5 = d; _p5 = p; }
             }
-            return d(self);
+            return d(self, name);
         }
         
-        // GetVersion
+        // GetAllPreferences
         private static IntPtr _p6;
-        private static get_version_delegate _d6;
+        private static get_all_preferences_delegate _d6;
         
-        public static cef_string_userfree* get_version(cef_web_plugin_info_t* self)
+        public static cef_dictionary_value_t* get_all_preferences(cef_preference_manager_t* self, int include_defaults)
         {
-            get_version_delegate d;
-            var p = self->_get_version;
+            get_all_preferences_delegate d;
+            var p = self->_get_all_preferences;
             if (p == _p6) { d = _d6; }
             else
             {
-                d = (get_version_delegate)Marshal.GetDelegateForFunctionPointer(p, typeof(get_version_delegate));
+                d = (get_all_preferences_delegate)Marshal.GetDelegateForFunctionPointer(p, typeof(get_all_preferences_delegate));
                 if (_p6 == IntPtr.Zero) { _d6 = d; _p6 = p; }
             }
-            return d(self);
+            return d(self, include_defaults);
         }
         
-        // GetDescription
+        // CanSetPreference
         private static IntPtr _p7;
-        private static get_description_delegate _d7;
+        private static can_set_preference_delegate _d7;
         
-        public static cef_string_userfree* get_description(cef_web_plugin_info_t* self)
+        public static int can_set_preference(cef_preference_manager_t* self, cef_string_t* name)
         {
-            get_description_delegate d;
-            var p = self->_get_description;
+            can_set_preference_delegate d;
+            var p = self->_can_set_preference;
             if (p == _p7) { d = _d7; }
             else
             {
-                d = (get_description_delegate)Marshal.GetDelegateForFunctionPointer(p, typeof(get_description_delegate));
+                d = (can_set_preference_delegate)Marshal.GetDelegateForFunctionPointer(p, typeof(can_set_preference_delegate));
                 if (_p7 == IntPtr.Zero) { _d7 = d; _p7 = p; }
             }
-            return d(self);
+            return d(self, name);
+        }
+        
+        // SetPreference
+        private static IntPtr _p8;
+        private static set_preference_delegate _d8;
+        
+        public static int set_preference(cef_preference_manager_t* self, cef_string_t* name, cef_value_t* value, cef_string_t* error)
+        {
+            set_preference_delegate d;
+            var p = self->_set_preference;
+            if (p == _p8) { d = _d8; }
+            else
+            {
+                d = (set_preference_delegate)Marshal.GetDelegateForFunctionPointer(p, typeof(set_preference_delegate));
+                if (_p8 == IntPtr.Zero) { _d8 = d; _p8 = p; }
+            }
+            return d(self, name, value, error);
         }
         
     }

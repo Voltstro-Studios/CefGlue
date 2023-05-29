@@ -39,6 +39,18 @@ public sealed unsafe partial class CefProcessMessage
         CefListValue.FromNative(
             cef_process_message_t.get_argument_list(_self)
         );
+    
+    
+    /// <summary>
+    /// Returns the shared memory region.
+    /// Returns nullptr when message contains an argument list.
+    /// </summary>
+    public CefSharedMemoryRegion? GetSharedMemoryRegion()
+    {
+        return CefSharedMemoryRegion.FromNativeOrNull(
+            cef_process_message_t.get_shared_memory_region(_self)
+        );
+    }
 
     // FIXME: caching ?
     /// <summary>

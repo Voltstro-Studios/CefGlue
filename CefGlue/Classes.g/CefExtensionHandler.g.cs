@@ -4,14 +4,15 @@
 //      DO NOT MODIFY!
 // </auto-generated>
 //------------------------------------------------------------------------------
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using Xilium.CefGlue.Interop;
-
 namespace Xilium.CefGlue
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Runtime.InteropServices;
+    using System.Threading;
+    using Xilium.CefGlue.Interop;
+    
     // Role: HANDLER
     #nullable enable
     public abstract unsafe partial class CefExtensionHandler
@@ -21,8 +22,6 @@ namespace Xilium.CefGlue
         private int _refct;
         private cef_extension_handler_t* _self;
         
-        protected object SyncRoot { get { return this; } }
-        
         internal static CefExtensionHandler? FromNativeOrNull(cef_extension_handler_t* ptr)
         {
             CefExtensionHandler? value = null;
@@ -30,6 +29,8 @@ namespace Xilium.CefGlue
             lock (_roots)
             {
                 found = _roots.TryGetValue((IntPtr)ptr, out value);
+                // as we're getting the ref from the outside, it's our responsibility to decrement it
+                value.release(ptr);
             }
             return found ? value : null;
         }
@@ -100,38 +101,30 @@ namespace Xilium.CefGlue
         
         private void add_ref(cef_extension_handler_t* self)
         {
-            lock (SyncRoot)
+            if (Interlocked.Increment(ref _refct) == 1)
             {
-                var result = ++_refct;
-                if (result == 1)
-                {
-                    lock (_roots) { _roots.Add((IntPtr)_self, this); }
-                }
+                lock (_roots) { _roots.Add((IntPtr)_self, this); }
             }
         }
         
         private int release(cef_extension_handler_t* self)
         {
-            lock (SyncRoot)
+            if (Interlocked.Decrement(ref _refct) == 0)
             {
-                var result = --_refct;
-                if (result == 0)
-                {
-                    lock (_roots) { _roots.Remove((IntPtr)_self); }
-                    return 1;
-                }
-                return 0;
+                lock (_roots) { _roots.Remove((IntPtr)_self); }
+                return 1;
             }
+            return 0;
         }
         
         private int has_one_ref(cef_extension_handler_t* self)
         {
-            lock (SyncRoot) { return _refct == 1 ? 1 : 0; }
+            return _refct == 1 ? 1 : 0;
         }
         
         private int has_at_least_one_ref(cef_extension_handler_t* self)
         {
-            lock (SyncRoot) { return _refct != 0 ? 1 : 0; }
+            return _refct != 0 ? 1 : 0;
         }
         
         internal cef_extension_handler_t* ToNative()

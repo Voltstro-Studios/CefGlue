@@ -422,8 +422,8 @@
         }
 
         /// <summary>
-        /// Check the specified |index|. Only applies to check and radio items. Returns
-        /// true on success.
+        /// Check the specified |index|. Only applies to check and radio items.
+        /// Returns true on success.
         /// </summary>
         public bool SetCheckedAt(nuint index, bool value)
         {
@@ -448,8 +448,8 @@
         }
 
         /// <summary>
-        /// Set the keyboard accelerator for the specified |commandId|. |key_code| can
-        /// be any virtual key or character value. Returns true on success.
+        /// Set the keyboard accelerator for the specified |commandId|. |key_code|
+        /// can be any virtual key or character value. Returns true on success.
         /// </summary>
         public bool SetAccelerator(int commandId, int keyCode, bool shiftPressed, bool ctrlPressed, bool altPressed)
         {
