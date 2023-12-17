@@ -22,7 +22,7 @@ namespace Xilium.CefGlue
             return new CefRequestContext(ptr);
         }
         
-        internal static CefRequestContext? FromNativeOrNull(cef_request_context_t* ptr)
+        internal static CefRequestContext FromNativeOrNull(cef_request_context_t* ptr)
         {
             if (ptr == null) return null;
             return new CefRequestContext(ptr);

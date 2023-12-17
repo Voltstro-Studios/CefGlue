@@ -22,25 +22,23 @@ namespace Xilium.CefGlue
             return new CefResourceBundle(ptr);
         }
         
-        internal static CefResourceBundle? FromNativeOrNull(cef_resource_bundle_t* ptr)
+        internal static CefResourceBundle FromNativeOrNull(cef_resource_bundle_t* ptr)
         {
             if (ptr == null) return null;
             return new CefResourceBundle(ptr);
         }
         
         private cef_resource_bundle_t* _self;
-        private int _disposed = 0;
         
         private CefResourceBundle(cef_resource_bundle_t* ptr)
         {
             if (ptr == null) throw new ArgumentNullException("ptr");
             _self = ptr;
-            CefObjectTracker.Track(this);
         }
         
         ~CefResourceBundle()
         {
-            if (Interlocked.CompareExchange(ref _disposed, 1, 0) == 0)
+            if (_self != null)
             {
                 Release();
                 _self = null;
@@ -49,12 +47,11 @@ namespace Xilium.CefGlue
         
         public void Dispose()
         {
-            if (Interlocked.CompareExchange(ref _disposed, 1, 0) == 0)
+            if (_self != null)
             {
                 Release();
                 _self = null;
             }
-            CefObjectTracker.Untrack(this);
             GC.SuppressFinalize(this);
         }
         

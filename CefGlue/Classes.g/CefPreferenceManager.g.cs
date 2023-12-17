@@ -22,25 +22,23 @@ namespace Xilium.CefGlue
             return new CefPreferenceManager(ptr);
         }
         
-        internal static CefPreferenceManager? FromNativeOrNull(cef_preference_manager_t* ptr)
+        internal static CefPreferenceManager FromNativeOrNull(cef_preference_manager_t* ptr)
         {
             if (ptr == null) return null;
             return new CefPreferenceManager(ptr);
         }
         
         private protected cef_preference_manager_t* _self;
-        private protected int _disposed = 0;
         
         private protected CefPreferenceManager(cef_preference_manager_t* ptr)
         {
             if (ptr == null) throw new ArgumentNullException("ptr");
             _self = ptr;
-            CefObjectTracker.Track(this);
         }
         
         ~CefPreferenceManager()
         {
-            if (Interlocked.CompareExchange(ref _disposed, 1, 0) == 0)
+            if (_self != null)
             {
                 Release();
                 _self = null;
@@ -49,12 +47,11 @@ namespace Xilium.CefGlue
         
         public void Dispose()
         {
-            if (Interlocked.CompareExchange(ref _disposed, 1, 0) == 0)
+            if (_self != null)
             {
                 Release();
                 _self = null;
             }
-            CefObjectTracker.Untrack(this);
             GC.SuppressFinalize(this);
         }
         

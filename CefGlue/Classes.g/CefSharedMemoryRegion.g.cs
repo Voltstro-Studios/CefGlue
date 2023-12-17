@@ -22,25 +22,23 @@ namespace Xilium.CefGlue
             return new CefSharedMemoryRegion(ptr);
         }
         
-        internal static CefSharedMemoryRegion? FromNativeOrNull(cef_shared_memory_region_t* ptr)
+        internal static CefSharedMemoryRegion FromNativeOrNull(cef_shared_memory_region_t* ptr)
         {
             if (ptr == null) return null;
             return new CefSharedMemoryRegion(ptr);
         }
         
         private cef_shared_memory_region_t* _self;
-        private int _disposed = 0;
         
         private CefSharedMemoryRegion(cef_shared_memory_region_t* ptr)
         {
             if (ptr == null) throw new ArgumentNullException("ptr");
             _self = ptr;
-            CefObjectTracker.Track(this);
         }
         
         ~CefSharedMemoryRegion()
         {
-            if (Interlocked.CompareExchange(ref _disposed, 1, 0) == 0)
+            if (_self != null)
             {
                 Release();
                 _self = null;
@@ -49,12 +47,11 @@ namespace Xilium.CefGlue
         
         public void Dispose()
         {
-            if (Interlocked.CompareExchange(ref _disposed, 1, 0) == 0)
+            if (_self != null)
             {
                 Release();
                 _self = null;
             }
-            CefObjectTracker.Untrack(this);
             GC.SuppressFinalize(this);
         }
         

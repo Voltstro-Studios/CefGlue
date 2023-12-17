@@ -61,4 +61,3 @@ if not options.cefgluedir is None:
 if not options.quiet:
     sys.stdout.write('Done - Wrote '+str(writect)+' files.\n')
 
-

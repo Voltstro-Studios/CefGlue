@@ -114,24 +114,16 @@
         /// The root directory that all CefSettings.cache_path and
         /// CefRequestContextSettings.cache_path values must have in common. If this
         /// value is empty and CefSettings.cache_path is non-empty then it will
-        /// default to the CefSettings.cache_path value. If this value is non-empty
-        /// then it must be an absolute path. Failure to set this value correctly may
-        /// result in the sandbox blocking read/write access to the cache_path
-        /// directory.
-        /// </summary>
-        public string RootCachePath { get; set; }
-
-        /// <summary>
-        /// The location where user data such as the Widevine CDM module and spell
-        /// checking dictionary files will be stored on disk. If this value is empty
-        /// then the default platform-specific user data directory will be used
+        /// default to the CefSettings.cache_path value. If both values are empty
+        /// then the default platform-specific directory will be used
         /// ("~/.config/cef_user_data" directory on Linux, "~/Library/Application
         /// Support/CEF/User Data" directory on MacOS, "AppData\Local\CEF\User Data"
         /// directory under the user profile directory on Windows). If this value is
-        /// non-empty then it must be an absolute path. When using the Chrome runtime
-        /// this value will be ignored in favor of the |root_cache_path| value.
+        /// non-empty then it must be an absolute path. Failure to set this value
+        /// correctly may result in the sandbox blocking read/write access to certain
+        /// files.
         /// </summary>
-        public string UserDataPath { get; set; }
+        public string RootCachePath { get; set; }
 
         /// <summary>
         /// To persist session cookies (cookies without an expiry date or validity
@@ -197,6 +189,14 @@
         /// "warning", "error", "fatal" or "disable".
         /// </summary>
         public CefLogSeverity LogSeverity { get; set; }
+        
+        /// <summary>
+        /// The log items prepended to each log line. If not set the default log items
+        /// will be used. Also configurable using the "log-items" command-line switch
+        /// with a value of "none" for no log items, or a comma-delimited list of
+        /// values "pid", "tid", "timestamp" or "tickcount" for custom log items.
+        /// </summary>
+        public CefLogItems LogItems { get; set; }
 
         /// <summary>
         /// Custom flags that will be used when initializing the V8 JavaScript engine.
@@ -267,10 +267,9 @@
 
         /// <summary>
         /// Comma delimited ordered list of language codes without any whitespace that
-        /// will be used in the "Accept-Language" HTTP header. May be overridden on a
-        /// per-browser basis using the CefBrowserSettings.accept_language_list value.
-        /// If both values are empty then "en-US,en" will be used. Can be overridden
-        /// for individual CefRequestContext instances via the
+        /// will be used in the "Accept-Language" HTTP request header and
+        /// "navigator.language" JS attribute. Can be overridden for individual
+        /// CefRequestContext instances via the
         /// CefRequestContextSettings.accept_language_list value.
         /// </summary>
         public string AcceptLanguageList { get; set; }
@@ -289,6 +288,21 @@
         public string CookieableSchemesList { get; set; }
 
         public bool CookieableSchemesExcludeDefaults { get; set; }
+        
+        /// <summary>
+        /// Specify an ID to enable Chrome policy management via Platform and OS-user
+        /// policies. On Windows, this is a registry key like
+        /// "SOFTWARE\\Policies\\Google\\Chrome". On MacOS, this is a bundle ID like
+        /// "com.google.Chrome". On Linux, this is an absolute directory path like
+        /// "/etc/opt/chrome/policies". Only supported with the Chrome runtime. See
+        /// https://support.google.com/chrome/a/answer/9037717 for details.
+        ///
+        /// Chrome Browser Cloud Management integration, when enabled via the
+        /// "enable-chrome-browser-cloud-management" command-line flag, will also use
+        /// the specified ID. See https://support.google.com/chrome/a/answer/9116814
+        /// for details.
+        /// </summary>
+        public string ChromePolicyId { get; set; }
 
         internal cef_settings_t* ToNative()
         {
@@ -304,7 +318,6 @@
             ptr->command_line_args_disabled = CommandLineArgsDisabled ? 1 : 0;
             cef_string_t.Copy(CachePath, &ptr->cache_path);
             cef_string_t.Copy(RootCachePath, &ptr->root_cache_path);
-            cef_string_t.Copy(UserDataPath, &ptr->user_data_path);
             ptr->persist_session_cookies = PersistSessionCookies ? 1 : 0;
             ptr->persist_user_preferences = PersistUserPreferences ? 1 : 0;
             cef_string_t.Copy(UserAgent, &ptr->user_agent);
@@ -312,6 +325,7 @@
             cef_string_t.Copy(Locale, &ptr->locale);
             cef_string_t.Copy(LogFile, &ptr->log_file);
             ptr->log_severity = LogSeverity;
+            ptr->log_items = LogItems;
             cef_string_t.Copy(JavaScriptFlags, &ptr->javascript_flags);
             cef_string_t.Copy(ResourcesDirPath, &ptr->resources_dir_path);
             cef_string_t.Copy(LocalesDirPath, &ptr->locales_dir_path);
@@ -322,6 +336,7 @@
             cef_string_t.Copy(AcceptLanguageList, &ptr->accept_language_list);
             cef_string_t.Copy(CookieableSchemesList, &ptr->cookieable_schemes_list);
             ptr->cookieable_schemes_exclude_defaults = CookieableSchemesExcludeDefaults ? 1 : 0;
+            cef_string_t.Copy(ChromePolicyId, &ptr->chrome_policy_id);
             return ptr;
         }
 
@@ -332,7 +347,6 @@
             libcef.string_clear(&ptr->main_bundle_path);
             libcef.string_clear(&ptr->cache_path);
             libcef.string_clear(&ptr->root_cache_path);
-            libcef.string_clear(&ptr->user_data_path);
             libcef.string_clear(&ptr->user_agent);
             libcef.string_clear(&ptr->user_agent_product);
             libcef.string_clear(&ptr->locale);
@@ -342,6 +356,7 @@
             libcef.string_clear(&ptr->locales_dir_path);
             libcef.string_clear(&ptr->accept_language_list);
             libcef.string_clear(&ptr->cookieable_schemes_list);
+            libcef.string_clear(&ptr->chrome_policy_id);
         }
 
         internal static void Free(cef_settings_t* ptr)

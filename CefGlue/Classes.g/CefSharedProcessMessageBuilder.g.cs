@@ -22,25 +22,23 @@ namespace Xilium.CefGlue
             return new CefSharedProcessMessageBuilder(ptr);
         }
         
-        internal static CefSharedProcessMessageBuilder? FromNativeOrNull(cef_shared_process_message_builder_t* ptr)
+        internal static CefSharedProcessMessageBuilder FromNativeOrNull(cef_shared_process_message_builder_t* ptr)
         {
             if (ptr == null) return null;
             return new CefSharedProcessMessageBuilder(ptr);
         }
         
         private cef_shared_process_message_builder_t* _self;
-        private int _disposed = 0;
         
         private CefSharedProcessMessageBuilder(cef_shared_process_message_builder_t* ptr)
         {
             if (ptr == null) throw new ArgumentNullException("ptr");
             _self = ptr;
-            CefObjectTracker.Track(this);
         }
         
         ~CefSharedProcessMessageBuilder()
         {
-            if (Interlocked.CompareExchange(ref _disposed, 1, 0) == 0)
+            if (_self != null)
             {
                 Release();
                 _self = null;
@@ -49,12 +47,11 @@ namespace Xilium.CefGlue
         
         public void Dispose()
         {
-            if (Interlocked.CompareExchange(ref _disposed, 1, 0) == 0)
+            if (_self != null)
             {
                 Release();
                 _self = null;
             }
-            CefObjectTracker.Untrack(this);
             GC.SuppressFinalize(this);
         }
         

@@ -22,25 +22,23 @@ namespace Xilium.CefGlue
             return new CefX509Certificate(ptr);
         }
         
-        internal static CefX509Certificate? FromNativeOrNull(cef_x509certificate_t* ptr)
+        internal static CefX509Certificate FromNativeOrNull(cef_x509certificate_t* ptr)
         {
             if (ptr == null) return null;
             return new CefX509Certificate(ptr);
         }
         
         private cef_x509certificate_t* _self;
-        private int _disposed = 0;
         
         private CefX509Certificate(cef_x509certificate_t* ptr)
         {
             if (ptr == null) throw new ArgumentNullException("ptr");
             _self = ptr;
-            CefObjectTracker.Track(this);
         }
         
         ~CefX509Certificate()
         {
-            if (Interlocked.CompareExchange(ref _disposed, 1, 0) == 0)
+            if (_self != null)
             {
                 Release();
                 _self = null;
@@ -49,12 +47,11 @@ namespace Xilium.CefGlue
         
         public void Dispose()
         {
-            if (Interlocked.CompareExchange(ref _disposed, 1, 0) == 0)
+            if (_self != null)
             {
                 Release();
                 _self = null;
             }
-            CefObjectTracker.Untrack(this);
             GC.SuppressFinalize(this);
         }
         

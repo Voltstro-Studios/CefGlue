@@ -22,14 +22,13 @@ namespace Xilium.CefGlue
             return new CefSchemeRegistrar(ptr);
         }
         
-        internal static CefSchemeRegistrar? FromNativeOrNull(cef_scheme_registrar_t* ptr)
+        internal static CefSchemeRegistrar FromNativeOrNull(cef_scheme_registrar_t* ptr)
         {
             if (ptr == null) return null;
             return new CefSchemeRegistrar(ptr);
         }
         
         private cef_scheme_registrar_t* _self;
-        private int _disposed = 0;
         
         private CefSchemeRegistrar(cef_scheme_registrar_t* ptr)
         {
