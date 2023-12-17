@@ -89,6 +89,27 @@
         }
 
 
+        private int on_already_running_app_relaunch(cef_browser_process_handler_t* self, cef_command_line_t* command_line, cef_string_t* current_directory)
+        {
+            CheckSelf(self);
+            
+            var m_commandLine = CefCommandLine.FromNative(command_line);
+            var m_current_directory = cef_string_t.ToString(current_directory);
+
+            bool result = OnAlreadyRunningAppRelaunch(ref m_commandLine, ref m_current_directory);
+
+            *command_line = *m_commandLine.ToNative();
+            cef_string_t.Copy(m_current_directory, current_directory);
+
+            return result ? 1 : 0;
+        }
+
+        protected virtual bool OnAlreadyRunningAppRelaunch(ref CefCommandLine commandLine, ref string currentDirectory)
+        {
+            return false;
+        }
+
+
         private void on_schedule_message_pump_work(cef_browser_process_handler_t* self, long delay_ms)
         {
             CheckSelf(self);

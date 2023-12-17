@@ -33,8 +33,8 @@ namespace Xilium.CefGlue
         RegisterProtocolHandler = 1 << 15,
         SecurityAttestation = 1 << 16,
         StorageAccess = 1 << 17,
-        U2fApiRequest = 1 << 18,
-        VrSession = 1 << 19,
-        WindowManagement = 1 << 20,
+        VrSession = 1 << 18,
+        WindowManagement = 1 << 19,
+        FileSystemAccess = 1 << 20
     }
 }

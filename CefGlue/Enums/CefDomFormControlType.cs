@@ -1,0 +1,38 @@
+﻿namespace Xilium.CefGlue;
+
+public enum CefDomFormControlType
+{
+    Unsupported = 0,
+    ButtonButton,
+    ButtonSubmit,
+    ButtonReset,
+    ButtonSelectList,
+    FileLdSet,
+    InputButton,
+    InputCheckbox,
+    InputColor,
+    InputDate,
+    InputDateTimeLocal,
+    InputEmail,
+    InputFile,
+    InputHidden,
+    InputImage,
+    InputMonth,
+    InputNumber,
+    InputPassword,
+    InputRadio,
+    InputRange,
+    InputReset,
+    InputSearch,
+    InputSubmit,
+    InputTelephone,
+    InputText,
+    InputTime,
+    InputUrl,
+    InputWeek,
+    Output,
+    SelectOne,
+    SelectMultiple,
+    SelectList,
+    TextArea
+}

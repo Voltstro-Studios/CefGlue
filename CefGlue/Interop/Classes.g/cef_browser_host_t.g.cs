@@ -80,6 +80,8 @@ namespace Xilium.CefGlue.Interop
         internal IntPtr _is_audio_muted;
         internal IntPtr _is_fullscreen;
         internal IntPtr _exit_fullscreen;
+        internal IntPtr _can_execute_chrome_command;
+        internal IntPtr _execute_chrome_command;
         
         // CreateBrowser
         [DllImport(libcef.DllName, EntryPoint = "cef_browser_host_create_browser", CallingConvention = libcef.CEF_CALL)]
@@ -496,6 +498,18 @@ namespace Xilium.CefGlue.Interop
         [SuppressUnmanagedCodeSecurity]
         #endif
         private delegate void exit_fullscreen_delegate(cef_browser_host_t* self, int will_cause_resize);
+        
+        [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
+        #if !DEBUG
+        [SuppressUnmanagedCodeSecurity]
+        #endif
+        private delegate int can_execute_chrome_command_delegate(cef_browser_host_t* self, int command_id);
+        
+        [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
+        #if !DEBUG
+        [SuppressUnmanagedCodeSecurity]
+        #endif
+        private delegate void execute_chrome_command_delegate(cef_browser_host_t* self, int command_id, CefWindowOpenDisposition disposition);
         
         // AddRef
         private static IntPtr _p0;
@@ -1651,6 +1665,40 @@ namespace Xilium.CefGlue.Interop
                 if (_p43 == IntPtr.Zero) { _d43 = d; _p43 = p; }
             }
             d(self, will_cause_resize);
+        }
+        
+        // CanExecuteChromeCommand
+        private static IntPtr _p44;
+        private static can_execute_chrome_command_delegate _d44;
+        
+        public static int can_execute_chrome_command(cef_browser_host_t* self, int command_id)
+        {
+            can_execute_chrome_command_delegate d;
+            var p = self->_can_execute_chrome_command;
+            if (p == _p44) { d = _d44; }
+            else
+            {
+                d = (can_execute_chrome_command_delegate)Marshal.GetDelegateForFunctionPointer(p, typeof(can_execute_chrome_command_delegate));
+                if (_p44 == IntPtr.Zero) { _d44 = d; _p44 = p; }
+            }
+            return d(self, command_id);
+        }
+        
+        // ExecuteChromeCommand
+        private static IntPtr _p45;
+        private static execute_chrome_command_delegate _d45;
+        
+        public static void execute_chrome_command(cef_browser_host_t* self, int command_id, CefWindowOpenDisposition disposition)
+        {
+            execute_chrome_command_delegate d;
+            var p = self->_execute_chrome_command;
+            if (p == _p45) { d = _d45; }
+            else
+            {
+                d = (execute_chrome_command_delegate)Marshal.GetDelegateForFunctionPointer(p, typeof(execute_chrome_command_delegate));
+                if (_p45 == IntPtr.Zero) { _d45 = d; _p45 = p; }
+            }
+            d(self, command_id, disposition);
         }
         
     }
