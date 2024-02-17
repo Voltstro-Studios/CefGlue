@@ -1179,6 +1179,11 @@ namespace Xilium.CefGlue
         /// network access check.
         /// </summary>
         CACHED_IP_ADDRESS_SPACE_BLOCKED_BY_PRIVATE_NETWORK_ACCESS_POLICY = -384,
+        
+        /// <summary>
+        /// The connection is blocked by private network access checks.
+        /// </summary>
+        BLOCKED_BY_PRIVATE_NETWORK_ACCESS_CHECKS = -385,
 
         /// <summary>
         /// The cache does not have the requested entry.
