@@ -140,46 +140,46 @@ public sealed unsafe partial class CefBrowser
     /// <summary>
     ///     Returns the frame with the specified identifier, or NULL if not found.
     /// </summary>
-    public CefFrame? GetFrame(long identifier)
+    public CefFrame? GetFrameByIdentifier(string identifier)
     {
-        return CefFrame.FromNativeOrNull(cef_browser_t.get_frame_byident(_self, identifier));
+        fixed (char* identifier_str = identifier)
+        {
+            cef_string_t m_identifier = new(identifier_str, identifier.Length);
+            
+            return CefFrame.FromNativeOrNull(cef_browser_t.get_frame_by_identifier(_self, &m_identifier));
+        }
     }
 
     /// <summary>
     ///     Returns the frame with the specified name, or NULL if not found.
     /// </summary>
-    public CefFrame? GetFrame(string name)
+    public CefFrame? GetFrameByName(string name)
     {
         fixed (char* name_str = name)
         {
             var n_name = new cef_string_t(name_str, name.Length);
 
-            return CefFrame.FromNativeOrNull(cef_browser_t.get_frame(_self, &n_name));
+            return CefFrame.FromNativeOrNull(cef_browser_t.get_frame_by_name(_self, &n_name));
         }
     }
 
     /// <summary>
     ///     Returns the identifiers of all existing frames.
     /// </summary>
-    public long[] GetFrameIdentifiers()
+    public string[] GetFrameIdentifiers()
     {
         var frameCount = FrameCount;
-        var identifiers = new long[frameCount * 2];
+        //var identifiers = new long[frameCount * 2];
         var n_count = (UIntPtr) frameCount;
-
-        fixed (long* identifiers_ptr = identifiers)
-        {
-            cef_browser_t.get_frame_identifiers(_self, &n_count, identifiers_ptr);
-        }
-
+        
+        var identifiers = cef_string_list.From(new string[frameCount * 2]);
+        cef_browser_t.get_frame_identifiers(_self, identifiers);
+        
         if ((int) n_count < 0) throw new InvalidOperationException("Invalid number of frames.");
 
-        if ((int) n_count > identifiers.Length)
-            throw new InvalidOperationException("Number of returned frames are too big.");
+        string[] identifiersManaged = cef_string_list.ToArray(identifiers);
 
-        Array.Resize(ref identifiers, (int) n_count);
-
-        return identifiers;
+        return identifiersManaged;
     }
 
     /// <summary>
