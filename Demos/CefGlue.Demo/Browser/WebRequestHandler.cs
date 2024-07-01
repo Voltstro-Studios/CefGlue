@@ -17,9 +17,11 @@
             return base.OnBeforeBrowse(browser, frame, request, userGesture, isRedirect);
         }
 
+        /*
         protected override void OnRenderProcessTerminated(CefBrowser browser, CefTerminationStatus status)
         {
             //DemoApp.BrowserMessageRouter.OnRenderProcessTerminated(browser);
         }
+        */
     }
 }

@@ -279,14 +279,49 @@ public abstract unsafe partial class CefRequestHandler
     }
 
 
-    private void on_render_process_terminated(cef_request_handler_t* self, cef_browser_t* browser,
-        CefTerminationStatus status)
+    private int on_render_process_unresponsive(cef_request_handler_t* self, cef_browser_t* browser,
+        cef_unresponsive_process_callback_t* callback)
+    {
+        var m_browser = CefBrowser.FromNative(browser);
+        var m_callback = CefUnresponsiveProcessCallback.FromNative(callback);
+
+        var result = OnRenderProcessUnresponsive(m_browser, m_callback);
+        if (result)
+        {
+            return 1;
+        }
+        
+        m_callback.Dispose();
+        return 0;
+    }
+
+    protected virtual bool OnRenderProcessUnresponsive(CefBrowser cefBrowser, CefUnresponsiveProcessCallback callback)
+    {
+        return false;
+    }
+
+
+    private void on_render_process_responsive(cef_request_handler_t* self, cef_browser_t* browser)
+    {
+        var m_browser = CefBrowser.FromNative(browser);
+        
+        OnRenderProcessResponsive(m_browser);
+    }
+
+    protected virtual void OnRenderProcessResponsive(CefBrowser browser)
+    {
+    }
+
+
+    private void on_render_process_terminated(cef_request_handler_t* self, cef_browser_t* browser, CefTerminationStatus status, int error_code, cef_string_t* error_string)
     {
         CheckSelf(self);
 
         var m_browser = CefBrowser.FromNative(browser);
 
-        OnRenderProcessTerminated(m_browser, status);
+        var m_error_string = cef_string_t.ToString(error_string);
+        
+        OnRenderProcessTerminated(m_browser, status, error_code, m_error_string);
     }
 
     /// <summary>
@@ -294,7 +329,7 @@ public abstract unsafe partial class CefRequestHandler
     ///     terminates unexpectedly. |status| indicates how the process
     ///     terminated.
     /// </summary>
-    protected virtual void OnRenderProcessTerminated(CefBrowser browser, CefTerminationStatus status)
+    protected virtual void OnRenderProcessTerminated(CefBrowser browser, CefTerminationStatus status, int errorCode, string errorString)
     {
     }
 

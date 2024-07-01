@@ -246,7 +246,20 @@
             Initialize(args, settings, application, IntPtr.Zero);
         }
 
-
+        /// <summary>
+        /// This function can optionally be called on the main application thread after
+        /// CefInitialize to retrieve the initialization exit code. When CefInitialize
+        /// returns true the exit code will be 0 (CEF_RESULT_CODE_NORMAL_EXIT).
+        /// Otherwise, see cef_resultcode_t for possible exit code values including
+        /// browser process initialization errors and normal early exit conditions (such
+        /// as CEF_RESULT_CODE_NORMAL_EXIT_PROCESS_NOTIFIED for process singleton
+        /// relaunch behavior).
+        /// </summary>
+        public static int GetExitCode()
+        {
+            return libcef.get_exit_code();
+        }
+        
         /// <summary>
         /// This function should be called on the main application thread to shut down
         /// the CEF browser process before the application exits.

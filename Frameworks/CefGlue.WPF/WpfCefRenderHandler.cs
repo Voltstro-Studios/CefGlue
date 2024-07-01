@@ -71,9 +71,11 @@ namespace Xilium.CefGlue.WPF
             _owner.OnPopupSize(rect);
         }
 
+        /*
         protected override void OnAcceleratedPaint(CefBrowser browser, CefPaintElementType type, CefRectangle[] dirtyRects, IntPtr sharedHandle)
         {
         }
+        */
 
         protected override void OnPaint(CefBrowser browser, CefPaintElementType type, CefRectangle[] dirtyRects, IntPtr buffer, int width, int height)
         {
@@ -91,6 +93,12 @@ namespace Xilium.CefGlue.WPF
             {
                 _owner.HandlePopupPaint(width, height, dirtyRects, buffer);
             }
+        }
+
+        protected override void OnAcceleratedPaint(CefBrowser browser, CefPaintElementType type, CefRectangle[] dirtyRects,
+            CefAcceleratedPaintInfo acceleratedPaintInfo)
+        {
+            
         }
 
         // Moved to CefDisplayHandler.

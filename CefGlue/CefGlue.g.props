@@ -108,6 +108,7 @@
         <Compile Include="Classes.g\CefStringVisitor.g.cs"/>
         <Compile Include="Classes.g\CefTask.g.cs"/>
         <Compile Include="Classes.g\CefTaskRunner.g.cs"/>
+        <Compile Include="Classes.g\CefUnresponsiveProcessCallback.g.cs"/>
         <Compile Include="Classes.g\CefUrlRequest.g.cs"/>
         <Compile Include="Classes.g\CefUrlRequestClient.g.cs"/>
         <Compile Include="Classes.g\CefUserData.g.cs"/>
@@ -234,6 +235,7 @@
         <Compile Include="Interop\Classes.g\cef_string_visitor_t.g.cs"/>
         <Compile Include="Interop\Classes.g\cef_task_runner_t.g.cs"/>
         <Compile Include="Interop\Classes.g\cef_task_t.g.cs"/>
+        <Compile Include="Interop\Classes.g\cef_unresponsive_process_callback_t.g.cs"/>
         <Compile Include="Interop\Classes.g\cef_urlrequest_client_t.g.cs"/>
         <Compile Include="Interop\Classes.g\cef_urlrequest_t.g.cs"/>
         <Compile Include="Interop\Classes.g\cef_user_data_t.g.cs"/>

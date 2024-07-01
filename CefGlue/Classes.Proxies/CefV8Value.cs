@@ -424,11 +424,11 @@
         /// <summary>
         /// Returns true if the object has a value with the specified identifier.
         /// </summary>
-        public bool HasValue(string key)
+        public bool HasValue(string? key)
         {
             fixed (char* key_str = key)
             {
-                var n_key = new cef_string_t(key_str, key != null ? key.Length : 0);
+                var n_key = new cef_string_t(key_str, key?.Length ?? 0);
                 return cef_v8value_t.has_value_bykey(_self, &n_key) != 0;
             }
         }
@@ -447,11 +447,11 @@
         /// exception is thrown. For read-only and don't-delete values this method
         /// will return true even though deletion failed.
         /// </summary>
-        public bool DeleteValue(string key)
+        public bool DeleteValue(string? key)
         {
             fixed (char* key_str = key)
             {
-                var n_key = new cef_string_t(key_str, key != null ? key.Length : 0);
+                var n_key = new cef_string_t(key_str, key?.Length ?? 0);
                 return cef_v8value_t.delete_value_bykey(_self, &n_key) != 0;
             }
         }
@@ -471,11 +471,11 @@
         /// Returns the value with the specified identifier on success. Returns NULL
         /// if this method is called incorrectly or an exception is thrown.
         /// </summary>
-        public CefV8Value GetValue(string key)
+        public CefV8Value GetValue(string? key)
         {
             fixed (char* key_str = key)
             {
-                var n_key = new cef_string_t(key_str, key != null ? key.Length : 0);
+                var n_key = new cef_string_t(key_str, key?.Length ?? 0);
                 return CefV8Value.FromNativeOrNull(
                     cef_v8value_t.get_value_bykey(_self, &n_key)
                     );
@@ -499,11 +499,11 @@
         /// exception is thrown. For read-only values this method will return true
         /// even though assignment failed.
         /// </summary>
-        public bool SetValue(string key, CefV8Value value, CefV8PropertyAttribute attribute = CefV8PropertyAttribute.None)
+        public bool SetValue(string? key, CefV8Value value, CefV8PropertyAttribute attribute = CefV8PropertyAttribute.None)
         {
             fixed (char* key_str = key)
             {
-                var n_key = new cef_string_t(key_str, key != null ? key.Length : 0);
+                var n_key = new cef_string_t(key_str, key?.Length ?? 0);
                 return cef_v8value_t.set_value_bykey(_self, &n_key, value.ToNative(), attribute) != 0;
             }
         }
@@ -526,12 +526,12 @@
         /// incorrectly or an exception is thrown. For read-only values this method
         /// will return true even though assignment failed.
         /// </summary>
-        public bool SetValue(string key, CefV8AccessControl settings, CefV8PropertyAttribute attribute = CefV8PropertyAttribute.None)
+        public bool SetValue(string? key, CefV8PropertyAttribute attribute = CefV8PropertyAttribute.None)
         {
             fixed (char* key_str = key)
             {
-                var n_key = new cef_string_t(key_str, key != null ? key.Length : 0);
-                return cef_v8value_t.set_value_byaccessor(_self, &n_key, settings, attribute) != 0;
+                var n_key = new cef_string_t(key_str, key?.Length ?? 0);
+                return cef_v8value_t.set_value_byaccessor(_self, &n_key, attribute) != 0;
             }
         }
 
@@ -752,11 +752,11 @@
         /// CefV8Context reference. Returns true on success. Returns false if this
         /// method is called incorrectly or an exception is thrown.
         /// </summary>
-        public bool RejectPromise(string errorMessage)
+        public bool RejectPromise(string? errorMessage)
         {
             fixed (char* errorMessage_str = errorMessage)
             {
-                var n_errorMessage = new cef_string_t(errorMessage_str, errorMessage != null ? errorMessage.Length : 0);
+                var n_errorMessage = new cef_string_t(errorMessage_str, errorMessage?.Length ?? 0);
                 return cef_v8value_t.reject_promise(_self, &n_errorMessage) != 0;
             }
         }

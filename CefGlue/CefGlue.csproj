@@ -10,7 +10,7 @@
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <LangVersion>latest</LangVersion>
         <AnalysisMode>Default</AnalysisMode>
-        <Version>122.1.13</Version>
+        <Version>126.2.9</Version>
         <IsPackable>true</IsPackable>
     </PropertyGroup>
 
