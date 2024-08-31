@@ -27,13 +27,6 @@ public sealed unsafe partial class CefBrowserHost
     public bool IsWindowRenderingDisabled => cef_browser_host_t.is_window_rendering_disabled(_self) != 0;
 
     /// <summary>
-    ///     Returns true if this browser is hosting an extension background script.
-    ///     Background hosts do not have a window and are not displayable. See
-    ///     CefRequestContext::LoadExtension for details.
-    /// </summary>
-    public bool IsBackgroundHost => cef_browser_host_t.is_background_host(_self) != 0;
-
-    /// <summary>
     ///     Returns true if the browser's audio is muted.  This method can only be
     ///     called on the UI thread.
     /// </summary>
@@ -861,16 +854,6 @@ public sealed unsafe partial class CefBrowserHost
         var nMinSize = new cef_size_t(minSize.Width, minSize.Height);
         var nMaxSize = new cef_size_t(maxSize.Width, maxSize.Height);
         cef_browser_host_t.set_auto_resize_enabled(_self, enabled ? 1 : 0, &nMinSize, &nMaxSize);
-    }
-
-    /// <summary>
-    ///     Returns the extension hosted in this browser or NULL if no extension is
-    ///     hosted. See CefRequestContext::LoadExtension for details.
-    /// </summary>
-    public CefExtension? GetExtension()
-    {
-        var nExtension = cef_browser_host_t.get_extension(_self);
-        return CefExtension.FromNativeOrNull(nExtension);
     }
 
     /// <summary>
