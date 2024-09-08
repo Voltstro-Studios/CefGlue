@@ -973,6 +973,8 @@
   E_CPONLY(CEF_ColorNewTabPageModuleContextMenuDivider) \
   E_CPONLY(CEF_ColorNewTabPageModuleBackground) \
   E_CPONLY(CEF_ColorNewTabPageModuleCalendarEventTimeStatusBackground) \
+  E_CPONLY(CEF_ColorNewTabPageModuleCalendarAttachmentScrollbarThumb) \
+  E_CPONLY(CEF_ColorNewTabPageModuleCalendarDividerColor) \
   E_CPONLY(CEF_ColorNewTabPageModuleIconBackground) \
   E_CPONLY(CEF_ColorNewTabPageModuleElementDivider) \
   E_CPONLY(CEF_ColorNewTabPageModuleIconContainerBackground) \
