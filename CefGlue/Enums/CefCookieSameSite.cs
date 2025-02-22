@@ -12,6 +12,6 @@ namespace Xilium.CefGlue
         Unspecified,
         NoRestriction,
         LaxMode,
-        StrictMode,
+        StrictMode
     }
 }

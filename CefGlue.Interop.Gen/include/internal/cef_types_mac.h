@@ -37,6 +37,7 @@
 #include "include/internal/cef_string.h"
 #include "include/internal/cef_types_color.h"
 #include "include/internal/cef_types_geometry.h"
+#include "include/internal/cef_types_osr.h"
 #include "include/internal/cef_types_runtime.h"
 
 // Handle types.
@@ -89,6 +90,11 @@ typedef struct _cef_main_args_t {
 /// Class representing window information.
 ///
 typedef struct _cef_window_info_t {
+  ///
+  /// Size of this structure.
+  ///
+  size_t size;
+
   cef_string_t window_name;
 
   ///
@@ -154,6 +160,11 @@ typedef struct _cef_window_info_t {
 ///
 typedef struct _cef_accelerated_paint_info_t {
   ///
+  /// Size of this structure.
+  ///
+  size_t size;
+
+  ///
   /// Handle for the shared texture IOSurface.
   ///
   cef_shared_texture_handle_t shared_texture_io_surface;
@@ -162,6 +173,11 @@ typedef struct _cef_accelerated_paint_info_t {
   /// The pixel format of the texture.
   ///
   cef_color_type_t format;
+
+  ///
+  /// The extra common info.
+  ///
+  cef_accelerated_paint_info_common_t extra;
 } cef_accelerated_paint_info_t;
 
 #ifdef __cplusplus

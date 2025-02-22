@@ -44,6 +44,7 @@ typedef struct _XDisplay XDisplay;
 #include "include/internal/cef_string.h"
 #include "include/internal/cef_types_color.h"
 #include "include/internal/cef_types_geometry.h"
+#include "include/internal/cef_types_osr.h"
 #include "include/internal/cef_types_runtime.h"
 
 // Handle types.
@@ -85,6 +86,11 @@ typedef struct _cef_main_args_t {
 /// Class representing window information.
 ///
 typedef struct _cef_window_info_t {
+  ///
+  /// Size of this structure.
+  ///
+  size_t size;
+
   ///
   /// The initial title of the window, to be set when the window is created.
   /// Some layout managers (e.g., Compiz) can look at the window title
@@ -174,6 +180,11 @@ typedef struct _cef_accelerated_paint_native_pixmap_plane_info_t {
 ///
 typedef struct _cef_accelerated_paint_info_t {
   ///
+  /// Size of this structure.
+  ///
+  size_t size;
+
+  ///
   /// Planes of the shared texture, usually file descriptors of dmabufs.
   ///
   cef_accelerated_paint_native_pixmap_plane_t
@@ -193,6 +204,11 @@ typedef struct _cef_accelerated_paint_info_t {
   /// The pixel format of the texture.
   ///
   cef_color_type_t format;
+
+  ///
+  /// The extra common info.
+  ///
+  cef_accelerated_paint_info_common_t extra;
 } cef_accelerated_paint_info_t;
 
 #ifdef __cplusplus

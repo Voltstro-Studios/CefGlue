@@ -10,6 +10,7 @@ internal struct cef_accelerated_paint_info_t
 [StructLayout(LayoutKind.Sequential, Pack = libcef.ALIGN)]
 internal unsafe struct cef_accelerated_paint_info_t_windows
 {
+    public UIntPtr size;
     public IntPtr shared_texture_handle;
     public CefColorType format;
     
@@ -25,6 +26,7 @@ internal unsafe struct cef_accelerated_paint_info_t_windows
     {
         var ptr = (cef_accelerated_paint_info_t_windows*)Marshal.AllocHGlobal(_sizeof);
         *ptr = new cef_accelerated_paint_info_t_windows();
+        ptr->size = (UIntPtr)_sizeof;
         return ptr;
     }
 
@@ -51,6 +53,7 @@ internal unsafe struct cef_accelerated_paint_native_pixmap_plane_t
 [StructLayout(LayoutKind.Sequential, Pack = libcef.ALIGN)]
 internal unsafe struct cef_accelerated_paint_info_t_linux
 {
+    public UIntPtr size;
     public cef_accelerated_paint_native_pixmap_plane_t plane1;
     public cef_accelerated_paint_native_pixmap_plane_t plane2;
     public cef_accelerated_paint_native_pixmap_plane_t plane3;
@@ -72,6 +75,7 @@ internal unsafe struct cef_accelerated_paint_info_t_linux
     {
         var ptr = (cef_accelerated_paint_info_t_linux*)Marshal.AllocHGlobal(_sizeof);
         *ptr = new cef_accelerated_paint_info_t_linux();
+        ptr->size = (UIntPtr)_sizeof;
         return ptr;
     }
 
@@ -88,6 +92,7 @@ internal unsafe struct cef_accelerated_paint_info_t_linux
 [StructLayout(LayoutKind.Sequential, Pack = libcef.ALIGN)]
 internal unsafe struct cef_accelerated_paint_info_t_mac
 {
+    public UIntPtr size;
     public IntPtr shared_texture_handle;
     public CefColorType format;
     
@@ -103,6 +108,7 @@ internal unsafe struct cef_accelerated_paint_info_t_mac
     {
         var ptr = (cef_accelerated_paint_info_t_mac*)Marshal.AllocHGlobal(_sizeof);
         *ptr = new cef_accelerated_paint_info_t_mac();
+        ptr->size = (UIntPtr)_sizeof;
         return ptr;
     }
 

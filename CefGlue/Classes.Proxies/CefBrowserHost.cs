@@ -556,9 +556,10 @@ public sealed unsafe partial class CefBrowserHost
     {
         if (keyEvent == null) throw new ArgumentNullException(nameof(keyEvent));
 
-        var n_event = new cef_key_event_t();
-        keyEvent.ToNative(&n_event);
-        cef_browser_host_t.send_key_event(_self, &n_event);
+        cef_key_event_t* n_event = cef_key_event_t.Alloc();
+        keyEvent.ToNative(n_event);
+        cef_browser_host_t.send_key_event(_self, n_event);
+        cef_key_event_t.Free(n_event);
     }
 
     /// <summary>
@@ -679,7 +680,7 @@ public sealed unsafe partial class CefBrowserHost
             var n_replacementRange = new cef_range_t(replacementRange.From, replacementRange.To);
             var n_selectionRange = new cef_range_t(selectionRange.From, selectionRange.To);
 
-            cef_browser_host_t.ime_set_composition(_self, &n_text, n_underlinesCount, &n_underlines,
+            cef_browser_host_t.ime_set_composition(_self, &n_text, n_underlinesCount, n_underlines,
                 &n_replacementRange, &n_selectionRange);
         }
     }

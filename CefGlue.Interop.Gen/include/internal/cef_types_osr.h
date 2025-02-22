@@ -27,33 +27,95 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef CEF_INCLUDE_INTERNAL_CEF_TYPES_COLOR_H_
-#define CEF_INCLUDE_INTERNAL_CEF_TYPES_COLOR_H_
+#ifndef CEF_INCLUDE_INTERNAL_CEF_TYPES_OSR_H_
+#define CEF_INCLUDE_INTERNAL_CEF_TYPES_OSR_H_
 #pragma once
+
+#include <stddef.h>
+#include <stdint.h>
+
+#include "include/internal/cef_types_geometry.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 ///
-/// Describes how to interpret the components of a pixel.
+/// Structure containing shared texture common metadata.
+/// For documentation on each field, please refer to
+/// src/media/base/video_frame_metadata.h for actual details.
 ///
-typedef enum {
+typedef struct _cef_accelerated_paint_info_common_t {
   ///
-  /// RGBA with 8 bits per pixel (32bits total).
+  /// Size of this structure.
   ///
-  CEF_COLOR_TYPE_RGBA_8888,
+  size_t size;
 
   ///
-  /// BGRA with 8 bits per pixel (32bits total).
+  /// Timestamp of the frame in microseconds since capture start.
   ///
-  CEF_COLOR_TYPE_BGRA_8888,
+  uint64_t timestamp;
 
-  CEF_COLOR_TYPE_NUM_VALUES,
-} cef_color_type_t;
+  ///
+  /// The full dimensions of the video frame.
+  ///
+  cef_size_t coded_size;
+
+  ///
+  /// The visible area of the video frame.
+  ///
+  cef_rect_t visible_rect;
+
+  ///
+  /// The region of the video frame that capturer would like to populate.
+  ///
+  cef_rect_t content_rect;
+
+  ///
+  /// Full size of the source frame.
+  ///
+  cef_size_t source_size;
+
+  ///
+  /// Updated area of frame, can be considered as the `dirty` area.
+  ///
+  cef_rect_t capture_update_rect;
+
+  ///
+  /// May reflects where the frame's contents originate from if region
+  /// capture is used internally.
+  ///
+  cef_rect_t region_capture_rect;
+
+  ///
+  /// The increamental counter of the frame.
+  ///
+  uint64_t capture_counter;
+
+  ///
+  /// Optional flag of capture_update_rect
+  ///
+  uint8_t has_capture_update_rect;
+
+  ///
+  /// Optional flag of region_capture_rect
+  ///
+  uint8_t has_region_capture_rect;
+
+  ///
+  /// Optional flag of source_size
+  ///
+  uint8_t has_source_size;
+
+  ///
+  /// Optional flag of capture_counter
+  ///
+  uint8_t has_capture_counter;
+
+} cef_accelerated_paint_info_common_t;
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif  // CEF_INCLUDE_INTERNAL_CEF_TYPES_COLOR_H_
+#endif  // CEF_INCLUDE_INTERNAL_CEF_TYPES_OSR_H_

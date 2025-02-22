@@ -137,7 +137,7 @@
             string actual;
             try
             {
-                var n_actual = libcef.api_hash(0);
+                var n_actual = libcef.api_hash(999999, 2);
                 actual = n_actual != null ? new string(n_actual) : null;
             }
             catch (EntryPointNotFoundException ex)
@@ -146,7 +146,9 @@
             }
             if (string.IsNullOrEmpty(actual)) throw new NotSupportedException();
 
-            string expected;
+            string expected = libcef.CEF_COMMIT_HASH;
+            
+            /*
             switch (CefRuntime.Platform)
             {
                 case CefRuntimePlatform.Windows: expected = libcef.CEF_API_HASH_PLATFORM_WIN; break;
@@ -154,10 +156,11 @@
                 case CefRuntimePlatform.Linux: expected = libcef.CEF_API_HASH_PLATFORM_LINUX; break;
                 default: throw new PlatformNotSupportedException();
             }
+            */
 
             if (string.Compare(actual, expected, StringComparison.OrdinalIgnoreCase) != 0)
             {
-                var expectedVersion = libcef.CEF_VERSION;
+                string expectedVersion = libcef.CEF_VERSION;
                 throw ExceptionBuilder.RuntimeVersionApiHashMismatch(actual, expected, expectedVersion);
             }
         }
@@ -591,12 +594,13 @@
             fixed (char* url_str = url)
             {
                 var n_url = new cef_string_t(url_str, url != null ? url.Length : 0);
-                var n_parts = new cef_urlparts_t();
+                var n_parts = cef_urlparts_t.Alloc();
 
-                var result = libcef.parse_url(&n_url, &n_parts) != 0;
+                var result = libcef.parse_url(&n_url, n_parts) != 0;
 
-                parts = result ? CefUrlParts.FromNative(&n_parts) : null;
-                cef_urlparts_t.Clear(&n_parts);
+                parts = result ? CefUrlParts.FromNative(n_parts) : null;
+                cef_urlparts_t.Clear(n_parts);
+                cef_urlparts_t.Free(n_parts);
                 return result;
             }
         }

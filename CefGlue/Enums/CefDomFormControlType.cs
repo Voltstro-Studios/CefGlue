@@ -2,11 +2,11 @@
 
 public enum CefDomFormControlType
 {
-    Unsupported = 0,
+    Unsupported,
     ButtonButton,
     ButtonSubmit,
     ButtonReset,
-    ButtonSelectList,
+    ButtonPopover,
     FileLdSet,
     InputButton,
     InputCheckbox,
@@ -33,6 +33,5 @@ public enum CefDomFormControlType
     Output,
     SelectOne,
     SelectMultiple,
-    SelectList,
     TextArea
 }

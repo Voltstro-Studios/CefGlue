@@ -132,6 +132,7 @@
                     new MenuItem(new Command("Transparent Popup Window", TransparentPopupWindowCommand)),
                     new MenuItem(new Command("Open Developer Tools...", OpenDeveloperToolsCommand)),
                     new MenuItem(new Command("SendKeyEvent", SendKeyEventCommand)),
+                    new MenuItem(new Command("Url Parts", UrlPartsCommand))
                     }),
                 new MenuItem("Help", new [] {
                     new MenuItem(new Command("About", HelpAboutCommand)),
@@ -225,6 +226,26 @@
                         UnmodifiedCharacter = c,
                     });
             }
+        }
+
+        private void UrlPartsCommand(object sender, EventArgs e)
+        {
+            var url = MainView.CurrentBrowser.GetMainFrame().Url;
+
+            if (!CefRuntime.ParseUrl(url, out CefUrlParts parts))
+                Debug.WriteLine("Parsed URL is invalid!");
+
+            Debug.WriteLine("URL Parts");
+            Debug.WriteLine(parts.Spec);
+            Debug.WriteLine(parts.Scheme);
+            Debug.WriteLine(parts.UserName);
+            Debug.WriteLine(parts.Password);
+            Debug.WriteLine(parts.Host);
+            Debug.WriteLine(parts.Port);
+            Debug.WriteLine(parts.Origin);
+            Debug.WriteLine(parts.Path);
+            Debug.WriteLine(parts.Query);
+            Debug.WriteLine(parts.Fragment);
         }
 
         private void HelpAboutCommand(object sender, EventArgs e)

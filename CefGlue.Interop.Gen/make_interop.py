@@ -823,11 +823,11 @@ def make_version_cs(content, api_hash_content):
     result.append('public const int CHROME_VERSION_PATCH = %s;' % __get_version_constant(content, "CHROME_VERSION_PATCH"))
     result.append("")
 
-    result.append('public const string CEF_API_HASH_UNIVERSAL = %s;' % __get_version_constant(api_hash_content, "CEF_API_HASH_UNIVERSAL"))
-    result.append("")
-    result.append('public const string CEF_API_HASH_PLATFORM_WIN = %s;' % __get_version_constant(api_hash_content, "CEF_API_HASH_PLATFORM", "WIN"))
-    result.append('public const string CEF_API_HASH_PLATFORM_MACOS = %s;' % __get_version_constant(api_hash_content, "CEF_API_HASH_PLATFORM", "MAC"))
-    result.append('public const string CEF_API_HASH_PLATFORM_LINUX = %s;' % __get_version_constant(api_hash_content, "CEF_API_HASH_PLATFORM", "LINUX"))
+    #result.append('public const string CEF_API_HASH_UNIVERSAL = %s;' % __get_version_constant(api_hash_content, "CEF_API_HASH_UNIVERSAL"))
+    #result.append("")
+    #result.append('public const string CEF_API_HASH_PLATFORM_WIN = %s;' % __get_version_constant(api_hash_content, "CEF_API_HASH_PLATFORM", "WIN"))
+    #result.append('public const string CEF_API_HASH_PLATFORM_MACOS = %s;' % __get_version_constant(api_hash_content, "CEF_API_HASH_PLATFORM", "MAC"))
+    #result.append('public const string CEF_API_HASH_PLATFORM_LINUX = %s;' % __get_version_constant(api_hash_content, "CEF_API_HASH_PLATFORM", "LINUX"))
 
     usings = []
     usings.append('using System;')

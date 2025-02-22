@@ -21,14 +21,11 @@ internal static unsafe partial class libcef
 
     #region cef_version.h
 
-    [DllImport(DllName, EntryPoint = "cef_build_revision", CallingConvention = CEF_CALL)]
-    public static extern int build_revision();
-
     [DllImport(DllName, EntryPoint = "cef_version_info", CallingConvention = CEF_CALL)]
     public static extern int version_info(int entry);
 
     [DllImport(DllName, EntryPoint = "cef_api_hash", CallingConvention = CEF_CALL)]
-    public static extern sbyte* api_hash(int entry);
+    public static extern sbyte* api_hash(int version, int entry);
 
     #endregion
 }

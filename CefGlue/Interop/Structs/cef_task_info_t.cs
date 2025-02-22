@@ -7,6 +7,8 @@ namespace Xilium.CefGlue;
 [StructLayout(LayoutKind.Sequential, Pack = libcef.ALIGN)]
 internal struct cef_task_info_t
 {
+    public UIntPtr size;
+    
     public Int64 id;
 
     public CefTaskType type;

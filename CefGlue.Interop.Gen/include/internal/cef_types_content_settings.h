@@ -45,7 +45,7 @@ typedef enum {
   /// provided context. However, it may be overridden by other settings. This
   /// enum should NOT be read directly to determine whether cookies are enabled;
   /// the client should instead rely on the CookieSettings API.
-  CEF_CONTENT_SETTING_TYPE_COOKIES = 0,
+  CEF_CONTENT_SETTING_TYPE_COOKIES,
   CEF_CONTENT_SETTING_TYPE_IMAGES,
   CEF_CONTENT_SETTING_TYPE_JAVASCRIPT,
 
@@ -119,8 +119,8 @@ typedef enum {
   /// permission to respond to accessibility events, which can be used to
   /// provide a custom accessibility experience. Requires explicit user consent
   /// because some users may not want sites to know they're using assistive
-  /// technology.
-  CEF_CONTENT_SETTING_TYPE_ACCESSIBILITY_EVENTS,
+  /// technology. Deprecated in M131.
+  CEF_CONTENT_SETTING_TYPE_DEPRECATED_ACCESSIBILITY_EVENTS,
 
   /// Used to store whether to allow a website to install a payment handler.
   CEF_CONTENT_SETTING_TYPE_PAYMENT_HANDLER,
@@ -474,6 +474,17 @@ typedef enum {
   /// Website setting to indicate whether user has opted in to allow web apps to
   /// install other web apps.
   CEF_CONTENT_SETTING_TYPE_WEB_APP_INSTALLATION,
+
+  /// Content settings for private network access in the context of the
+  /// Direct Sockets API.
+  CEF_CONTENT_SETTING_TYPE_DIRECT_SOCKETS_PRIVATE_NETWORK_ACCESS,
+
+  /// Content settings for legacy cookie scope.
+  /// Checks whether cookies scope is handled according to origin-bound cookies
+  /// or legacy behavior.
+  CEF_CONTENT_SETTING_TYPE_LEGACY_COOKIE_SCOPE,
+
+  CEF_CONTENT_SETTING_TYPE_NUM_VALUES,
 } cef_content_setting_types_t;
 
 ///
@@ -481,14 +492,14 @@ typedef enum {
 /// ContentSetting type.
 ///
 typedef enum {
-  CEF_CONTENT_SETTING_VALUE_DEFAULT = 0,
+  CEF_CONTENT_SETTING_VALUE_DEFAULT,
   CEF_CONTENT_SETTING_VALUE_ALLOW,
   CEF_CONTENT_SETTING_VALUE_BLOCK,
   CEF_CONTENT_SETTING_VALUE_ASK,
   CEF_CONTENT_SETTING_VALUE_SESSION_ONLY,
   CEF_CONTENT_SETTING_VALUE_DETECT_IMPORTANT_CONTENT,
 
-  CEF_CONTENT_SETTING_VALUE_NUM_VALUES
+  CEF_CONTENT_SETTING_VALUE_NUM_VALUES,
 } cef_content_setting_values_t;
 
 #ifdef __cplusplus
