@@ -19,7 +19,7 @@ public sealed unsafe partial class CefSslInfo
     public CefX509Certificate GetX509Certificate()
     {
         return CefX509Certificate.FromNative(
-            cef_sslinfo_t.get_x509certificate(_self)
+            cef_sslinfo_t.get_x509_certificate(_self)
         );
     }
 }

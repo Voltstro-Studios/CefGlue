@@ -13,7 +13,7 @@ namespace Xilium.CefGlue.Interop
 {
     [StructLayout(LayoutKind.Sequential, Pack = libcef.ALIGN)]
     [SuppressMessage("Microsoft.Design", "CA1049:TypesThatOwnNativeResourcesShouldBeDisposable")]
-    internal unsafe struct cef_v8context_t
+    internal unsafe struct cef_v8_context_t
     {
         internal cef_base_ref_counted_t _base;
         internal IntPtr _get_task_runner;
@@ -27,100 +27,100 @@ namespace Xilium.CefGlue.Interop
         internal IntPtr _eval;
         
         // GetCurrentContext
-        [DllImport(libcef.DllName, EntryPoint = "cef_v8context_get_current_context", CallingConvention = libcef.CEF_CALL)]
-        public static extern cef_v8context_t* get_current_context();
+        [DllImport(libcef.DllName, EntryPoint = "cef_v8_context_get_current_context", CallingConvention = libcef.CEF_CALL)]
+        public static extern cef_v8_context_t* get_current_context();
         
         // GetEnteredContext
-        [DllImport(libcef.DllName, EntryPoint = "cef_v8context_get_entered_context", CallingConvention = libcef.CEF_CALL)]
-        public static extern cef_v8context_t* get_entered_context();
+        [DllImport(libcef.DllName, EntryPoint = "cef_v8_context_get_entered_context", CallingConvention = libcef.CEF_CALL)]
+        public static extern cef_v8_context_t* get_entered_context();
         
         // InContext
-        [DllImport(libcef.DllName, EntryPoint = "cef_v8context_in_context", CallingConvention = libcef.CEF_CALL)]
+        [DllImport(libcef.DllName, EntryPoint = "cef_v8_context_in_context", CallingConvention = libcef.CEF_CALL)]
         public static extern int in_context();
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate void add_ref_delegate(cef_v8context_t* self);
+        private delegate void add_ref_delegate(cef_v8_context_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate int release_delegate(cef_v8context_t* self);
+        private delegate int release_delegate(cef_v8_context_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate int has_one_ref_delegate(cef_v8context_t* self);
+        private delegate int has_one_ref_delegate(cef_v8_context_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate int has_at_least_one_ref_delegate(cef_v8context_t* self);
+        private delegate int has_at_least_one_ref_delegate(cef_v8_context_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate cef_task_runner_t* get_task_runner_delegate(cef_v8context_t* self);
+        private delegate cef_task_runner_t* get_task_runner_delegate(cef_v8_context_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate int is_valid_delegate(cef_v8context_t* self);
+        private delegate int is_valid_delegate(cef_v8_context_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate cef_browser_t* get_browser_delegate(cef_v8context_t* self);
+        private delegate cef_browser_t* get_browser_delegate(cef_v8_context_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate cef_frame_t* get_frame_delegate(cef_v8context_t* self);
+        private delegate cef_frame_t* get_frame_delegate(cef_v8_context_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate cef_v8value_t* get_global_delegate(cef_v8context_t* self);
+        private delegate cef_v8_value_t* get_global_delegate(cef_v8_context_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate int enter_delegate(cef_v8context_t* self);
+        private delegate int enter_delegate(cef_v8_context_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate int exit_delegate(cef_v8context_t* self);
+        private delegate int exit_delegate(cef_v8_context_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate int is_same_delegate(cef_v8context_t* self, cef_v8context_t* that);
+        private delegate int is_same_delegate(cef_v8_context_t* self, cef_v8_context_t* that);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate int eval_delegate(cef_v8context_t* self, cef_string_t* code, cef_string_t* script_url, int start_line, cef_v8value_t** retval, cef_v8exception_t** exception);
+        private delegate int eval_delegate(cef_v8_context_t* self, cef_string_t* code, cef_string_t* script_url, int start_line, cef_v8_value_t** retval, cef_v8_exception_t** exception);
         
         // AddRef
         private static IntPtr _p0;
         private static add_ref_delegate _d0;
         
-        public static void add_ref(cef_v8context_t* self)
+        public static void add_ref(cef_v8_context_t* self)
         {
             add_ref_delegate d;
             var p = self->_base._add_ref;
@@ -137,7 +137,7 @@ namespace Xilium.CefGlue.Interop
         private static IntPtr _p1;
         private static release_delegate _d1;
         
-        public static int release(cef_v8context_t* self)
+        public static int release(cef_v8_context_t* self)
         {
             release_delegate d;
             var p = self->_base._release;
@@ -154,7 +154,7 @@ namespace Xilium.CefGlue.Interop
         private static IntPtr _p2;
         private static has_one_ref_delegate _d2;
         
-        public static int has_one_ref(cef_v8context_t* self)
+        public static int has_one_ref(cef_v8_context_t* self)
         {
             has_one_ref_delegate d;
             var p = self->_base._has_one_ref;
@@ -171,7 +171,7 @@ namespace Xilium.CefGlue.Interop
         private static IntPtr _p3;
         private static has_at_least_one_ref_delegate _d3;
         
-        public static int has_at_least_one_ref(cef_v8context_t* self)
+        public static int has_at_least_one_ref(cef_v8_context_t* self)
         {
             has_at_least_one_ref_delegate d;
             var p = self->_base._has_at_least_one_ref;
@@ -188,7 +188,7 @@ namespace Xilium.CefGlue.Interop
         private static IntPtr _p4;
         private static get_task_runner_delegate _d4;
         
-        public static cef_task_runner_t* get_task_runner(cef_v8context_t* self)
+        public static cef_task_runner_t* get_task_runner(cef_v8_context_t* self)
         {
             get_task_runner_delegate d;
             var p = self->_get_task_runner;
@@ -205,7 +205,7 @@ namespace Xilium.CefGlue.Interop
         private static IntPtr _p5;
         private static is_valid_delegate _d5;
         
-        public static int is_valid(cef_v8context_t* self)
+        public static int is_valid(cef_v8_context_t* self)
         {
             is_valid_delegate d;
             var p = self->_is_valid;
@@ -222,7 +222,7 @@ namespace Xilium.CefGlue.Interop
         private static IntPtr _p6;
         private static get_browser_delegate _d6;
         
-        public static cef_browser_t* get_browser(cef_v8context_t* self)
+        public static cef_browser_t* get_browser(cef_v8_context_t* self)
         {
             get_browser_delegate d;
             var p = self->_get_browser;
@@ -239,7 +239,7 @@ namespace Xilium.CefGlue.Interop
         private static IntPtr _p7;
         private static get_frame_delegate _d7;
         
-        public static cef_frame_t* get_frame(cef_v8context_t* self)
+        public static cef_frame_t* get_frame(cef_v8_context_t* self)
         {
             get_frame_delegate d;
             var p = self->_get_frame;
@@ -256,7 +256,7 @@ namespace Xilium.CefGlue.Interop
         private static IntPtr _p8;
         private static get_global_delegate _d8;
         
-        public static cef_v8value_t* get_global(cef_v8context_t* self)
+        public static cef_v8_value_t* get_global(cef_v8_context_t* self)
         {
             get_global_delegate d;
             var p = self->_get_global;
@@ -273,7 +273,7 @@ namespace Xilium.CefGlue.Interop
         private static IntPtr _p9;
         private static enter_delegate _d9;
         
-        public static int enter(cef_v8context_t* self)
+        public static int enter(cef_v8_context_t* self)
         {
             enter_delegate d;
             var p = self->_enter;
@@ -290,7 +290,7 @@ namespace Xilium.CefGlue.Interop
         private static IntPtr _pa;
         private static exit_delegate _da;
         
-        public static int exit(cef_v8context_t* self)
+        public static int exit(cef_v8_context_t* self)
         {
             exit_delegate d;
             var p = self->_exit;
@@ -307,7 +307,7 @@ namespace Xilium.CefGlue.Interop
         private static IntPtr _pb;
         private static is_same_delegate _db;
         
-        public static int is_same(cef_v8context_t* self, cef_v8context_t* that)
+        public static int is_same(cef_v8_context_t* self, cef_v8_context_t* that)
         {
             is_same_delegate d;
             var p = self->_is_same;
@@ -324,7 +324,7 @@ namespace Xilium.CefGlue.Interop
         private static IntPtr _pc;
         private static eval_delegate _dc;
         
-        public static int eval(cef_v8context_t* self, cef_string_t* code, cef_string_t* script_url, int start_line, cef_v8value_t** retval, cef_v8exception_t** exception)
+        public static int eval(cef_v8_context_t* self, cef_string_t* code, cef_string_t* script_url, int start_line, cef_v8_value_t** retval, cef_v8_exception_t** exception)
         {
             eval_delegate d;
             var p = self->_eval;

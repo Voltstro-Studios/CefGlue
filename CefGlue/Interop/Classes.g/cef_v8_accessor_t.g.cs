@@ -13,7 +13,7 @@ namespace Xilium.CefGlue.Interop
 {
     [StructLayout(LayoutKind.Sequential, Pack = libcef.ALIGN)]
     [SuppressMessage("Microsoft.Design", "CA1049:TypesThatOwnNativeResourcesShouldBeDisposable")]
-    internal unsafe struct cef_v8accessor_t
+    internal unsafe struct cef_v8_accessor_t
     {
         internal cef_base_ref_counted_t _base;
         internal IntPtr _get;
@@ -23,54 +23,54 @@ namespace Xilium.CefGlue.Interop
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        internal delegate void add_ref_delegate(cef_v8accessor_t* self);
+        internal delegate void add_ref_delegate(cef_v8_accessor_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        internal delegate int release_delegate(cef_v8accessor_t* self);
+        internal delegate int release_delegate(cef_v8_accessor_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        internal delegate int has_one_ref_delegate(cef_v8accessor_t* self);
+        internal delegate int has_one_ref_delegate(cef_v8_accessor_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        internal delegate int has_at_least_one_ref_delegate(cef_v8accessor_t* self);
+        internal delegate int has_at_least_one_ref_delegate(cef_v8_accessor_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        internal delegate int get_delegate(cef_v8accessor_t* self, cef_string_t* name, cef_v8value_t* @object, cef_v8value_t** retval, cef_string_t* exception);
+        internal delegate int get_delegate(cef_v8_accessor_t* self, cef_string_t* name, cef_v8_value_t* @object, cef_v8_value_t** retval, cef_string_t* exception);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        internal delegate int set_delegate(cef_v8accessor_t* self, cef_string_t* name, cef_v8value_t* @object, cef_v8value_t* value, cef_string_t* exception);
+        internal delegate int set_delegate(cef_v8_accessor_t* self, cef_string_t* name, cef_v8_value_t* @object, cef_v8_value_t* value, cef_string_t* exception);
         
         private static int _sizeof;
         
-        static cef_v8accessor_t()
+        static cef_v8_accessor_t()
         {
-            _sizeof = Marshal.SizeOf(typeof(cef_v8accessor_t));
+            _sizeof = Marshal.SizeOf(typeof(cef_v8_accessor_t));
         }
         
-        internal static cef_v8accessor_t* Alloc()
+        internal static cef_v8_accessor_t* Alloc()
         {
-            var ptr = (cef_v8accessor_t*)Marshal.AllocHGlobal(_sizeof);
-            *ptr = new cef_v8accessor_t();
+            var ptr = (cef_v8_accessor_t*)Marshal.AllocHGlobal(_sizeof);
+            *ptr = new cef_v8_accessor_t();
             ptr->_base._size = (UIntPtr)_sizeof;
             return ptr;
         }
         
-        internal static void Free(cef_v8accessor_t* ptr)
+        internal static void Free(cef_v8_accessor_t* ptr)
         {
             Marshal.FreeHGlobal((IntPtr)ptr);
         }

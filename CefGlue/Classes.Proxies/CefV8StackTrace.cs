@@ -16,12 +16,12 @@ public sealed unsafe partial class CefV8StackTrace
     ///     the current thread. Do not call any other methods if this method returns
     ///     false.
     /// </summary>
-    public bool IsValid => cef_v8stack_trace_t.is_valid(_self) != 0;
+    public bool IsValid => cef_v8_stack_trace_t.is_valid(_self) != 0;
 
     /// <summary>
     ///     Returns the number of stack frames.
     /// </summary>
-    public int FrameCount => cef_v8stack_trace_t.get_frame_count(_self);
+    public int FrameCount => cef_v8_stack_trace_t.get_frame_count(_self);
 
     /// <summary>
     ///     Returns the stack trace for the currently active context. |frame_limit| is
@@ -30,7 +30,7 @@ public sealed unsafe partial class CefV8StackTrace
     public static CefV8StackTrace GetCurrent(int frameLimit)
     {
         return FromNative(
-            cef_v8stack_trace_t.get_current(frameLimit)
+            cef_v8_stack_trace_t.get_current(frameLimit)
         );
     }
 
@@ -40,7 +40,7 @@ public sealed unsafe partial class CefV8StackTrace
     public CefV8StackFrame GetFrame(int index)
     {
         return CefV8StackFrame.FromNative(
-            cef_v8stack_trace_t.get_frame(_self, index)
+            cef_v8_stack_trace_t.get_frame(_self, index)
         );
     }
 }

@@ -15,7 +15,7 @@ public sealed unsafe partial class CefV8Exception
     {
         get
         {
-            var n_result = cef_v8exception_t.get_message(_self);
+            var n_result = cef_v8_exception_t.get_message(_self);
             return cef_string_userfree.ToString(n_result);
         }
     }
@@ -27,7 +27,7 @@ public sealed unsafe partial class CefV8Exception
     {
         get
         {
-            var n_result = cef_v8exception_t.get_source_line(_self);
+            var n_result = cef_v8_exception_t.get_source_line(_self);
             return cef_string_userfree.ToString(n_result);
         }
     }
@@ -40,7 +40,7 @@ public sealed unsafe partial class CefV8Exception
     {
         get
         {
-            var n_result = cef_v8exception_t.get_script_resource_name(_self);
+            var n_result = cef_v8_exception_t.get_script_resource_name(_self);
             return cef_string_userfree.ToString(n_result);
         }
     }
@@ -49,29 +49,29 @@ public sealed unsafe partial class CefV8Exception
     ///     Returns the 1-based number of the line where the error occurred or 0 if the
     ///     line number is unknown.
     /// </summary>
-    public int LineNumber => cef_v8exception_t.get_line_number(_self);
+    public int LineNumber => cef_v8_exception_t.get_line_number(_self);
 
     /// <summary>
     ///     Returns the index within the script of the first character where the error
     ///     occurred.
     /// </summary>
-    public int StartPosition => cef_v8exception_t.get_start_position(_self);
+    public int StartPosition => cef_v8_exception_t.get_start_position(_self);
 
     /// <summary>
     ///     Returns the index within the script of the last character where the error
     ///     occurred.
     /// </summary>
-    public int EndPosition => cef_v8exception_t.get_end_position(_self);
+    public int EndPosition => cef_v8_exception_t.get_end_position(_self);
 
     /// <summary>
     ///     Returns the index within the line of the first character where the error
     ///     occurred.
     /// </summary>
-    public int StartColumn => cef_v8exception_t.get_start_column(_self);
+    public int StartColumn => cef_v8_exception_t.get_start_column(_self);
 
     /// <summary>
     ///     Returns the index within the line of the last character where the error
     ///     occurred.
     /// </summary>
-    public int EndColumn => cef_v8exception_t.get_end_column(_self);
+    public int EndColumn => cef_v8_exception_t.get_end_column(_self);
 }

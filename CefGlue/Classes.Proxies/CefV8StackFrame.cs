@@ -16,7 +16,7 @@ public sealed unsafe partial class CefV8StackFrame
     ///     the current thread. Do not call any other methods if this method returns
     ///     false.
     /// </summary>
-    public bool IsValid => cef_v8stack_frame_t.is_valid(_self) != 0;
+    public bool IsValid => cef_v8_stack_frame_t.is_valid(_self) != 0;
 
     /// <summary>
     ///     Returns the name of the resource script that contains the function.
@@ -25,7 +25,7 @@ public sealed unsafe partial class CefV8StackFrame
     {
         get
         {
-            var n_result = cef_v8stack_frame_t.get_script_name(_self);
+            var n_result = cef_v8_stack_frame_t.get_script_name(_self);
             return cef_string_userfree.ToString(n_result);
         }
     }
@@ -39,7 +39,7 @@ public sealed unsafe partial class CefV8StackFrame
     {
         get
         {
-            var n_result = cef_v8stack_frame_t.get_script_name_or_source_url(_self);
+            var n_result = cef_v8_stack_frame_t.get_script_name_or_source_url(_self);
             return cef_string_userfree.ToString(n_result);
         }
     }
@@ -51,7 +51,7 @@ public sealed unsafe partial class CefV8StackFrame
     {
         get
         {
-            var n_result = cef_v8stack_frame_t.get_function_name(_self);
+            var n_result = cef_v8_stack_frame_t.get_function_name(_self);
             return cef_string_userfree.ToString(n_result);
         }
     }
@@ -59,21 +59,21 @@ public sealed unsafe partial class CefV8StackFrame
     /// <summary>
     ///     Returns the 1-based line number for the function call or 0 if unknown.
     /// </summary>
-    public int LineNumber => cef_v8stack_frame_t.get_line_number(_self);
+    public int LineNumber => cef_v8_stack_frame_t.get_line_number(_self);
 
     /// <summary>
     ///     Returns the 1-based column offset on the line for the function call or 0 if
     ///     unknown.
     /// </summary>
-    public int Column => cef_v8stack_frame_t.get_column(_self);
+    public int Column => cef_v8_stack_frame_t.get_column(_self);
 
     /// <summary>
     ///     Returns true if the function was compiled using eval().
     /// </summary>
-    public bool IsEval => cef_v8stack_frame_t.is_eval(_self) != 0;
+    public bool IsEval => cef_v8_stack_frame_t.is_eval(_self) != 0;
 
     /// <summary>
     ///     Returns true if the function was called as a constructor via "new".
     /// </summary>
-    public bool IsConstructor => cef_v8stack_frame_t.is_constructor(_self) != 0;
+    public bool IsConstructor => cef_v8_stack_frame_t.is_constructor(_self) != 0;
 }

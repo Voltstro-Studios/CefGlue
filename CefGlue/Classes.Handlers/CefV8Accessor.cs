@@ -8,7 +8,7 @@ namespace Xilium.CefGlue;
 /// </summary>
 public abstract unsafe partial class CefV8Accessor
 {
-    private int get(cef_v8accessor_t* self, cef_string_t* name, cef_v8value_t* @object, cef_v8value_t** retval,
+    private int get(cef_v8_accessor_t* self, cef_string_t* name, cef_v8_value_t* @object, cef_v8_value_t** retval,
         cef_string_t* exception)
     {
         CheckSelf(self);
@@ -38,7 +38,7 @@ public abstract unsafe partial class CefV8Accessor
     protected abstract bool Get(string? name, CefV8Value obj, out CefV8Value? returnValue, out string? exception);
 
 
-    private int set(cef_v8accessor_t* self, cef_string_t* name, cef_v8value_t* @object, cef_v8value_t* value,
+    private int set(cef_v8_accessor_t* self, cef_string_t* name, cef_v8_value_t* @object, cef_v8_value_t* value,
         cef_string_t* exception)
     {
         CheckSelf(self);

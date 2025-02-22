@@ -13,7 +13,7 @@ namespace Xilium.CefGlue.Interop
 {
     [StructLayout(LayoutKind.Sequential, Pack = libcef.ALIGN)]
     [SuppressMessage("Microsoft.Design", "CA1049:TypesThatOwnNativeResourcesShouldBeDisposable")]
-    internal unsafe struct cef_v8exception_t
+    internal unsafe struct cef_v8_exception_t
     {
         internal cef_base_ref_counted_t _base;
         internal IntPtr _get_message;
@@ -29,79 +29,79 @@ namespace Xilium.CefGlue.Interop
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate void add_ref_delegate(cef_v8exception_t* self);
+        private delegate void add_ref_delegate(cef_v8_exception_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate int release_delegate(cef_v8exception_t* self);
+        private delegate int release_delegate(cef_v8_exception_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate int has_one_ref_delegate(cef_v8exception_t* self);
+        private delegate int has_one_ref_delegate(cef_v8_exception_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate int has_at_least_one_ref_delegate(cef_v8exception_t* self);
+        private delegate int has_at_least_one_ref_delegate(cef_v8_exception_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate cef_string_userfree* get_message_delegate(cef_v8exception_t* self);
+        private delegate cef_string_userfree* get_message_delegate(cef_v8_exception_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate cef_string_userfree* get_source_line_delegate(cef_v8exception_t* self);
+        private delegate cef_string_userfree* get_source_line_delegate(cef_v8_exception_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate cef_string_userfree* get_script_resource_name_delegate(cef_v8exception_t* self);
+        private delegate cef_string_userfree* get_script_resource_name_delegate(cef_v8_exception_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate int get_line_number_delegate(cef_v8exception_t* self);
+        private delegate int get_line_number_delegate(cef_v8_exception_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate int get_start_position_delegate(cef_v8exception_t* self);
+        private delegate int get_start_position_delegate(cef_v8_exception_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate int get_end_position_delegate(cef_v8exception_t* self);
+        private delegate int get_end_position_delegate(cef_v8_exception_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate int get_start_column_delegate(cef_v8exception_t* self);
+        private delegate int get_start_column_delegate(cef_v8_exception_t* self);
         
         [UnmanagedFunctionPointer(libcef.CEF_CALLBACK)]
         #if !DEBUG
         [SuppressUnmanagedCodeSecurity]
         #endif
-        private delegate int get_end_column_delegate(cef_v8exception_t* self);
+        private delegate int get_end_column_delegate(cef_v8_exception_t* self);
         
         // AddRef
         private static IntPtr _p0;
         private static add_ref_delegate _d0;
         
-        public static void add_ref(cef_v8exception_t* self)
+        public static void add_ref(cef_v8_exception_t* self)
         {
             add_ref_delegate d;
             var p = self->_base._add_ref;
@@ -118,7 +118,7 @@ namespace Xilium.CefGlue.Interop
         private static IntPtr _p1;
         private static release_delegate _d1;
         
-        public static int release(cef_v8exception_t* self)
+        public static int release(cef_v8_exception_t* self)
         {
             release_delegate d;
             var p = self->_base._release;
@@ -135,7 +135,7 @@ namespace Xilium.CefGlue.Interop
         private static IntPtr _p2;
         private static has_one_ref_delegate _d2;
         
-        public static int has_one_ref(cef_v8exception_t* self)
+        public static int has_one_ref(cef_v8_exception_t* self)
         {
             has_one_ref_delegate d;
             var p = self->_base._has_one_ref;
@@ -152,7 +152,7 @@ namespace Xilium.CefGlue.Interop
         private static IntPtr _p3;
         private static has_at_least_one_ref_delegate _d3;
         
-        public static int has_at_least_one_ref(cef_v8exception_t* self)
+        public static int has_at_least_one_ref(cef_v8_exception_t* self)
         {
             has_at_least_one_ref_delegate d;
             var p = self->_base._has_at_least_one_ref;
@@ -169,7 +169,7 @@ namespace Xilium.CefGlue.Interop
         private static IntPtr _p4;
         private static get_message_delegate _d4;
         
-        public static cef_string_userfree* get_message(cef_v8exception_t* self)
+        public static cef_string_userfree* get_message(cef_v8_exception_t* self)
         {
             get_message_delegate d;
             var p = self->_get_message;
@@ -186,7 +186,7 @@ namespace Xilium.CefGlue.Interop
         private static IntPtr _p5;
         private static get_source_line_delegate _d5;
         
-        public static cef_string_userfree* get_source_line(cef_v8exception_t* self)
+        public static cef_string_userfree* get_source_line(cef_v8_exception_t* self)
         {
             get_source_line_delegate d;
             var p = self->_get_source_line;
@@ -203,7 +203,7 @@ namespace Xilium.CefGlue.Interop
         private static IntPtr _p6;
         private static get_script_resource_name_delegate _d6;
         
-        public static cef_string_userfree* get_script_resource_name(cef_v8exception_t* self)
+        public static cef_string_userfree* get_script_resource_name(cef_v8_exception_t* self)
         {
             get_script_resource_name_delegate d;
             var p = self->_get_script_resource_name;
@@ -220,7 +220,7 @@ namespace Xilium.CefGlue.Interop
         private static IntPtr _p7;
         private static get_line_number_delegate _d7;
         
-        public static int get_line_number(cef_v8exception_t* self)
+        public static int get_line_number(cef_v8_exception_t* self)
         {
             get_line_number_delegate d;
             var p = self->_get_line_number;
@@ -237,7 +237,7 @@ namespace Xilium.CefGlue.Interop
         private static IntPtr _p8;
         private static get_start_position_delegate _d8;
         
-        public static int get_start_position(cef_v8exception_t* self)
+        public static int get_start_position(cef_v8_exception_t* self)
         {
             get_start_position_delegate d;
             var p = self->_get_start_position;
@@ -254,7 +254,7 @@ namespace Xilium.CefGlue.Interop
         private static IntPtr _p9;
         private static get_end_position_delegate _d9;
         
-        public static int get_end_position(cef_v8exception_t* self)
+        public static int get_end_position(cef_v8_exception_t* self)
         {
             get_end_position_delegate d;
             var p = self->_get_end_position;
@@ -271,7 +271,7 @@ namespace Xilium.CefGlue.Interop
         private static IntPtr _pa;
         private static get_start_column_delegate _da;
         
-        public static int get_start_column(cef_v8exception_t* self)
+        public static int get_start_column(cef_v8_exception_t* self)
         {
             get_start_column_delegate d;
             var p = self->_get_start_column;
@@ -288,7 +288,7 @@ namespace Xilium.CefGlue.Interop
         private static IntPtr _pb;
         private static get_end_column_delegate _db;
         
-        public static int get_end_column(cef_v8exception_t* self)
+        public static int get_end_column(cef_v8_exception_t* self)
         {
             get_end_column_delegate d;
             var p = self->_get_end_column;

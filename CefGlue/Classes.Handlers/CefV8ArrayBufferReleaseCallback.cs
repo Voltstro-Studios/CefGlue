@@ -8,7 +8,7 @@ namespace Xilium.CefGlue;
 /// </summary>
 public abstract unsafe partial class CefV8ArrayBufferReleaseCallback
 {
-    private void release_buffer(cef_v8array_buffer_release_callback_t* self, void* buffer)
+    private void release_buffer(cef_v8_array_buffer_release_callback_t* self, void* buffer)
     {
         CheckSelf(self);
 

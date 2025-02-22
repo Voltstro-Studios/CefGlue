@@ -82,7 +82,7 @@ public sealed unsafe partial class CefFrame
     ///     Get the V8 context associated with the frame. This method can only be
     ///     called from the render process.
     /// </summary>
-    public CefV8Context V8Context => CefV8Context.FromNative(cef_frame_t.get_v8context(_self));
+    public CefV8Context V8Context => CefV8Context.FromNative(cef_frame_t.get_v8_context(_self));
 
     /// <summary>
     ///     Execute undo in this frame.

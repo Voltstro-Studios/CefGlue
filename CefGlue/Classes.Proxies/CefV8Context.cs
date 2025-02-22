@@ -14,21 +14,21 @@ public sealed unsafe partial class CefV8Context
     /// <summary>
     ///     Returns true if V8 is currently inside a context.
     /// </summary>
-    public static bool InContext => cef_v8context_t.in_context() != 0;
+    public static bool InContext => cef_v8_context_t.in_context() != 0;
 
     /// <summary>
     ///     Returns true if the underlying handle is valid and it can be accessed on
     ///     the current thread. Do not call any other methods if this method returns
     ///     false.
     /// </summary>
-    public bool IsValid => cef_v8context_t.is_valid(_self) != 0;
+    public bool IsValid => cef_v8_context_t.is_valid(_self) != 0;
 
     /// <summary>
     ///     Returns the current (top) context object in the V8 context stack.
     /// </summary>
     public static CefV8Context GetCurrentContext()
     {
-        return FromNative(cef_v8context_t.get_current_context());
+        return FromNative(cef_v8_context_t.get_current_context());
     }
 
     /// <summary>
@@ -36,7 +36,7 @@ public sealed unsafe partial class CefV8Context
     /// </summary>
     public static CefV8Context GetEnteredContext()
     {
-        return FromNative(cef_v8context_t.get_entered_context());
+        return FromNative(cef_v8_context_t.get_entered_context());
     }
 
     /// <summary>
@@ -46,7 +46,7 @@ public sealed unsafe partial class CefV8Context
     /// </summary>
     public CefTaskRunner GetTaskRunner()
     {
-        return CefTaskRunner.FromNative(cef_v8context_t.get_task_runner(_self));
+        return CefTaskRunner.FromNative(cef_v8_context_t.get_task_runner(_self));
     }
 
     /// <summary>
@@ -55,7 +55,7 @@ public sealed unsafe partial class CefV8Context
     /// </summary>
     public CefBrowser? GetBrowser()
     {
-        return CefBrowser.FromNativeOrNull(cef_v8context_t.get_browser(_self));
+        return CefBrowser.FromNativeOrNull(cef_v8_context_t.get_browser(_self));
     }
 
     /// <summary>
@@ -64,7 +64,7 @@ public sealed unsafe partial class CefV8Context
     /// </summary>
     public CefFrame? GetFrame()
     {
-        return CefFrame.FromNativeOrNull(cef_v8context_t.get_frame(_self));
+        return CefFrame.FromNativeOrNull(cef_v8_context_t.get_frame(_self));
     }
 
     /// <summary>
@@ -74,7 +74,7 @@ public sealed unsafe partial class CefV8Context
     public CefV8Value GetGlobal()
     {
         return CefV8Value.FromNative(
-            cef_v8context_t.get_global(_self)
+            cef_v8_context_t.get_global(_self)
         );
     }
 
@@ -87,7 +87,7 @@ public sealed unsafe partial class CefV8Context
     /// </summary>
     public bool Enter()
     {
-        return cef_v8context_t.enter(_self) != 0;
+        return cef_v8_context_t.enter(_self) != 0;
     }
 
     /// <summary>
@@ -96,7 +96,7 @@ public sealed unsafe partial class CefV8Context
     /// </summary>
     public bool Exit()
     {
-        return cef_v8context_t.exit(_self) != 0;
+        return cef_v8_context_t.exit(_self) != 0;
     }
 
     /// <summary>
@@ -108,7 +108,7 @@ public sealed unsafe partial class CefV8Context
         if (that == null)
             return false;
 
-        return cef_v8context_t.is_same(_self, that.ToNative()) != 0;
+        return cef_v8_context_t.is_same(_self, that.ToNative()) != 0;
     }
 
     /// <summary>
@@ -123,15 +123,15 @@ public sealed unsafe partial class CefV8Context
         out CefV8Exception? exception)
     {
         bool result;
-        cef_v8value_t* n_retval = null;
-        cef_v8exception_t* n_exception = null;
+        cef_v8_value_t* n_retval = null;
+        cef_v8_exception_t* n_exception = null;
 
         fixed (char* code_str = code)
         fixed (char* scriptUrl_str = scriptUrl)
         {
             var n_code = new cef_string_t(code_str, code?.Length ?? 0);
             var n_scriptUrl = new cef_string_t(scriptUrl_str, scriptUrl?.Length ?? 0);
-            result = cef_v8context_t.eval(_self, &n_code, &n_scriptUrl, startLine, &n_retval, &n_exception) != 0;
+            result = cef_v8_context_t.eval(_self, &n_code, &n_scriptUrl, startLine, &n_retval, &n_exception) != 0;
         }
 
         returnValue = n_retval != null ? CefV8Value.FromNative(n_retval) : null;

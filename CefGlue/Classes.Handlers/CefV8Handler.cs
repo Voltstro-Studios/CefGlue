@@ -11,8 +11,8 @@ public abstract unsafe partial class CefV8Handler
 {
     private static readonly CefV8Value[] EmptyArgs = Array.Empty<CefV8Value>();
 
-    private int execute(cef_v8handler_t* self, cef_string_t* name, cef_v8value_t* @object, UIntPtr argumentsCount,
-        cef_v8value_t** arguments, cef_v8value_t** retval, cef_string_t* exception)
+    private int execute(cef_v8_handler_t* self, cef_string_t* name, cef_v8_value_t* @object, UIntPtr argumentsCount,
+        cef_v8_value_t** arguments, cef_v8_value_t** retval, cef_string_t* exception)
     {
         CheckSelf(self);
 
