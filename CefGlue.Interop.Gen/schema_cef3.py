@@ -190,4 +190,7 @@ classdef = {
 
     #128
     'CefTaskManager': { 'role': ROLE_PROXY, 'abstract': True },
+    #133
+    'CefPreferenceObserver': { 'role': ROLE_HANDLER },
+    'CefSettingObserver': { 'role': ROLE_HANDLER },
     }

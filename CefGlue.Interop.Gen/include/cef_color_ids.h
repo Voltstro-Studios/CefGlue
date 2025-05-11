@@ -344,6 +344,8 @@
   /* CSS system colors. */ \
   E_CPONLY(CEF_ColorCssSystemBtnFace) \
   E_CPONLY(CEF_ColorCssSystemBtnText) \
+  E_CPONLY(CEF_ColorCssSystemField) \
+  E_CPONLY(CEF_ColorCssSystemFieldText) \
   E_CPONLY(CEF_ColorCssSystemGrayText) \
   E_CPONLY(CEF_ColorCssSystemHighlight) \
   E_CPONLY(CEF_ColorCssSystemHighlightText) \
@@ -494,6 +496,8 @@
   E_CPONLY(CEF_ColorTableHeaderBackground) \
   E_CPONLY(CEF_ColorTableHeaderForeground) \
   E_CPONLY(CEF_ColorTableHeaderSeparator) \
+  E_CPONLY(CEF_ColorTableIconBackground) \
+  E_CPONLY(CEF_ColorTableRowHighlight) \
   E_CPONLY(CEF_ColorSuggestionChipBorder) \
   E_CPONLY(CEF_ColorSuggestionChipIcon) \
   E_CPONLY(CEF_ColorTextfieldBackground) \
@@ -661,7 +665,8 @@
   E_CPONLY(CEF_ColorCrosSystemHighlightBorder1) \
   \
   E_CPONLY(CEF_ColorCrosSysPositive) \
-  E_CPONLY(CEF_ColorCrosSysComplementVariant)
+  E_CPONLY(CEF_ColorCrosSysComplementVariant) \
+  E_CPONLY(CEF_ColorCrosSysInputFieldOnBase)
 #elif defined(OS_LINUX)
 #define PLATFORM_SPECIFIC_COLOR_IDS \
   E_CPONLY(CEF_ColorNativeButtonBorder)\
@@ -719,6 +724,8 @@
 
 // Cross-platform IDs should be added here.
 #define COMMON_COMPONENTS_COLOR_IDS \
+  E_CPONLY(kFullscreenNotificationOpaqueBackgroundColor) \
+  E_CPONLY(kFullscreenNotificationTransparentBackgroundColor) \
 
 #if !defined(OS_MAC)
 #define COMPONENTS_COLOR_IDS COMMON_COMPONENTS_COLOR_IDS \
@@ -801,6 +808,10 @@
   E_CPONLY(CEF_ColorBatchUploadBackground) \
   E_CPONLY(CEF_ColorBatchUploadDataBackground) \
   E_CPONLY(CEF_ColorBatchUploadDataSeparator) \
+  /* BNPL Issuer GPay colors */ \
+  E_CPONLY(CEF_ColorBnplIssuerLabelForeground) \
+  E_CPONLY(CEF_ColorBnplIssuerLabelForegroundDisabled) \
+  E_CPONLY(CEF_ColorBnplIssuerLinkedIneligibleBackground) \
   /* Compose colors */ \
   E_CPONLY(CEF_ColorComposeDialogBackground) \
   E_CPONLY(CEF_ColorComposeDialogDivider) \
@@ -871,7 +882,6 @@
   E_CPONLY(CEF_ColorExtensionMenuPinButtonIcon) \
   E_CPONLY(CEF_ColorExtensionMenuPinButtonIconDisabled) \
   E_CPONLY(CEF_ColorExtensionsMenuContainerBackground) \
-  E_CPONLY(CEF_ColorExtensionsToolbarControlsBackground) \
   E_CPONLY(CEF_ColorExtensionsMenuText) \
   E_CPONLY(CEF_ColorExtensionsMenuSecondaryText) \
   /* Feature Promo bubble colors. */ \
@@ -905,7 +915,6 @@
   E_CPONLY(CEF_ColorHistoryEmbeddingsImageBackground) \
   E_CPONLY(CEF_ColorHistoryEmbeddingsImageBackgroundGradientEnd) \
   E_CPONLY(CEF_ColorHistoryEmbeddingsImageBackgroundGradientStart) \
-  E_CPONLY(CEF_ColorHistoryEmbeddingsWithAnswersBackground) \
   /* InfoBar colors. */ \
   E_CPONLY(CEF_ColorInfoBarBackground) \
   E_CPONLY(CEF_ColorInfoBarButtonIcon) \
@@ -916,6 +925,8 @@
   /* Intent Picker colors. */ \
   E_CPONLY(CEF_ColorIntentPickerItemBackgroundHovered) \
   E_CPONLY(CEF_ColorIntentPickerItemBackgroundSelected) \
+  /* Glic colors */ \
+  E_CPONLY(CEF_ColorGlicBackground) \
   /* Hover Button colors */ \
   E_CPONLY(CEF_ColorHoverButtonBackgroundHovered) \
   /* Lens overlay colors. */ \
@@ -933,6 +944,9 @@
   /* Media router colors. */ \
   E_CPONLY(CEF_ColorMediaRouterIconActive) \
   E_CPONLY(CEF_ColorMediaRouterIconWarning) \
+  /* Multi contents view colors. */ \
+  E_CPONLY(CEF_ColorMulitContentsViewActiveContentOutline) \
+  E_CPONLY(CEF_ColorMulitContentsViewInactiveContentOutline) \
   /* New tab button colors. */ \
   E_CPONLY(CEF_ColorNewTabButtonForegroundFrameActive) \
   E_CPONLY(CEF_ColorNewTabButtonForegroundFrameInactive) \
@@ -942,7 +956,6 @@
   E_CPONLY(CEF_ColorNewTabButtonInkDropFrameActive) \
   E_CPONLY(CEF_ColorNewTabButtonInkDropFrameInactive) \
   E_CPONLY(CEF_ColorTabStripComboButtonSeparator) \
-  E_CPONLY(CEF_ColorTabStripComboButtonSeparatorOnHeader) \
   E_CPONLY(CEF_ColorTabStripControlButtonInkDrop) \
   E_CPONLY(CEF_ColorTabStripControlButtonInkDropRipple) \
   /* New tab button colors for ChromeRefresh.*/ \
@@ -1111,6 +1124,8 @@
   E_CPONLY(CEF_ColorPageInfoSubtitleForeground) \
   E_CPONLY(CEF_ColorPageInfoPermissionBlockedOnSystemLevelDisabled) \
   E_CPONLY(CEF_ColorPageInfoPermissionUsedIcon) \
+  /* Parent access local web approval dialog colors */ \
+  E_CPONLY(CEF_ColorParentAccessViewLocalWebApprovalBackground) \
   /* Payments colors. */ \
   E_CPONLY(CEF_ColorPaymentsFeedbackTipBackground) \
   E_CPONLY(CEF_ColorPaymentsFeedbackTipBorder) \
@@ -1192,7 +1207,6 @@
   E_CPONLY(CEF_ColorPwaMenuButtonIcon) \
   E_CPONLY(CEF_ColorPwaSecurityChipForeground) \
   E_CPONLY(CEF_ColorPwaSecurityChipForegroundDangerous) \
-  E_CPONLY(CEF_ColorPwaSecurityChipForegroundPolicyCert) \
   E_CPONLY(CEF_ColorPwaSecurityChipForegroundSecure) \
   E_CPONLY(CEF_ColorPwaTabBarBottomSeparator) \
   E_CPONLY(CEF_ColorPwaTabBarTopSeparator) \
@@ -1315,6 +1329,9 @@
   /* Share-this-tab dialog colors. */ \
   E_CPONLY(CEF_ColorShareThisTabAudioToggleBackground) \
   E_CPONLY(CEF_ColorShareThisTabSourceViewBorder) \
+  /* The color used in the Tab Group Sharing Recent Activity dialog */ \
+  E_CPONLY(CEF_ColorSharingRecentActivityDialogFaviconContainer) \
+  E_CPONLY(CEF_ColorSharingRecentActivityDialogActivityContainer) \
   /* Side panel colors. */ \
   E_CPONLY(CEF_ColorSidePanelBackground) \
   E_CPONLY(CEF_ColorSidePanelBadgeBackground) \
@@ -1512,8 +1529,12 @@
   E_CPONLY(CEF_ColorTabSearchScrollbarThumb) \
   /* Task Manager colors. */ \
   E_CPONLY(CEF_ColorTaskManagerBackground) \
+  E_CPONLY(CEF_ColorTaskManagerTableBackground) \
+  E_CPONLY(CEF_ColorTaskManagerTableBackgroundAlternate) \
+  E_CPONLY(CEF_ColorTaskManagerTableBackgroundSelectedFocused) \
+  E_CPONLY(CEF_ColorTaskManagerTableBackgroundSelectedUnfocused) \
+  E_CPONLY(CEF_ColorTaskManagerTableHeaderBackground) \
   E_CPONLY(CEF_ColorTaskManagerSearchBarBackground) \
-  E_CPONLY(CEF_ColorTaskManagerSearchBarHoverOn) \
   E_CPONLY(CEF_ColorTaskManagerSearchBarTransparent) \
   E_CPONLY(CEF_ColorTaskManagerSearchBarPlaceholderText) \
   /* Thumbnail tab colors. */ \

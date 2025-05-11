@@ -522,9 +522,9 @@ def dict_to_str(dict):
 # Attribute keys allowed in CEF metadata comments.
 COMMON_ATTRIB_KEYS = ('added', 'removed')
 CLASS_ATTRIB_KEYS = COMMON_ATTRIB_KEYS + ('no_debugct_check', 'source')
-FUNCTION_ATTRIB_KEYS = COMMON_ATTRIB_KEYS + ('api_hash_check', 'capi_name',
-                                             'count_func', 'default_retval',
-                                             'index_param', 'optional_param')
+FUNCTION_ATTRIB_KEYS = COMMON_ATTRIB_KEYS + (
+    'api_hash_check', 'capi_name', 'count_func', 'default_retval',
+    'index_param', 'no_stack_protector', 'optional_param')
 
 # regex for matching comment-formatted attributes
 _cre_attrib = r'/\*--cef\(([A-Za-z0-9_ ,=:\n]{0,})\)--\*/'
@@ -1352,9 +1352,14 @@ class obj_class:
 
     # Clamp to class versions, if specified.
     if self.has_version_added():
-      versions = [x for x in versions if x >= self.get_version_added()]
+      version_added = self.get_version_added()
+      versions = [x for x in versions if x >= version_added]
+      if not version_added in versions:
+        versions.append(version_added)
     if self.has_version_removed():
       versions = [x for x in versions if x < self.get_version_removed()]
+
+    assert len(versions) > 0, self.get_name()
 
     self.allversions = sorted(versions)
     return self.allversions
