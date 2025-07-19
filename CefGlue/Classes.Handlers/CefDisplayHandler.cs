@@ -242,4 +242,70 @@ public abstract unsafe partial class CefDisplayHandler
     protected virtual void OnMediaAccessChange(CefBrowser browser, bool hasVideoAccess, bool hasAudioAccess)
     {
     }
+
+    private int on_contents_bounds_change(cef_display_handler_t* self, cef_browser_t* browser, cef_rect_t* new_bounds)
+    {
+        CheckSelf(self);
+
+        CefBrowser mBrowser = CefBrowser.FromNative(browser);
+        CefRectangle newBounds = new CefRectangle(new_bounds->x, new_bounds->y, new_bounds->width, new_bounds->height);
+
+        bool result = OnContentsBoundsChange(mBrowser, newBounds);
+
+        return result ? 1 : 0;
+    }
+
+    /// <summary>
+    /// Called when JavaScript is requesting new bounds via window.moveTo/By() or
+    /// window.resizeTo/By(). |new_bounds| are in DIP screen coordinates.
+    ///
+    /// With Views-hosted browsers |new_bounds| are the desired bounds for
+    /// the containing CefWindow and may be passed directly to
+    /// CefWindow::SetBounds. With external (client-provided) parent on macOS and
+    /// Windows |new_bounds| are the desired frame bounds for the containing root
+    /// window. With other non-Views browsers |new_bounds| are the desired bounds
+    /// for the browser content only unless the client implements either
+    /// CefDisplayHandler::GetRootWindowScreenRect for windowed browsers or
+    /// CefRenderHandler::GetWindowScreenRect for windowless browsers. Clients may
+    /// expand browser content bounds to window bounds using OS-specific or
+    /// CefDisplay methods.
+    ///
+    /// Return true if this method was handled or false for default handling.
+    /// Default move/resize behavior is only provided with Views-hosted Chrome
+    /// style browsers.
+    /// </summary>
+    /// <param name="browser"></param>
+    /// <param name="newBounds"></param>
+    /// <returns></returns>
+    protected virtual bool OnContentsBoundsChange(CefBrowser browser, CefRectangle newBounds)
+    {
+        return false;
+    }
+
+    private int get_root_window_screen_rect(cef_display_handler_t* self, cef_browser_t* browser, cef_rect_t* rect)
+    {
+        CheckSelf(self);
+
+        CefBrowser mBrowser = CefBrowser.FromNative(browser);
+        CefRectangle mRect = new(rect->x, rect->y, rect->width, rect->height);
+
+        bool result = GetRootWindowScreenRect(mBrowser, mRect);
+
+        return result ? 1 : 0;
+    }
+
+    /// <summary>
+    /// Called to retrieve the external (client-provided) root window rectangle in
+    /// screen DIP coordinates. Only called for windowed browsers on Windows and
+    /// Linux. Return true if the rectangle was provided. Return false to use the
+    /// root window bounds on Windows or the browser content bounds on Linux. For
+    /// additional usage details see CefBrowserHost::NotifyScreenInfoChanged.
+    /// </summary>
+    /// <param name="browser"></param>
+    /// <param name="rect"></param>
+    /// <returns></returns>
+    protected virtual bool GetRootWindowScreenRect(CefBrowser browser, CefRectangle rect)
+    {
+        return false;
+    }
 }

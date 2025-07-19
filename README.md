@@ -2,7 +2,7 @@
 
 This repo is a fork of the original [CefGlue](https://gitlab.com/xiliumhq/chromiumembedded/cefglue) project. Used by [UnityWebBrowser](https://github.com/Voltstro-Studios/UnityWebBrowser).
 
-Currently updated to CEF `136.1.1+g4dec9aa+chromium-136.0.7103.33`.
+Currently updated to CEF `137.0.19+g8a1c4ce+chromium-137.0.7151.121`.
 
 ## Changes
 

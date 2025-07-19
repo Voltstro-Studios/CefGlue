@@ -139,30 +139,40 @@
 #define CEF_API_HASH_13601 "40b224f295a20694241c5db49721bc90a3796f30"
 #endif
 
-// Next version last updated May 03, 2025.
-#define CEF_API_VERSION_999998 999998
+// Added May 07, 2025.
+#define CEF_API_VERSION_13700 13700
 #if defined(OS_WIN)
-#define CEF_API_HASH_999998 "116a4153047ee1ee67f17fc938f084ee72b24e54"
+#define CEF_API_HASH_13700 "65c7157dd3e8eba9bcc38db2bd7f26508c717f3e"
 #elif defined(OS_MAC)
-#define CEF_API_HASH_999998 "ff885fe921f9eae1a5ce6a71b30b0c37b306bf56"
+#define CEF_API_HASH_13700 "9e84009c92c25aa80935727b5e4526b23439a575"
 #elif defined(OS_LINUX)
-#define CEF_API_HASH_999998 "40b224f295a20694241c5db49721bc90a3796f30"
+#define CEF_API_HASH_13700 "e5ac12b1bd88b9ece6ceaa57848aaba61ab85242"
 #endif
 
-// Experimental version last updated May 03, 2025.
+// Next version last updated June 23, 2025.
+#define CEF_API_VERSION_999998 999998
+#if defined(OS_WIN)
+#define CEF_API_HASH_999998 "65c7157dd3e8eba9bcc38db2bd7f26508c717f3e"
+#elif defined(OS_MAC)
+#define CEF_API_HASH_999998 "9e84009c92c25aa80935727b5e4526b23439a575"
+#elif defined(OS_LINUX)
+#define CEF_API_HASH_999998 "e5ac12b1bd88b9ece6ceaa57848aaba61ab85242"
+#endif
+
+// Experimental version last updated June 23, 2025.
 #define CEF_API_VERSION_999999 999999
 #if defined(OS_WIN)
-#define CEF_API_HASH_999999 "9a1ec1afb988bfc9b3157e9a6adccc80790af1f3"
+#define CEF_API_HASH_999999 "770549a2b4f2e039c3257ca2159df80167c521c7"
 #elif defined(OS_MAC)
-#define CEF_API_HASH_999999 "3392d9099da9288debd116e125998f3c6f691642"
+#define CEF_API_HASH_999999 "cae3110e6a9754ea5927ea7fc9bb57e48a671f37"
 #elif defined(OS_LINUX)
-#define CEF_API_HASH_999999 "cf102dc1148d9d20a4692c0fb19586c42c96f7c3"
+#define CEF_API_HASH_999999 "4f9fac397d9db5edf96273f4a7f4d7ab6484e191"
 #endif
 
 // Oldest supported CEF version.
 #define CEF_API_VERSION_MIN CEF_API_VERSION_13300
 
 // Newest supported CEF version.
-#define CEF_API_VERSION_LAST CEF_API_VERSION_13601
+#define CEF_API_VERSION_LAST CEF_API_VERSION_13700
 
 #endif  // CEF_INCLUDE_CEF_API_VERSIONS_H_

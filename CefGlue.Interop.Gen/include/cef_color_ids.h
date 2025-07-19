@@ -342,6 +342,7 @@
   /* These colors correspond to the system colors defined in */ \
   /* ui::NativeTheme::SystemThemeColor. They are used to support */ \
   /* CSS system colors. */ \
+  E_CPONLY(CEF_ColorCssSystemActiveText) \
   E_CPONLY(CEF_ColorCssSystemBtnFace) \
   E_CPONLY(CEF_ColorCssSystemBtnText) \
   E_CPONLY(CEF_ColorCssSystemField) \
@@ -350,8 +351,10 @@
   E_CPONLY(CEF_ColorCssSystemHighlight) \
   E_CPONLY(CEF_ColorCssSystemHighlightText) \
   E_CPONLY(CEF_ColorCssSystemHotlight) \
+  E_CPONLY(CEF_ColorCssSystemLinkText) \
   E_CPONLY(CEF_ColorCssSystemMenuHilight) \
   E_CPONLY(CEF_ColorCssSystemScrollbar) \
+  E_CPONLY(CEF_ColorCssSystemVisitedText) \
   E_CPONLY(CEF_ColorCssSystemWindow) \
   E_CPONLY(CEF_ColorCssSystemWindowText) \
   E_CPONLY(CEF_ColorCustomFrameCaptionForeground) \
@@ -669,7 +672,7 @@
   E_CPONLY(CEF_ColorCrosSysInputFieldOnBase)
 #elif defined(OS_LINUX)
 #define PLATFORM_SPECIFIC_COLOR_IDS \
-  E_CPONLY(CEF_ColorNativeButtonBorder)\
+  E_CPONLY(CEF_ColorNativeBoxFrameBorder)\
   E_CPONLY(CEF_ColorNativeHeaderButtonBorderActive) \
   E_CPONLY(CEF_ColorNativeHeaderButtonBorderInactive) \
   E_CPONLY(CEF_ColorNativeHeaderSeparatorBorderActive) \
@@ -770,13 +773,14 @@
   E_CPONLY(CEF_ColorAvatarButtonHighlightSigninPaused) \
   E_CPONLY(CEF_ColorAvatarButtonHighlightExplicitText) \
   E_CPONLY(CEF_ColorAvatarButtonHighlightIncognito) \
+  E_CPONLY(CEF_ColorAvatarButtonHighlightManagement) \
   E_CPONLY(CEF_ColorAvatarButtonHighlightNormalForeground) \
   E_CPONLY(CEF_ColorAvatarButtonHighlightDefaultForeground) \
   E_CPONLY(CEF_ColorAvatarButtonHighlightSyncErrorForeground) \
   E_CPONLY(CEF_ColorAvatarButtonHighlightIncognitoForeground) \
+  E_CPONLY(CEF_ColorAvatarButtonHighlightManagementForeground) \
   E_CPONLY(CEF_ColorAvatarButtonIncognitoHover) \
   E_CPONLY(CEF_ColorAvatarButtonNormalRipple) \
-  E_CPONLY(CEF_ColorAvatarStrokeLight) \
   E_CPONLY(CEF_ColorAvatarStroke) \
   E_CPONLY(CEF_ColorAvatarFillForContrast) \
   /* Bookmark bar colors. */ \
@@ -812,6 +816,8 @@
   E_CPONLY(CEF_ColorBnplIssuerLabelForeground) \
   E_CPONLY(CEF_ColorBnplIssuerLabelForegroundDisabled) \
   E_CPONLY(CEF_ColorBnplIssuerLinkedIneligibleBackground) \
+  E_CPONLY(CEF_ColorBnplIssuerLinkedPillBackground) \
+  E_CPONLY(CEF_ColorBnplIssuerLinkedPillForeground) \
   /* Compose colors */ \
   E_CPONLY(CEF_ColorComposeDialogBackground) \
   E_CPONLY(CEF_ColorComposeDialogDivider) \
@@ -884,6 +890,9 @@
   E_CPONLY(CEF_ColorExtensionsMenuContainerBackground) \
   E_CPONLY(CEF_ColorExtensionsMenuText) \
   E_CPONLY(CEF_ColorExtensionsMenuSecondaryText) \
+  /* Feature first run dialog colors. */ \
+  E_CPONLY(CEF_ColorFeatureFirstRunInfoContainerBackground) \
+  E_CPONLY(CEF_ColorFeatureFirstRunIconColor) \
   /* Feature Promo bubble colors. */ \
   E_CPONLY(CEF_ColorFeaturePromoBubbleBackground) \
   E_CPONLY(CEF_ColorFeaturePromoBubbleButtonBorder) \
@@ -927,6 +936,8 @@
   E_CPONLY(CEF_ColorIntentPickerItemBackgroundSelected) \
   /* Glic colors */ \
   E_CPONLY(CEF_ColorGlicBackground) \
+  E_CPONLY(CEF_ColorGlicModalBackground) \
+  E_CPONLY(CEF_ColorGlicModalForeground) \
   /* Hover Button colors */ \
   E_CPONLY(CEF_ColorHoverButtonBackgroundHovered) \
   /* Lens overlay colors. */ \
@@ -1191,15 +1202,6 @@
   E_CPONLY(CEF_ColorProfileMenuIdentityInfoBackground) \
   E_CPONLY(CEF_ColorProfileMenuIdentityInfoTitle) \
   E_CPONLY(CEF_ColorProfileMenuIdentityInfoSubtitle) \
-  E_CPONLY(CEF_ColorProfileMenuHeaderLabel) \
-  E_CPONLY(CEF_ColorProfileMenuIconButton) \
-  E_CPONLY(CEF_ColorProfileMenuIconButtonBackground) \
-  E_CPONLY(CEF_ColorProfileMenuIconButtonBackgroundHovered) \
-  E_CPONLY(CEF_ColorProfileMenuSyncErrorIcon) \
-  E_CPONLY(CEF_ColorProfileMenuSyncIcon) \
-  E_CPONLY(CEF_ColorProfileMenuSyncInfoBackground) \
-  E_CPONLY(CEF_ColorProfileMenuSyncOffIcon) \
-  E_CPONLY(CEF_ColorProfileMenuSyncPausedIcon) \
   /* Profiles colors. */ \
   E_CPONLY(CEF_ColorProfilesReauthDialogBorder) \
   /* PWA colors. */ \
@@ -1395,6 +1397,8 @@
   E_CPONLY(CEF_ColorSidePanelWallpaperSearchErrorButtonBackground) \
   E_CPONLY(CEF_ColorSidePanelWallpaperSearchErrorButtonText) \
   E_CPONLY(CEF_ColorSidePanelWallpaperSearchInspirationDescriptors) \
+  /* Split view empty state colors. */ \
+  E_CPONLY(CEF_ColorSplitViewBackground) \
   /* Star rating view colors. */ \
   E_CPONLY(CEF_ColorStarRatingFullIcon) \
   E_CPONLY(CEF_ColorStarRatingEmptyIcon) \
